@@ -14,7 +14,7 @@
   - 接口：FastAPI
   - 模型：通过 Ollama 调用，对话用 deepseek-v4-flash:cloud，向量用 qwen3-embedding:0.6b
 - 初始化 git 仓库和 uv 项目（Python 3.12）。
-- 编写开发计划 `PLAN.md`（Day 1–10 加缓冲）、设计文档 `docs/design.md`、README、CHANGELOG。
+- 编写开发计划 `PLAN.md`（Day 1–7 加 1 天缓冲）、设计文档 `docs/design.md`、README、CHANGELOG。
 
 ## 主要改动
 - `pyproject.toml`、`.python-version`：uv 项目配置
@@ -33,6 +33,9 @@
 ## 问题与决策
 - 显卡只有 6GB 显存，本地只能跑 4B 级别的模型，多步推理效果有限，所以对话模型选了 Ollama 云模型，本地模型作为备用。
 - 移民相关的问题只提供官方的一般性信息，并转介到官方渠道或持牌顾问，原因是新西兰对移民建议有执业许可要求。
+- 开发周期定为 7 天加 1 天缓冲。合并了工作量较轻的相邻任务：骨架与采集、索引与检索、接口与前端。评测单独留一天，因为它要大量调用云模型，最容易受限流影响。
 
 ## 明日计划
-Day 1：搭工程骨架，包括 FastAPI 应用和 `/health` 接口、配置与日志、ruff 和 pytest、GitHub Actions CI、环境检查脚本。
+Day 1：
+- 搭工程骨架：FastAPI 应用和 `/health` 接口、配置与日志、ruff 和 pytest、GitHub Actions CI、环境检查脚本
+- 完成数据采集：整理官方来源清单，实现抓取与清洗

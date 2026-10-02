@@ -4,17 +4,14 @@
 
 ## 进度
 - [x] Day 0：项目初始化（2026-10-02）
-- [ ] Day 1：工程骨架
-- [ ] Day 2：数据采集
-- [ ] Day 3：分块与索引
-- [ ] Day 4：检索与基线
-- [ ] Day 5：Agent v1
-- [ ] Day 6：反问、并行与转介
-- [ ] Day 7：FastAPI 接口
-- [ ] Day 8：中文前端
-- [ ] Day 9：评测与调优
-- [ ] Day 10：收尾发布
-- [ ] Day 11–12：缓冲（可选）
+- [ ] Day 1：工程骨架与数据采集
+- [ ] Day 2：分块、索引与检索基线
+- [ ] Day 3：Agent v1
+- [ ] Day 4：反问、并行与转介
+- [ ] Day 5：API 与中文前端
+- [ ] Day 6：评测与调优
+- [ ] Day 7：收尾发布
+- [ ] Day 8：缓冲（可选）
 
 ---
 
@@ -25,19 +22,17 @@
 
 **验收**：首次 push 成功。
 
-## Day 1：工程骨架
-**目标**：搭好可运行、可测试、能跑持续集成的 FastAPI 项目骨架。
+## Day 1：工程骨架与数据采集
+**目标**：搭好可运行、可测试、能跑持续集成的 FastAPI 项目骨架；从新西兰政府官网采集四个主题的资料，清洗成带元数据的 Markdown。
 
-**任务**
+**任务：工程骨架**
 - 安装依赖
-  - `uv add fastapi "uvicorn[standard]" pydantic-settings httpx`
+  - `uv add fastapi "uvicorn[standard]" pydantic-settings httpx trafilatura pyyaml`
   - `uv add --dev pytest pytest-asyncio ruff`
 - `app/__init__.py`、`app/config.py`
   - 用 pydantic-settings 读取 `.env`，字段与 `.env.example` 一致
   - 提供带缓存的 `get_settings()`
-- `app/logging_config.py`
-  - 统一日志格式：时间、级别、模块、消息
-  - 日志级别来自配置
+- `app/logging_config.py`：统一日志格式（时间、级别、模块、消息），日志级别来自配置
 - `app/main.py`
   - `create_app()` 应用工厂，模块级 `app = create_app()`
   - `GET /health` 返回服务状态、版本、Ollama 是否可达；不可达时返回 `degraded`，不要报 500
@@ -45,27 +40,16 @@
   - 检查 Ollama 服务是否在运行、`LLM_MODEL` 和 `EMBED_MODEL` 是否已安装，并用中文输出结果
   - 缺少向量模型时执行 `ollama pull qwen3-embedding:0.6b`（约 640MB）
 - `pyproject.toml`
-  - 补充中文 description
   - ruff 配置：line-length 100，规则集 E、F、I、UP、B
   - pytest 配置：`pythonpath = ["."]`，`asyncio_mode = "auto"`
 - `.github/workflows/ci.yml`
   - 在 push 和 pull_request 时触发，运行环境 ubuntu-latest
   - 用 astral-sh/setup-uv 安装依赖，然后运行 `uv run ruff check .` 和 `uv run pytest -q`
-- `tests/conftest.py`、`tests/test_health.py`、`tests/test_config.py`
+- 测试
   - `/health` 在 Ollama 可达和不可达两种情况下的行为（用 monkeypatch 模拟，不访问网络）
   - 配置的默认值，以及环境变量覆盖默认值
 
-**验收**
-- `uv run ruff check .` 和 `uv run pytest -q` 全部通过
-- 本地运行 `uv run uvicorn app.main:app` 后访问 `/health` 正常
-- `uv run python scripts/check_env.py` 能如实报告 Ollama 和模型的状态
-- push 后 GitHub Actions 通过；无法确认 CI 状态时，在日志中如实写明
-
-## Day 2：数据采集
-**目标**：从新西兰政府官网采集四个主题的资料，清洗成带元数据的 Markdown。
-
-**任务**
-- 安装依赖：`uv add trafilatura pyyaml`
+**任务：数据采集**
 - 先查看各站点的 robots.txt 和版权页面，把结论写进 `docs/data-sources.md`：许可类型、是否允许抓取、引用要求。不允许抓取的站点直接排除
 - 编写 `sources.yaml`
   - 四个主题：tenancy（租房）、employment（打工与劳动权益）、visa（学生签证）、tax（税务），共 30–50 个官方页面
@@ -90,13 +74,16 @@
   - robots 判断（用假的 robots 内容）
 
 **验收**
-- 实际运行一次抓取，成功率 ≥90%，失败的页面在日志中列出原因
-- 测试全部通过，`data/` 没有被提交
+- `uv run ruff check .` 和 `uv run pytest -q` 全部通过
+- 本地运行 `uv run uvicorn app.main:app` 后访问 `/health` 正常
+- `uv run python scripts/check_env.py` 能如实报告 Ollama 和模型的状态
+- 实际运行一次抓取，成功率 ≥90%，失败的页面在日志中列出原因；`data/` 没有被提交
+- push 后 GitHub Actions 通过；无法确认 CI 状态时，在日志中如实写明
 
-## Day 3：分块与索引
-**目标**：把清洗后的文档切成父子块，建立稠密加 BM25 的混合索引。
+## Day 2：分块、索引与检索基线
+**目标**：把清洗后的文档切成父子块，建立稠密加 BM25 的混合索引；实现混合检索和朴素 RAG 基线，建立评测集和检索指标。
 
-**任务**
+**任务：分块与索引**
 - 安装依赖：`uv add qdrant-client fastembed langchain-ollama`
 - 确认向量模型已下载（`ollama list`）。如果 `qwen3-embedding:0.6b` 不可用，改用 `bge-m3`，并在日志中说明
 - `app/ingest/chunk.py`：父子分块
@@ -112,19 +99,8 @@
 - `app/ingest/index.py` 和 `scripts/build_index.py`
   - 按 content_hash 增量建索引：只重建内容有变化的页面，并删除已不存在页面的旧块
   - 用中文打印统计信息
-- 测试（使用假向量模型和临时目录）
-  - 分块规则：按标题切分、合并过短的块、子块重叠、元数据完整
-  - 父块回取
-  - 增量逻辑：content_hash 不变时跳过
 
-**验收**
-- 用真实数据建索引成功，在日志中记录块数和耗时
-- 测试全部通过
-
-## Day 4：检索与基线
-**目标**：实现混合检索和朴素 RAG 基线，建立评测集和检索指标。
-
-**任务**
+**任务：检索与基线**
 - `app/retrieval/search.py`
   - dense 和 sparse 各取 top 20 作为 prefetch，用 RRF 融合后取 top_k（默认 6）
   - 可按 topic 过滤
@@ -139,15 +115,19 @@
   - 题目必须基于 `data/` 中实际抓到的内容编写；文件开头注明"标准答案待人工复核"
 - `app/eval/metrics.py`：hit@k 和 MRR，纯代码计算
 - `scripts/run_eval.py --mode naive --retrieval-only`：输出检索指标，结果保存到 `eval/results/`（结果文件提交）
-- 测试
-  - 指标计算（用手算的样例核对）
-  - RRF 融合的排序
-  - 父块去重
-  - 朴素 RAG 的引用编号格式（用假 LLM）
 
-**验收**：得到基线的 hit@5 和 MRR，写进当天日志。
+**测试**（使用假向量模型、假 LLM 和临时目录）
+- 分块规则：按标题切分、合并过短的块、子块重叠、元数据完整
+- 父块回取；增量逻辑：content_hash 不变时跳过
+- 指标计算（用手算的样例核对）、RRF 融合的排序、父块去重
+- 朴素 RAG 的引用编号格式
 
-## Day 5：Agent v1
+**验收**
+- 用真实数据建索引成功，在日志中记录块数和耗时
+- 得到基线的 hit@5 和 MRR，写进当天日志
+- 测试全部通过
+
+## Day 3：Agent v1
 **目标**：用 LangGraph 搭出带自我纠错的 Agentic RAG 主流程和多轮会话记忆。
 
 **任务**
@@ -157,7 +137,7 @@
 - `app/agent/nodes.py`，依次为：
   1. summarize：对话超过 6 轮时压缩历史
   2. rewrite：把问题改写成 1–3 条英文检索词，并判断所属主题
-  3. retrieve：调用 Day 4 的混合检索
+  3. retrieve：调用 Day 2 的混合检索
   4. grade：由 LLM 判断检索结果能否回答问题，输出 JSON；结果不足且 retries < 2 时，带上失败原因回到 rewrite
   5. generate：生成中文回答，官方术语附英文原名，用 [1][2] 编号引用，结尾附免责声明
 - 结构化输出：用 pydantic 模型解析 JSON；解析失败时重试一次，仍失败就走降级逻辑
@@ -170,7 +150,7 @@
 
 **验收**：用假模型的测试全部通过；用真实模型跑 3 个问题，把问答样例写进日志。
 
-## Day 6：反问、并行与转介
+## Day 4：反问、并行与转介
 **目标**：让 Agent 会反问、会拆分复合问题，并且守住回答范围。
 
 **任务**
@@ -190,10 +170,10 @@
 
 **验收**：测试全部通过；用真实模型各演示一次反问和拆分，写进日志。
 
-## Day 7：FastAPI 接口
-**目标**：把 Agent 包装成可用的 HTTP 接口。
+## Day 5：API 与中文前端
+**目标**：把 Agent 包装成可用的 HTTP 接口，并做一个开箱即用的中文网页界面。
 
-**任务**
+**任务：接口**
 - 安装依赖：`uv add sse-starlette`
 - `app/api/schemas.py`：请求和响应模型
 - 接口
@@ -204,16 +184,9 @@
   - `POST /chat/stream`：SSE 流式输出，先推送节点进度事件和回答文本，最后发送引用列表
   - `GET /sources`：已索引的来源列表，包含主题、标题、链接、抓取日期
   - `POST /ingest/refresh`：在后台重新抓取并增量更新索引，返回任务状态
-- 统一异常处理，错误信息用中文
-- 请求日志中记录耗时
-- 测试：用 httpx AsyncClient 和假 Agent，覆盖每个接口的正常情况和异常情况
+- 统一异常处理，错误信息用中文；请求日志中记录耗时
 
-**验收**：测试全部通过；`/docs` 可以访问。
-
-## Day 8：中文前端
-**目标**：做一个开箱即用的中文网页界面。
-
-**任务**
+**任务：前端**
 - `app/web/index.html`：原生 HTML、CSS、JS，不引入构建工具，包含：
   - 聊天区和输入框
   - 主题快捷问题按钮：租房、打工、签证、税务
@@ -222,11 +195,16 @@
   - 顶部免责声明
   - 流式显示回答
 - FastAPI 把这个页面挂载到 `/`
-- 测试：首页可访问，且包含关键的中文元素
 
-**验收**：本地启动后，在浏览器里完成一次完整问答（其中包括一次反问），并在日志中写明操作步骤和结果。
+**测试**
+- 用 httpx AsyncClient 和假 Agent，覆盖每个接口的正常情况和异常情况
+- 首页可访问，且包含关键的中文元素
 
-## Day 9：评测与调优
+**验收**
+- 测试全部通过；`/docs` 可以访问
+- 本地启动后，在浏览器里完成一次完整问答（其中包括一次反问），并在日志中写明操作步骤和结果
+
+## Day 6：评测与调优
 **目标**：用数据证明 Agent 比朴素 RAG 好在哪里，并完成一轮调优。
 
 **任务**
@@ -241,11 +219,11 @@
 
 **验收**：报告完成；Agent 至少有一项指标优于基线，否则在报告中如实写明原因。
 
-## Day 10：收尾发布
+## Day 7：收尾发布
 **目标**：让别人照着 README 就能把项目跑起来。
 
 **任务**
-- `scripts/refresh_sources.py`：重新抓取所有来源，只更新内容有变化的页面（复用 Day 2 和 Day 3 的逻辑），并打印变化统计
+- `scripts/refresh_sources.py`：重新抓取所有来源，只更新内容有变化的页面（复用 Day 1 和 Day 2 的逻辑），并打印变化统计
 - 中文 README，包含以下内容：
   - 项目介绍
   - 架构图（mermaid）
@@ -260,7 +238,7 @@
 
 **验收**：测试全部通过，README 中的步骤可以复现。
 
-## Day 11–12：缓冲（可选）
+## Day 8：缓冲（可选）
 - 先补完之前没完成、或没达到验收标准的任务
 - 如果都已完成，可以从以下选做：
   - MCP 服务：通过 MCP 协议把问答能力提供给支持 MCP 的客户端
