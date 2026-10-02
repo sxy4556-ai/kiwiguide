@@ -2,6 +2,14 @@
 
 ## 未发布
 
+### Day 1（2026-10-02）
+- 新增 FastAPI 应用骨架：配置读取、统一日志、`GET /health`（Ollama 不可达时返回 degraded）
+- 新增环境检查脚本 `scripts/check_env.py`，缺少向量模型时自动下载
+- 新增 GitHub Actions CI：运行 ruff 和 pytest
+- 新增数据采集：`sources.yaml`（4 个主题共 50 个官方页面）、遵守 robots.txt 的抓取器、trafilatura 正文清洗、`scripts/fetch_sources.py`
+- 新增 `docs/data-sources.md`：各站点的许可与抓取规则
+- 26 个离线测试
+
 ### Day 0（2026-10-02）
 - 初始化 git 仓库和 uv 项目（Python 3.12）
 - 新增开发计划 `PLAN.md`、设计文档 `docs/design.md`、README 和开发日志
