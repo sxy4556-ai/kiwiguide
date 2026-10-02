@@ -3,7 +3,13 @@
 import json
 from pathlib import Path
 
-from app.ingest.clean import build_document, content_hash, save_document, slugify
+from app.ingest.clean import (
+    build_document,
+    content_hash,
+    normalize_whitespace,
+    save_document,
+    slugify,
+)
 
 FIXTURE = Path(__file__).parent / "fixtures" / "bond_page.html"
 URL = "https://www.tenancy.govt.nz/starting-a-tenancy/bond/"
@@ -32,6 +38,12 @@ def test_navigation_and_footer_removed():
 def test_body_text_kept():
     """正文里的关键事实（如押金上限）必须完整保留，否则回答会缺少依据。"""
     assert "up to four weeks' rent" in _markdown()
+
+
+def test_whitespace_noise_collapsed():
+    """列表项里的大段缩进和空行必须压缩：IRD 页面实测有这种噪音，不处理会让子块被空白填满。"""
+    raw = "- \n        \n            Fees Free\n\n\n\n    Fees Free helps   with fees.\n## Loans"
+    assert normalize_whitespace(raw) == "- Fees Free\n\nFees Free helps with fees.\n## Loans"
 
 
 def test_document_fields_and_save(tmp_path):

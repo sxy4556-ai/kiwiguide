@@ -1,0 +1,181 @@
+# KiwiGuide 数据来源清单
+# 每条：url（必填）、topic（tenancy / employment / visa / tax）、title（可选，覆盖页面标题）、note（可选）
+# 所有页面已在 2026-10-02 确认存在且内容相关；各站点的许可与抓取规则见 docs/data-sources.md
+
+sources:
+  # ---------- 租房（tenancy.govt.nz） ----------
+  - url: https://www.tenancy.govt.nz/rent-bond-and-bills/bond/
+    topic: tenancy
+    title: Bonds
+    note: 押金与宠物押金概述
+  - url: https://www.tenancy.govt.nz/rent-bond-and-bills/bond/refunding-a-bond/
+    topic: tenancy
+    title: Refunding a bond
+    note: 退押金
+  - url: https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/
+    topic: tenancy
+    title: Rent increases and reductions
+    note: 涨租的通知期与频率
+  - url: https://www.tenancy.govt.nz/rent-bond-and-bills/rent/charging-rent/
+    topic: tenancy
+    title: Charging rent
+    note: 预付租金上限、禁止竞价
+  - url: https://www.tenancy.govt.nz/rent-bond-and-bills/letting-fees-and-key-money/
+    topic: tenancy
+    title: Letting fees and key money
+    note: 中介费与钥匙费是否合法
+  - url: https://www.tenancy.govt.nz/ending-a-tenancy/giving-notice-to-end-tenancy/
+    topic: tenancy
+    title: Giving notice to end a tenancy
+  - url: https://www.tenancy.govt.nz/ending-a-tenancy/ending-a-fixed-term-early/
+    topic: tenancy
+    title: Ending a fixed-term tenancy early
+    note: 定期租约提前退租、转租
+  - url: https://www.tenancy.govt.nz/healthy-homes/healthy-homes-standards-what-a-tenant-needs-to-know/
+    topic: tenancy
+    title: Healthy homes standards – what a tenant needs to know
+  - url: https://www.tenancy.govt.nz/starting-a-tenancy/flatting/
+    topic: tenancy
+    title: Flatting
+    note: 租客与合租房客（flatmate）的区别
+  - url: https://www.tenancy.govt.nz/starting-a-tenancy/boarding-houses/
+    topic: tenancy
+    title: Boarding houses
+  - url: https://www.tenancy.govt.nz/starting-a-tenancy/types-of-tenancies/periodic-or-fixed-term-tenancy/
+    topic: tenancy
+    title: Periodic or fixed-term tenancy
+  - url: https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/
+    topic: tenancy
+    title: Information for new tenants
+  - url: https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/
+    topic: tenancy
+    title: Who tenancy law does not protect
+    note: 寄宿、学生宿舍等不受《住宅租赁法》保护的情形
+  - url: https://www.tenancy.govt.nz/disputes/tribunal/
+    topic: tenancy
+    title: Tenancy Tribunal
+  - url: https://www.tenancy.govt.nz/maintenance-and-inspections/inspections/
+    topic: tenancy
+    title: Inspections
+    note: 房东入户检查的通知要求
+
+  # ---------- 打工与劳动权益（employment.govt.nz） ----------
+  - url: https://www.employment.govt.nz/pay-and-hours/pay-and-wages/minimum-wage/minimum-wage-rates-and-types
+    topic: employment
+    title: Minimum wage rates and types
+  - url: https://www.employment.govt.nz/leave-and-holidays/annual-holidays/taking-annual-holidays
+    topic: employment
+    title: Taking annual holidays
+  - url: https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/annual-holiday-pay
+    topic: employment
+    title: Annual holiday pay
+  - url: https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/pay-as-you-go-annual-holiday-payments
+    topic: employment
+    title: Pay-as-you-go annual holiday payments
+    note: 兼职和临时工常见的 8% 假期工资
+  - url: https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-rights-for-employees
+    topic: employment
+    title: Public holidays rights for employees
+  - url: https://www.employment.govt.nz/leave-and-holidays/sick-leave/taking-sick-leave
+    topic: employment
+    title: Taking sick leave
+  - url: https://www.employment.govt.nz/starting-employment/rights-and-responsibilities/employee-rights-and-responsibilities
+    topic: employment
+    title: Employee rights and responsibilities
+  - url: https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment
+    topic: employment
+    title: Casual employment
+  - url: https://www.employment.govt.nz/starting-employment/hiring/trial-periods
+    topic: employment
+    title: Trial periods
+  - url: https://www.employment.govt.nz/pay-and-hours/pay-and-wages/deductions
+    topic: employment
+    title: Deductions and premiums
+    note: 雇主扣工资的规则
+  - url: https://www.employment.govt.nz/pay-and-hours/pay-and-wages/payslips
+    topic: employment
+    title: Payslips
+  - url: https://www.employment.govt.nz/pay-and-hours/pay-and-wages/final-pay
+    topic: employment
+    title: Final pay
+  - url: https://www.employment.govt.nz/pay-and-hours/hours-and-breaks/rest-and-breaks
+    topic: employment
+    title: Rest and breaks
+  - url: https://www.employment.govt.nz/resolving-problems/migrant-exploitation
+    topic: employment
+    title: Migrant exploitation
+    note: 移民劳工被剥削时的求助渠道
+
+  # ---------- 学生签证（immigration.govt.nz） ----------
+  - url: https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/
+    topic: visa
+    title: Working on a student visa
+    note: 学期中与假期的打工时长限制
+  - url: https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/
+    topic: visa
+    title: Check or change your student visa conditions
+  - url: https://www.immigration.govt.nz/study/once-you-have-a-student-visa/unpaid-work-while-studying/
+    topic: visa
+    title: Unpaid work while studying
+  - url: https://www.immigration.govt.nz/study/study-visas/visas-for-studying-in-new-zealand/
+    topic: visa
+    title: Visas for studying in New Zealand
+  - url: https://www.immigration.govt.nz/visas/fee-paying-student-visa/
+    topic: visa
+    title: Fee Paying Student Visa
+  - url: https://www.immigration.govt.nz/study/after-you-finish-your-study/staying-to-work-after-finishing-your-study/
+    topic: visa
+    title: Staying to work after finishing your study
+  - url: https://www.immigration.govt.nz/study/after-you-finish-your-study/qualifications-needed-for-a-post-study-work-visa/
+    topic: visa
+    title: Qualifications needed for a Post-Study Work Visa
+  - url: https://www.immigration.govt.nz/visas/post-study-work-visa/
+    topic: visa
+    title: Post-Study Work Visa
+  - url: https://www.immigration.govt.nz/visas/interim-visa/
+    topic: visa
+    title: Interim Visa
+    note: 续签期间的过渡签证
+  - url: https://www.immigration.govt.nz/work/worker-rights/your-rights-as-a-worker-from-overseas/
+    topic: visa
+    title: Your rights as a worker from overseas
+
+  # ---------- 税务（ird.govt.nz） ----------
+  - url: https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one
+    topic: tax
+    title: When you need an IRD number
+  - url: https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application
+    topic: tax
+    title: New arrival to New Zealand – IRD number application
+  - url: https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/what-tax-code-should-i-use
+    topic: tax
+    title: What tax code should I use?
+  - url: https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/secondary-tax-codes
+    topic: tax
+    title: Secondary tax codes
+    note: 打两份工时的副业税码
+  - url: https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals
+    topic: tax
+    title: Tax rates for individuals
+  - url: https://www.ird.govt.nz/students
+    topic: tax
+    title: Students
+    note: IRD 面向学生的入口页
+  - url: https://www.ird.govt.nz/roles/non-residents/experts-and-students-visiting-from-overseas
+    topic: tax
+    title: Experts and trainees visiting from overseas
+    note: 税收协定下访问学生的免税情形
+  - url: https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals
+    topic: tax
+    title: Tax residency status for individuals
+    note: 183 天规则
+  - url: https://www.ird.govt.nz/income-tax/income-tax-for-individuals/what-happens-at-the-end-of-the-tax-year/income-tax-assessments
+    topic: tax
+    title: Income tax assessments
+    note: 年终自动结算与退税
+  - url: https://www.ird.govt.nz/kiwisaver/kiwisaver-individuals/how-kiwisaver-works
+    topic: tax
+    title: How KiwiSaver works
+  - url: https://www.ird.govt.nz/kiwisaver/kiwisaver-individuals/joining-kiwisaver
+    topic: tax
+    title: Joining KiwiSaver

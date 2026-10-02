@@ -42,7 +42,17 @@ def html_to_markdown(html: str, url: str = "") -> str:
         include_comments=False,
         favor_precision=True,
     )
-    return (markdown or "").strip()
+    return normalize_whitespace(markdown or "")
+
+
+def normalize_whitespace(markdown: str) -> str:
+    """规整空白：部分页面的列表项内含大量缩进和空行，会浪费分块长度并干扰检索。"""
+    lines = [re.sub(r"[ \t]+", " ", line).strip() for line in markdown.splitlines()]
+    text = "\n".join(lines)
+    # 只剩列表标记的行与下一行正文合并
+    text = re.sub(r"^([-*]|\d+\.)\n+", r"\1 ", text, flags=re.MULTILINE)
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    return text.strip()
 
 
 def extract_title(html: str) -> str:
