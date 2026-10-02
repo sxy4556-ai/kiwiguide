@@ -1,0 +1,7 @@
+[project]
+name = "kiwiguide"
+version = "0.1.0"
+description = "新西兰留学生生活助手：基于 Agentic RAG 与 FastAPI 的官方信息问答"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []

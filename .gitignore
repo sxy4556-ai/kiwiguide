@@ -1,0 +1,33 @@
+# Python 缓存与构建产物
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# 虚拟环境
+.venv/
+
+# 本地配置（示例见 .env.example）
+.env
+
+# 抓取的数据、向量索引与会话数据库：可由脚本重新生成，不提交
+data/
+*.sqlite
+*.sqlite3
+*.db
+
+# 运行日志
+logs/
+
+# 工具缓存
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# 编辑器与系统文件
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

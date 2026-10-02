@@ -1,0 +1,2 @@
+# 仓库内统一使用 LF 换行，避免 Windows 本地与 CI（Linux）之间出现换行差异
+* text=auto eol=lf
