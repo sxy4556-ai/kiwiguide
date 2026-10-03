@@ -63,3 +63,16 @@ class FakeChatModel:
     def invoke(self, messages):
         self.calls.append(messages)
         return AIMessage(content=self.replies.pop(0))
+
+
+class FakeSearcher:
+    """按检索词返回预先编排好的结果，没有编排的检索词返回 default；记录每次调用的参数。"""
+
+    def __init__(self, results: dict[str, list] | None = None, default: list | None = None):
+        self.results = results or {}
+        self.default = default or []
+        self.calls: list[tuple[str, int, str | None]] = []
+
+    def __call__(self, query: str, top_k: int, topic: str | None) -> list:
+        self.calls.append((query, top_k, topic))
+        return self.results.get(query, self.default)[:top_k]
