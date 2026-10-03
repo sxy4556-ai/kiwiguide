@@ -7,13 +7,15 @@ from app.config import Settings, get_settings
 
 def test_defaults_match_env_example(monkeypatch):
     """默认值必须与 .env.example 一致，否则没有 .env 的新环境会连到错误的模型或目录。"""
-    for name in ["OLLAMA_BASE_URL", "LLM_MODEL", "FALLBACK_LLM_MODEL", "EMBED_MODEL", "DATA_DIR"]:
+    for name in ["OLLAMA_BASE_URL", "LLM_MODEL", "FALLBACK_LLM_MODEL", "EMBED_MODEL",
+                 "SPARSE_MODEL", "DATA_DIR"]:
         monkeypatch.delenv(name, raising=False)
     settings = Settings(_env_file=None)
     assert settings.ollama_base_url == "http://localhost:11434"
     assert settings.llm_model == "deepseek-v4-flash:cloud"
     assert settings.fallback_llm_model == "qwen3:4b"
     assert settings.embed_model == "qwen3-embedding:0.6b"
+    assert settings.sparse_model == "Qdrant/bm25"
     assert settings.data_dir == Path("data")
 
 
