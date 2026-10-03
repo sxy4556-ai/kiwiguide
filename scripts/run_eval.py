@@ -1,0 +1,103 @@
+"""在 eval/questions.yaml 上评测检索效果，结果保存到 eval/results/。
+
+用法：uv run python scripts/run_eval.py --mode naive --retrieval-only [--top-k 10]
+"""
+
+import argparse
+import json
+import logging
+import sys
+import time
+from datetime import UTC, datetime
+from pathlib import Path
+
+import yaml
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from app.config import get_settings  # noqa: E402
+from app.eval.metrics import reciprocal_rank, summarize  # noqa: E402
+from app.logging_config import setup_logging  # noqa: E402
+from app.retrieval.embeddings import (  # noqa: E402
+    make_dense_embedder,
+    make_sparse_embedder,
+    probe_dimension,
+)
+from app.retrieval.search import HybridSearcher  # noqa: E402
+from app.retrieval.store import ParentStore, VectorStore  # noqa: E402
+
+ROOT = Path(__file__).resolve().parent.parent
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="评测检索效果")
+    parser.add_argument("--mode", choices=["naive"], default="naive", help="评测对象")
+    parser.add_argument("--retrieval-only", action="store_true", help="只评测检索，不生成回答")
+    parser.add_argument("--top-k", type=int, default=10, help="每题取回的父块数")
+    parser.add_argument("--questions", default=str(ROOT / "eval" / "questions.yaml"))
+    args = parser.parse_args()
+    if not args.retrieval_only:
+        print("目前只支持 --retrieval-only：回答质量评测尚未实现")
+        return 2
+
+    settings = get_settings()
+    setup_logging(settings.log_level)
+    logging.getLogger("httpx").setLevel(logging.WARNING)
+
+    questions = yaml.safe_load(Path(args.questions).read_text(encoding="utf-8"))["questions"]
+    dense, sparse = make_dense_embedder(settings), make_sparse_embedder(settings)
+    vector_store = VectorStore.open(settings.data_dir / "qdrant", probe_dimension(dense))
+    parent_store = ParentStore(settings.data_dir / "parents.sqlite")
+    searcher = HybridSearcher(vector_store, parent_store, dense, sparse)
+
+    rows = []
+    start = time.perf_counter()
+    try:
+        for q in questions:
+            # 朴素基线：原问题直接检索，不改写、不按主题过滤
+            results = searcher.search(q["question"], top_k=args.top_k)
+            urls = [r.parent.url for r in results]
+            rows.append({
+                "id": q["id"], "lang": q["lang"], "topic": q["topic"], "type": q["type"],
+                "question": q["question"], "gold_urls": q["gold_urls"], "retrieved_urls": urls,
+                "rr": reciprocal_rank(urls, q["gold_urls"]),
+            })
+    finally:
+        vector_store.close()
+        parent_store.close()
+    elapsed = time.perf_counter() - start
+
+    overall = summarize(rows)
+    by_lang = {lang: summarize([r for r in rows if r["lang"] == lang]) for lang in ("zh", "en")}
+    report = {
+        "mode": args.mode,
+        "retrieval_only": True,
+        "run_at": datetime.now(UTC).isoformat(timespec="seconds"),
+        "settings": {
+            "embed_model": settings.embed_model,
+            "sparse_model": settings.sparse_model,
+            "top_k": args.top_k,
+        },
+        "summary": overall,
+        "by_lang": by_lang,
+        "questions": rows,
+    }
+    out = ROOT / "eval" / "results" / f"{args.mode}-retrieval.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    def fmt(s: dict) -> str:
+        return (f"hit@1 {s['hit@1']:.3f}  hit@3 {s['hit@3']:.3f}  hit@5 {s['hit@5']:.3f}  "
+                f"MRR {s['mrr']:.3f}（{s['n']} 题）")
+
+    print(f"全部：{fmt(overall)}")
+    for lang, s in by_lang.items():
+        print(f"{'中文' if lang == 'zh' else '英文'}：{fmt(s)}")
+    misses = [r["id"] for r in rows if r["rr"] == 0]
+    print(f"前 {args.top_k} 个结果都没命中的题：{', '.join(misses) or '无'}")
+    print(f"检索耗时 {elapsed:.1f} 秒；结果已保存到 {out.relative_to(ROOT)}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
