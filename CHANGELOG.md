@@ -2,6 +2,15 @@
 
 ## 未发布
 
+### Day 2（2026-10-03）
+- 新增父子分块（按标题切父块，约 500 字符、重叠 80 字符切子块）
+- 新增 Qdrant 本地混合索引（qwen3-embedding 稠密向量 + BM25 稀疏向量）和 SQLite 父块库，按 content_hash 增量更新；`scripts/build_index.py`
+- 新增混合检索：RRF 融合、主题过滤、父块去重回取
+- 新增对话模型工厂（主模型失败时切换备用模型）和朴素 RAG 基线
+- 新增 30 道评测题、hit@k 和 MRR 指标、`scripts/run_eval.py`；基线 hit@5 0.967、MRR 0.898
+- 新增配置项 `SPARSE_MODEL`
+- 测试增至 52 个
+
 ### Day 1（2026-10-02）
 - 新增 FastAPI 应用骨架：配置读取、统一日志、`GET /health`（Ollama 不可达时返回 degraded）
 - 新增环境检查脚本 `scripts/check_env.py`，缺少向量模型时自动下载

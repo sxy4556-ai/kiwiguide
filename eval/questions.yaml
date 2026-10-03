@@ -1,0 +1,365 @@
+# KiwiGuide 评测题集（30 题）
+# 标准答案待人工复核：gold_urls 和 key_points 依据 2026-10-02 抓取的页面内容编写，
+# 官方页面更新后数字可能变化，复核时以官网当前内容为准。
+#
+# 字段说明
+#   id         题号
+#   lang       zh / en
+#   topic      tenancy / employment / visa / tax（复合题写主要主题）
+#   type       simple：单一事实；compound：涉及多个页面；underspecified：缺少关键信息，Agent 应反问
+#   question   问题
+#   gold_urls  应当命中的官方页面（命中其中任意一个即算命中）
+#   key_points 答案要点
+
+questions:
+  # ---------- 租房 ----------
+  - id: t01
+    lang: zh
+    topic: tenancy
+    type: simple
+    question: 房东最多可以收多少押金？押金要交给谁保管？
+    gold_urls:
+      - https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/
+      - https://www.tenancy.govt.nz/rent-bond-and-bills/bond/
+    key_points:
+      - 押金（bond）最多为 4 周租金
+      - 房东必须给收据，并在 23 个工作日内把押金交存（lodge）到 Tenancy Services
+
+  - id: t02
+    lang: zh
+    topic: tenancy
+    type: simple
+    question: 房东涨房租需要提前多久通知？多久可以涨一次？
+    gold_urls:
+      - https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/
+    key_points:
+      - 必须提前至少 60 天书面通知（寄宿屋 boarding house 为 28 天）
+      - 距上次涨租生效或租约开始满 12 个月后才能再次涨租
+
+  - id: t03
+    lang: zh
+    topic: tenancy
+    type: simple
+    question: 房东要来检查房子，需要提前多久通知我？可以多频繁？
+    gold_urls:
+      - https://www.tenancy.govt.nz/maintenance-and-inspections/inspections/
+    key_points:
+      - 至少提前 48 小时通知（寄宿屋为 24 小时），且不应早于 14 天
+      - 检查最多每 4 周一次
+
+  - id: t04
+    lang: zh
+    topic: tenancy
+    type: simple
+    question: 合租时，租客（tenant）和室友（flatmate）在法律上有什么区别？
+    gold_urls:
+      - https://www.tenancy.govt.nz/starting-a-tenancy/flatting/
+      - https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/
+    key_points:
+      - 签了租约的是租客，受《住宅租赁法》（Residential Tenancies Act）保护，对全部租金和损坏承担连带责任
+      - 室友不在租约上，不受该法保护，权利取决于与租客之间的约定
+
+  - id: t05
+    lang: en
+    topic: tenancy
+    type: simple
+    question: Can a landlord or letting agent charge me a letting fee or key money?
+    gold_urls:
+      - https://www.tenancy.govt.nz/rent-bond-and-bills/letting-fees-and-key-money/
+    key_points:
+      - No; letting fees and key money cannot be charged to tenants
+      - Letting fees have been prohibited since 12 December 2018, including fees to renew or extend a tenancy
+
+  - id: t06
+    lang: zh
+    topic: tenancy
+    type: simple
+    question: 住学校的学生宿舍，受《住宅租赁法》保护吗？
+    gold_urls:
+      - https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/
+    key_points:
+      - 学生宿舍（halls of residence、student hostels）一般不适用该法，有例外（第 5B 条）
+      - 宿舍提供方必须制定并告知住宿规则（house rules）
+
+  - id: t07
+    lang: en
+    topic: tenancy
+    type: simple
+    question: What is the difference between a periodic tenancy and a fixed-term tenancy?
+    gold_urls:
+      - https://www.tenancy.govt.nz/starting-a-tenancy/types-of-tenancies/periodic-or-fixed-term-tenancy/
+    key_points:
+      - A periodic tenancy has no end date and continues until correct written notice is given
+      - A fixed-term tenancy lasts a set time of more than 90 days and can only be ended early if both parties agree
+      - A fixed-term tenancy becomes periodic when it ends unless notice is given in the effective period
+
+  - id: t08
+    lang: zh
+    topic: tenancy
+    type: underspecified
+    question: 我的押金能退回来吗？
+    gold_urls:
+      - https://www.tenancy.govt.nz/rent-bond-and-bills/bond/refunding-a-bond/
+      - https://www.tenancy.govt.nz/rent-bond-and-bills/bond/
+    key_points:
+      - 需要先了解是普通押金（general bond）还是宠物押金（pet bond），以及租约是否已结束
+      - 租约结束且没有欠款时，普通押金通常可以退回
+
+  # ---------- 打工与劳动权益 ----------
+  - id: e01
+    lang: zh
+    topic: employment
+    type: simple
+    question: 新西兰现在的成人最低工资是每小时多少？
+    gold_urls:
+      - https://www.employment.govt.nz/pay-and-hours/pay-and-wages/minimum-wage/minimum-wage-rates-and-types
+    key_points:
+      - 成人最低工资（adult minimum wage）为每小时 23.95 新西兰元
+      - 另有起步最低工资（starting-out）和培训最低工资（training）
+
+  - id: e02
+    lang: zh
+    topic: employment
+    type: simple
+    question: 做满一年后有多少带薪年假？
+    gold_urls:
+      - https://www.employment.govt.nz/leave-and-holidays/annual-holidays/taking-annual-holidays
+      - https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/annual-holiday-pay
+    key_points:
+      - 连续受雇满 12 个月后，每年至少 4 周带薪年假（annual holidays）
+      - 部分员工可以约定按总收入至少 8% 随工资发放代替休假
+
+  - id: e03
+    lang: zh
+    topic: employment
+    type: simple
+    question: 公共假日上班，雇主应该怎么补偿？
+    gold_urls:
+      - https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-rights-for-employees
+    key_points:
+      - 公共假日工作至少按 1.5 倍（time and a half）支付
+      - 如果当天本来就是工作日（otherwise working day），还可获得一天带薪调休（alternative holiday）
+
+  - id: e04
+    lang: zh
+    topic: employment
+    type: simple
+    question: 每年有几天带薪病假？没用完的可以留到明年吗？
+    gold_urls:
+      - https://www.employment.govt.nz/leave-and-holidays/sick-leave/taking-sick-leave
+    key_points:
+      - 符合条件的员工每年有 10 天带薪病假（sick leave）
+      - 未用完的可以结转，最多累计到 20 天
+
+  - id: e05
+    lang: en
+    topic: employment
+    type: simple
+    question: Can my employer take money out of my wages without asking me?
+    gold_urls:
+      - https://www.employment.govt.nz/pay-and-hours/pay-and-wages/deductions
+    key_points:
+      - Deductions are generally only allowed if required by law, with the employee's written consent, or in some overpayment cases
+      - It is illegal to charge employees a premium to get or keep a job
+
+  - id: e06
+    lang: en
+    topic: employment
+    type: simple
+    question: How long can a trial period be, and what rights do I lose during it?
+    gold_urls:
+      - https://www.employment.govt.nz/starting-employment/hiring/trial-periods
+    key_points:
+      - A trial period can last up to 90 days and must be in the employment agreement signed before work starts
+      - During a valid trial period the employee cannot raise a personal grievance for unjustified dismissal (with exceptions)
+
+  - id: e07
+    lang: zh
+    topic: employment
+    type: simple
+    question: 临时工（casual）有带薪年假吗？
+    gold_urls:
+      - https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment
+      - https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/pay-as-you-go-annual-holiday-payments
+    key_points:
+      - 工作不规律或间断的员工可以按"随薪发放"（pay-as-you-go）方式，在工资之外拿到至少 8% 的年假工资
+      - 雇主支付的比例不能低于 8%
+
+  - id: e08
+    lang: en
+    topic: employment
+    type: compound
+    question: I'm a migrant worker and I think my employer is exploiting me. What counts as exploitation and what visa options do I have?
+    gold_urls:
+      - https://www.employment.govt.nz/resolving-problems/migrant-exploitation
+      - https://www.immigration.govt.nz/work/worker-rights/your-rights-as-a-worker-from-overseas/
+    key_points:
+      - Exploitation includes paying a fee to get a job or having to give back part of your wages to the employer
+      - You can report it to Employment New Zealand and should not be afraid to report, even if worried about your visa
+      - Migrant Exploitation Protection Work Visa (MEPV) can let you leave the employer and keep working
+
+  # ---------- 学生签证 ----------
+  - id: v01
+    lang: zh
+    topic: visa
+    type: simple
+    question: 学生签证在学期中每周最多可以打工多少小时？
+    gold_urls:
+      - https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/
+      - https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/
+    key_points:
+      - 符合条件的学生每周最多 25 小时（2025 年 11 月 3 日起由 20 小时提高到 25 小时）
+      - 以签证上的具体条件为准；之前获批 20 小时的可以申请变更条件
+
+  - id: v02
+    lang: zh
+    topic: visa
+    type: simple
+    question: 毕业后工作签证（Post-Study Work Visa）最长可以待多久？
+    gold_urls:
+      - https://www.immigration.govt.nz/visas/post-study-work-visa/
+      - https://www.immigration.govt.nz/study/after-you-finish-your-study/staying-to-work-after-finishing-your-study/
+    key_points:
+      - 最长 3 年，具体时长取决于学历
+      - 硕士或博士且在新西兰学习至少 30 周可获 3 年；8 级及以下学历一般与学习时长相同
+
+  - id: v03
+    lang: en
+    topic: visa
+    type: simple
+    question: Which qualifications make me eligible for a Post-Study Work Visa?
+    gold_urls:
+      - https://www.immigration.govt.nz/study/after-you-finish-your-study/qualifications-needed-for-a-post-study-work-visa/
+      - https://www.immigration.govt.nz/visas/post-study-work-visa/
+    key_points:
+      - Only qualifications on the eligible list, completed in New Zealand, qualify
+      - Degree level 7 or higher and some non-degree qualifications have different work conditions
+
+  - id: v04
+    lang: zh
+    topic: visa
+    type: simple
+    question: 拿学生签证做无偿的志愿者工作，算不算打工？
+    gold_urls:
+      - https://www.immigration.govt.nz/study/once-you-have-a-student-visa/unpaid-work-while-studying/
+    key_points:
+      - 如果做这份工作是为了获得报酬或好处（gain or reward），就不算志愿者，属于工作
+      - 报酬包括食宿、交通等服务以及工资、津贴
+
+  - id: v05
+    lang: zh
+    topic: visa
+    type: simple
+    question: 签证快到期了，新签证申请还没批下来，我还能合法留在新西兰吗？
+    gold_urls:
+      - https://www.immigration.govt.nz/visas/interim-visa/
+    key_points:
+      - 持有效临时签证并在新西兰境内递交了新的临时签证申请时，通常会自动获得过渡签证（Interim Visa）
+      - 过渡签证不需要申请、免费，最长 6 个月；新申请被拒后 21 天到期
+
+  - id: v06
+    lang: zh
+    topic: visa
+    type: simple
+    question: 申请付费学生签证，自费的话需要证明多少生活费？
+    gold_urls:
+      - https://www.immigration.govt.nz/visas/fee-paying-student-visa/
+    key_points:
+      - 高等教育或语言课程：学习 1 年及以上每年 20,000 新西兰元；不足 1 年每月 1,667 新西兰元
+      - 中小学阶段：每年 17,000 新西兰元或每月 1,417 新西兰元
+
+  - id: v07
+    lang: en
+    topic: visa
+    type: underspecified
+    question: How many hours am I allowed to work?
+    gold_urls:
+      - https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/
+    key_points:
+      - Depends on the visa type and conditions; should ask which visa the user holds
+      - Eligible student visa holders can work up to 25 hours a week during study
+
+  # ---------- 税务 ----------
+  - id: x01
+    lang: zh
+    topic: tax
+    type: simple
+    question: 刚到新西兰，怎么申请 IRD 号码？
+    gold_urls:
+      - https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application
+      - https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one
+    key_points:
+      - 可以按"新到达者"（new arrival）流程在线申请，由 IRD 通过移民局核实身份，不用重复提交证件
+      - 持签证者要在签证上的最晚入境日期之前申请；申请 IRD 号码免费
+
+  - id: x02
+    lang: zh
+    topic: tax
+    type: simple
+    question: 我有两份兼职，第二份工作应该用什么税码？
+    gold_urls:
+      - https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/secondary-tax-codes
+      - https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals
+      - https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/what-tax-code-should-i-use
+    key_points:
+      - 主要收入用 M 税码，第二份及以后的收入用次要税码（secondary tax code）
+      - 次要税码按全年各来源的总收入估算来选择，通过 IR330 表格告诉雇主
+
+  - id: x03
+    lang: en
+    topic: tax
+    type: simple
+    question: What are the New Zealand income tax rates from 1 April 2025?
+    gold_urls:
+      - https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals
+    key_points:
+      - 10.5% up to $15,600; 17.5% from $15,601 to $53,500; 30% from $53,501 to $78,100
+      - Higher brackets apply above $78,100
+
+  - id: x04
+    lang: zh
+    topic: tax
+    type: simple
+    question: 留学生在新西兰待多久会成为税务居民？
+    gold_urls:
+      - https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals
+    key_points:
+      - 任意 12 个月内在新西兰超过 183 天，或在新西兰有永久住所（permanent place of abode），就成为税务居民
+      - 税务居民身份与移民身份不同；183 天不必连续，部分天数按整天计算
+
+  - id: x05
+    lang: en
+    topic: tax
+    type: simple
+    question: How do I know if I paid too much tax at the end of the tax year?
+    gold_urls:
+      - https://www.ird.govt.nz/income-tax/income-tax-for-individuals/what-happens-at-the-end-of-the-tax-year/income-tax-assessments
+    key_points:
+      - The tax year runs 1 April to 31 March; IRD sends an income tax assessment if your income is salary, wages or already-taxed investment income
+      - The assessment shows whether you get a refund, have a tax bill, or paid the right amount; tell IRD if details are wrong
+
+  # ---------- 复合问题 ----------
+  - id: c01
+    lang: zh
+    topic: visa
+    type: compound
+    question: 我拿学生签证在餐厅兼职，老板让我每周干 30 小时，还说 90 天试用期内可以随时辞退我，这些合法吗？
+    gold_urls:
+      - https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/
+      - https://www.employment.govt.nz/starting-employment/hiring/trial-periods
+    key_points:
+      - 学期中学生签证一般最多每周 25 小时，30 小时可能违反签证条件
+      - 试用期最长 90 天，必须写在开工前签署的雇佣协议里；试用期内仍须遵守其他解雇规则
+
+  - id: c02
+    lang: en
+    topic: tax
+    type: compound
+    question: I just started my first part-time job in New Zealand. Do I need an IRD number, and what tax code should I give my employer?
+    gold_urls:
+      - https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one
+      - https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/what-tax-code-should-i-use
+      - https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application
+    key_points:
+      - You need an IRD number when earning income from a job
+      - Use the M tax code for your main job; secondary codes apply to additional income sources

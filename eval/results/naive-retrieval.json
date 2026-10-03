@@ -1,0 +1,740 @@
+{
+  "mode": "naive",
+  "retrieval_only": true,
+  "run_at": "2026-10-03T01:03:45+00:00",
+  "settings": {
+    "embed_model": "qwen3-embedding:0.6b",
+    "sparse_model": "Qdrant/bm25",
+    "top_k": 10
+  },
+  "summary": {
+    "n": 30,
+    "hit@1": 0.8333333333333334,
+    "hit@3": 0.9666666666666667,
+    "hit@5": 0.9666666666666667,
+    "mrr": 0.8977777777777778
+  },
+  "by_lang": {
+    "zh": {
+      "n": 20,
+      "hit@1": 0.9,
+      "hit@3": 0.95,
+      "hit@5": 0.95,
+      "mrr": 0.93
+    },
+    "en": {
+      "n": 10,
+      "hit@1": 0.7,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "mrr": 0.8333333333333334
+    }
+  },
+  "questions": [
+    {
+      "id": "t01",
+      "lang": "zh",
+      "topic": "tenancy",
+      "type": "simple",
+      "question": "房东最多可以收多少押金？押金要交给谁保管？",
+      "gold_urls": [
+        "https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/"
+      ],
+      "retrieved_urls": [
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/letting-fees-and-key-money/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/charging-rent/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/boarding-houses/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/letting-fees-and-key-money/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/letting-fees-and-key-money/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/"
+      ],
+      "rr": 0.5
+    },
+    {
+      "id": "t02",
+      "lang": "zh",
+      "topic": "tenancy",
+      "type": "simple",
+      "question": "房东涨房租需要提前多久通知？多久可以涨一次？",
+      "gold_urls": [
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/"
+      ],
+      "retrieved_urls": [
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/charging-rent/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/",
+        "https://www.tenancy.govt.nz/maintenance-and-inspections/inspections/"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "t03",
+      "lang": "zh",
+      "topic": "tenancy",
+      "type": "simple",
+      "question": "房东要来检查房子，需要提前多久通知我？可以多频繁？",
+      "gold_urls": [
+        "https://www.tenancy.govt.nz/maintenance-and-inspections/inspections/"
+      ],
+      "retrieved_urls": [
+        "https://www.tenancy.govt.nz/maintenance-and-inspections/inspections/",
+        "https://www.tenancy.govt.nz/maintenance-and-inspections/inspections/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/",
+        "https://www.tenancy.govt.nz/maintenance-and-inspections/inspections/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/",
+        "https://www.tenancy.govt.nz/maintenance-and-inspections/inspections/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/",
+        "https://www.tenancy.govt.nz/healthy-homes/healthy-homes-standards-what-a-tenant-needs-to-know/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/charging-rent/"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "t04",
+      "lang": "zh",
+      "topic": "tenancy",
+      "type": "simple",
+      "question": "合租时，租客（tenant）和室友（flatmate）在法律上有什么区别？",
+      "gold_urls": [
+        "https://www.tenancy.govt.nz/starting-a-tenancy/flatting/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/"
+      ],
+      "retrieved_urls": [
+        "https://www.tenancy.govt.nz/starting-a-tenancy/flatting/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/flatting/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/flatting/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/flatting/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/charging-rent/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/boarding-houses/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/charging-rent/"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "t05",
+      "lang": "en",
+      "topic": "tenancy",
+      "type": "simple",
+      "question": "Can a landlord or letting agent charge me a letting fee or key money?",
+      "gold_urls": [
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/letting-fees-and-key-money/"
+      ],
+      "retrieved_urls": [
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/letting-fees-and-key-money/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/letting-fees-and-key-money/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/letting-fees-and-key-money/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/letting-fees-and-key-money/",
+        "https://www.tenancy.govt.nz/ending-a-tenancy/ending-a-fixed-term-early/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/charging-rent/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/charging-rent/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/charging-rent/"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "t06",
+      "lang": "zh",
+      "topic": "tenancy",
+      "type": "simple",
+      "question": "住学校的学生宿舍，受《住宅租赁法》保护吗？",
+      "gold_urls": [
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/"
+      ],
+      "retrieved_urls": [
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/flatting/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/boarding-houses/"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "t07",
+      "lang": "en",
+      "topic": "tenancy",
+      "type": "simple",
+      "question": "What is the difference between a periodic tenancy and a fixed-term tenancy?",
+      "gold_urls": [
+        "https://www.tenancy.govt.nz/starting-a-tenancy/types-of-tenancies/periodic-or-fixed-term-tenancy/"
+      ],
+      "retrieved_urls": [
+        "https://www.tenancy.govt.nz/starting-a-tenancy/types-of-tenancies/periodic-or-fixed-term-tenancy/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/types-of-tenancies/periodic-or-fixed-term-tenancy/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/types-of-tenancies/periodic-or-fixed-term-tenancy/",
+        "https://www.tenancy.govt.nz/ending-a-tenancy/ending-a-fixed-term-early/",
+        "https://www.tenancy.govt.nz/ending-a-tenancy/giving-notice-to-end-tenancy/",
+        "https://www.tenancy.govt.nz/ending-a-tenancy/ending-a-fixed-term-early/",
+        "https://www.tenancy.govt.nz/ending-a-tenancy/ending-a-fixed-term-early/",
+        "https://www.tenancy.govt.nz/ending-a-tenancy/ending-a-fixed-term-early/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "t08",
+      "lang": "zh",
+      "topic": "tenancy",
+      "type": "underspecified",
+      "question": "我的押金能退回来吗？",
+      "gold_urls": [
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/refunding-a-bond/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/"
+      ],
+      "retrieved_urls": [
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/refunding-a-bond/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/refunding-a-bond/",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/deductions",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/letting-fees-and-key-money/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/charging-rent/",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/deductions"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "e01",
+      "lang": "zh",
+      "topic": "employment",
+      "type": "simple",
+      "question": "新西兰现在的成人最低工资是每小时多少？",
+      "gold_urls": [
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/minimum-wage/minimum-wage-rates-and-types"
+      ],
+      "retrieved_urls": [
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/minimum-wage/minimum-wage-rates-and-types",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/minimum-wage/minimum-wage-rates-and-types",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals",
+        "https://www.immigration.govt.nz/work/worker-rights/your-rights-as-a-worker-from-overseas/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/minimum-wage/minimum-wage-rates-and-types",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/minimum-wage/minimum-wage-rates-and-types",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/minimum-wage/minimum-wage-rates-and-types",
+        "https://www.immigration.govt.nz/work/worker-rights/your-rights-as-a-worker-from-overseas/"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "e02",
+      "lang": "zh",
+      "topic": "employment",
+      "type": "simple",
+      "question": "做满一年后有多少带薪年假？",
+      "gold_urls": [
+        "https://www.employment.govt.nz/leave-and-holidays/annual-holidays/taking-annual-holidays",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/annual-holiday-pay"
+      ],
+      "retrieved_urls": [
+        "https://www.employment.govt.nz/leave-and-holidays/annual-holidays/taking-annual-holidays",
+        "https://www.employment.govt.nz/leave-and-holidays/annual-holidays/taking-annual-holidays",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/annual-holiday-pay",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/annual-holiday-pay",
+        "https://www.employment.govt.nz/leave-and-holidays/annual-holidays/taking-annual-holidays",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/pay-as-you-go-annual-holiday-payments",
+        "https://www.employment.govt.nz/leave-and-holidays/annual-holidays/taking-annual-holidays",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/final-pay",
+        "https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment",
+        "https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "e03",
+      "lang": "zh",
+      "topic": "employment",
+      "type": "simple",
+      "question": "公共假日上班，雇主应该怎么补偿？",
+      "gold_urls": [
+        "https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-rights-for-employees"
+      ],
+      "retrieved_urls": [
+        "https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-rights-for-employees",
+        "https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-rights-for-employees",
+        "https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-rights-for-employees",
+        "https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-rights-for-employees",
+        "https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-rights-for-employees",
+        "https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-rights-for-employees",
+        "https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-rights-for-employees",
+        "https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-rights-for-employees",
+        "https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-rights-for-employees",
+        "https://www.employment.govt.nz/leave-and-holidays/annual-holidays/taking-annual-holidays"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "e04",
+      "lang": "zh",
+      "topic": "employment",
+      "type": "simple",
+      "question": "每年有几天带薪病假？没用完的可以留到明年吗？",
+      "gold_urls": [
+        "https://www.employment.govt.nz/leave-and-holidays/sick-leave/taking-sick-leave"
+      ],
+      "retrieved_urls": [
+        "https://www.employment.govt.nz/leave-and-holidays/sick-leave/taking-sick-leave",
+        "https://www.employment.govt.nz/leave-and-holidays/sick-leave/taking-sick-leave",
+        "https://www.employment.govt.nz/starting-employment/rights-and-responsibilities/employee-rights-and-responsibilities",
+        "https://www.employment.govt.nz/leave-and-holidays/sick-leave/taking-sick-leave",
+        "https://www.employment.govt.nz/leave-and-holidays/annual-holidays/taking-annual-holidays",
+        "https://www.employment.govt.nz/leave-and-holidays/sick-leave/taking-sick-leave",
+        "https://www.employment.govt.nz/leave-and-holidays/sick-leave/taking-sick-leave",
+        "https://www.employment.govt.nz/leave-and-holidays/sick-leave/taking-sick-leave",
+        "https://www.employment.govt.nz/leave-and-holidays/annual-holidays/taking-annual-holidays",
+        "https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "e05",
+      "lang": "en",
+      "topic": "employment",
+      "type": "simple",
+      "question": "Can my employer take money out of my wages without asking me?",
+      "gold_urls": [
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/deductions"
+      ],
+      "retrieved_urls": [
+        "https://www.employment.govt.nz/starting-employment/rights-and-responsibilities/employee-rights-and-responsibilities",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/deductions",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/deductions",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/deductions",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/deductions",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/payslips",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/deductions",
+        "https://www.employment.govt.nz/resolving-problems/migrant-exploitation",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/deductions",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/deductions"
+      ],
+      "rr": 0.5
+    },
+    {
+      "id": "e06",
+      "lang": "en",
+      "topic": "employment",
+      "type": "simple",
+      "question": "How long can a trial period be, and what rights do I lose during it?",
+      "gold_urls": [
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods"
+      ],
+      "retrieved_urls": [
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods",
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods",
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods",
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods",
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods",
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods",
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods",
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods",
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods",
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "e07",
+      "lang": "zh",
+      "topic": "employment",
+      "type": "simple",
+      "question": "临时工（casual）有带薪年假吗？",
+      "gold_urls": [
+        "https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/pay-as-you-go-annual-holiday-payments"
+      ],
+      "retrieved_urls": [
+        "https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment",
+        "https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment",
+        "https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment",
+        "https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment",
+        "https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment",
+        "https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment",
+        "https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment",
+        "https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment",
+        "https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment",
+        "https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "e08",
+      "lang": "en",
+      "topic": "employment",
+      "type": "compound",
+      "question": "I'm a migrant worker and I think my employer is exploiting me. What counts as exploitation and what visa options do I have?",
+      "gold_urls": [
+        "https://www.employment.govt.nz/resolving-problems/migrant-exploitation",
+        "https://www.immigration.govt.nz/work/worker-rights/your-rights-as-a-worker-from-overseas/"
+      ],
+      "retrieved_urls": [
+        "https://www.employment.govt.nz/resolving-problems/migrant-exploitation",
+        "https://www.employment.govt.nz/resolving-problems/migrant-exploitation",
+        "https://www.employment.govt.nz/resolving-problems/migrant-exploitation",
+        "https://www.immigration.govt.nz/work/worker-rights/your-rights-as-a-worker-from-overseas/",
+        "https://www.immigration.govt.nz/work/worker-rights/your-rights-as-a-worker-from-overseas/",
+        "https://www.employment.govt.nz/resolving-problems/migrant-exploitation",
+        "https://www.employment.govt.nz/resolving-problems/migrant-exploitation",
+        "https://www.employment.govt.nz/resolving-problems/migrant-exploitation",
+        "https://www.employment.govt.nz/resolving-problems/migrant-exploitation",
+        "https://www.immigration.govt.nz/work/worker-rights/your-rights-as-a-worker-from-overseas/"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "v01",
+      "lang": "zh",
+      "topic": "visa",
+      "type": "simple",
+      "question": "学生签证在学期中每周最多可以打工多少小时？",
+      "gold_urls": [
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/"
+      ],
+      "retrieved_urls": [
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "v02",
+      "lang": "zh",
+      "topic": "visa",
+      "type": "simple",
+      "question": "毕业后工作签证（Post-Study Work Visa）最长可以待多久？",
+      "gold_urls": [
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/study/after-you-finish-your-study/staying-to-work-after-finishing-your-study/"
+      ],
+      "retrieved_urls": [
+        "https://www.immigration.govt.nz/study/after-you-finish-your-study/staying-to-work-after-finishing-your-study/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/study/after-you-finish-your-study/qualifications-needed-for-a-post-study-work-visa/",
+        "https://www.immigration.govt.nz/study/after-you-finish-your-study/staying-to-work-after-finishing-your-study/"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "v03",
+      "lang": "en",
+      "topic": "visa",
+      "type": "simple",
+      "question": "Which qualifications make me eligible for a Post-Study Work Visa?",
+      "gold_urls": [
+        "https://www.immigration.govt.nz/study/after-you-finish-your-study/qualifications-needed-for-a-post-study-work-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/"
+      ],
+      "retrieved_urls": [
+        "https://www.immigration.govt.nz/study/after-you-finish-your-study/qualifications-needed-for-a-post-study-work-visa/",
+        "https://www.immigration.govt.nz/study/after-you-finish-your-study/staying-to-work-after-finishing-your-study/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/study/after-you-finish-your-study/qualifications-needed-for-a-post-study-work-visa/",
+        "https://www.immigration.govt.nz/study/after-you-finish-your-study/qualifications-needed-for-a-post-study-work-visa/",
+        "https://www.immigration.govt.nz/study/after-you-finish-your-study/qualifications-needed-for-a-post-study-work-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "v04",
+      "lang": "zh",
+      "topic": "visa",
+      "type": "simple",
+      "question": "拿学生签证做无偿的志愿者工作，算不算打工？",
+      "gold_urls": [
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/unpaid-work-while-studying/"
+      ],
+      "retrieved_urls": [
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/unpaid-work-while-studying/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "v05",
+      "lang": "zh",
+      "topic": "visa",
+      "type": "simple",
+      "question": "签证快到期了，新签证申请还没批下来，我还能合法留在新西兰吗？",
+      "gold_urls": [
+        "https://www.immigration.govt.nz/visas/interim-visa/"
+      ],
+      "retrieved_urls": [
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/",
+        "https://www.immigration.govt.nz/work/worker-rights/your-rights-as-a-worker-from-overseas/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/",
+        "https://www.immigration.govt.nz/visas/interim-visa/"
+      ],
+      "rr": 0.1
+    },
+    {
+      "id": "v06",
+      "lang": "zh",
+      "topic": "visa",
+      "type": "simple",
+      "question": "申请付费学生签证，自费的话需要证明多少生活费？",
+      "gold_urls": [
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/"
+      ],
+      "retrieved_urls": [
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "v07",
+      "lang": "en",
+      "topic": "visa",
+      "type": "underspecified",
+      "question": "How many hours am I allowed to work?",
+      "gold_urls": [
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/"
+      ],
+      "retrieved_urls": [
+        "https://www.employment.govt.nz/starting-employment/rights-and-responsibilities/employee-rights-and-responsibilities",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/payslips",
+        "https://www.employment.govt.nz/pay-and-hours/hours-and-breaks/rest-and-breaks",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/",
+        "https://www.employment.govt.nz/leave-and-holidays/annual-holidays/taking-annual-holidays",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/minimum-wage/minimum-wage-rates-and-types",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/annual-holiday-pay"
+      ],
+      "rr": 0.5
+    },
+    {
+      "id": "x01",
+      "lang": "zh",
+      "topic": "tax",
+      "type": "simple",
+      "question": "刚到新西兰，怎么申请 IRD 号码？",
+      "gold_urls": [
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one"
+      ],
+      "retrieved_urls": [
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/payslips"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "x02",
+      "lang": "zh",
+      "topic": "tax",
+      "type": "simple",
+      "question": "我有两份兼职，第二份工作应该用什么税码？",
+      "gold_urls": [
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/secondary-tax-codes",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/what-tax-code-should-i-use"
+      ],
+      "retrieved_urls": [
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/what-tax-code-should-i-use",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/secondary-tax-codes",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/secondary-tax-codes",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/secondary-tax-codes",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/deductions",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals",
+        "https://www.employment.govt.nz/starting-employment/rights-and-responsibilities/employee-rights-and-responsibilities",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/annual-holiday-pay"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "x03",
+      "lang": "en",
+      "topic": "tax",
+      "type": "simple",
+      "question": "What are the New Zealand income tax rates from 1 April 2025?",
+      "gold_urls": [
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals"
+      ],
+      "retrieved_urls": [
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals",
+        "https://www.ird.govt.nz/roles/non-residents/experts-and-students-visiting-from-overseas",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/what-tax-code-should-i-use",
+        "https://www.ird.govt.nz/roles/non-residents/experts-and-students-visiting-from-overseas",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/what-happens-at-the-end-of-the-tax-year/income-tax-assessments",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/secondary-tax-codes"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "x04",
+      "lang": "zh",
+      "topic": "tax",
+      "type": "simple",
+      "question": "留学生在新西兰待多久会成为税务居民？",
+      "gold_urls": [
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals"
+      ],
+      "retrieved_urls": [
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "https://www.ird.govt.nz/roles/non-residents/experts-and-students-visiting-from-overseas",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "x05",
+      "lang": "en",
+      "topic": "tax",
+      "type": "simple",
+      "question": "How do I know if I paid too much tax at the end of the tax year?",
+      "gold_urls": [
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/what-happens-at-the-end-of-the-tax-year/income-tax-assessments"
+      ],
+      "retrieved_urls": [
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/secondary-tax-codes",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/what-happens-at-the-end-of-the-tax-year/income-tax-assessments",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/secondary-tax-codes",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/what-happens-at-the-end-of-the-tax-year/income-tax-assessments",
+        "https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-rights-for-employees",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/final-pay"
+      ],
+      "rr": 0.3333333333333333
+    },
+    {
+      "id": "c01",
+      "lang": "zh",
+      "topic": "visa",
+      "type": "compound",
+      "question": "我拿学生签证在餐厅兼职，老板让我每周干 30 小时，还说 90 天试用期内可以随时辞退我，这些合法吗？",
+      "gold_urls": [
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods"
+      ],
+      "retrieved_urls": [
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/types-of-tenancies/periodic-or-fixed-term-tenancy/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods",
+        "https://www.employment.govt.nz/starting-employment/rights-and-responsibilities/employee-rights-and-responsibilities",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/"
+      ],
+      "rr": 1.0
+    },
+    {
+      "id": "c02",
+      "lang": "en",
+      "topic": "tax",
+      "type": "compound",
+      "question": "I just started my first part-time job in New Zealand. Do I need an IRD number, and what tax code should I give my employer?",
+      "gold_urls": [
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/what-tax-code-should-i-use",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application"
+      ],
+      "retrieved_urls": [
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/deductions",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/what-tax-code-should-i-use"
+      ],
+      "rr": 1.0
+    }
+  ]
+}

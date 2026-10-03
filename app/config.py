@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     llm_model: str = "deepseek-v4-flash:cloud"
     fallback_llm_model: str = "qwen3:4b"
     embed_model: str = "qwen3-embedding:0.6b"
+    sparse_model: str = "Qdrant/bm25"
     data_dir: Path = Path("data")
     log_level: str = "INFO"
 
