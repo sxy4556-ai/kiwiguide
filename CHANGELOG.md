@@ -2,6 +2,14 @@
 
 ## 未发布
 
+### Day 3（2026-10-04）
+- 新增 LangGraph Agent：summarize（超过 6 轮压缩历史）、rewrite（英文检索词 + 主题判断）、retrieve、grade（资料不足时带原因重试，最多 2 次）、generate
+- 结构化输出：JSON 经 pydantic 校验，失败重试一次后降级
+- 引用编号由代码按出现顺序重排，删除越界编号，保证正文编号与来源列表一一对应
+- 新增 SQLite checkpointer 多轮会话（`data/checkpoints.sqlite`，按 thread_id 区分）
+- 新增命令行提问脚本 `scripts/ask.py`
+- 新增假检索器；测试增至 62 个
+
 ### Day 2（2026-10-03）
 - 新增父子分块（按标题切父块，约 500 字符、重叠 80 字符切子块）
 - 新增 Qdrant 本地混合索引（qwen3-embedding 稠密向量 + BM25 稀疏向量）和 SQLite 父块库，按 content_hash 增量更新；`scripts/build_index.py`
