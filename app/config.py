@@ -13,7 +13,7 @@ class Settings(BaseSettings):
 
     ollama_base_url: str = "http://localhost:11434"
     llm_model: str = "gpt-oss:120b-cloud"
-    fallback_llm_model: str = "qwen3:4b"
+    fallback_llm_model: str = "qwen3:4b-instruct-2507-q4_K_M"
     embed_model: str = "qwen3-embedding:0.6b"
     sparse_model: str = "Qdrant/bm25"
     data_dir: Path = Path("data")
