@@ -73,7 +73,7 @@ flowchart TD
   - 用 [1][2] 编号引用，并附出处列表（标题、链接、抓取日期）
   - 结尾附免责声明；需要时给出转介建议
 - **会话记忆**：SQLite checkpointer，存在 `data/checkpoints.sqlite`，按 thread_id 区分会话。
-- **模型**：对话模型用 `LLM_MODEL`（Ollama 云模型），调用失败时切换到 `FALLBACK_LLM_MODEL`（本地 qwen3:4b）。
+- **模型**：对话模型用 `LLM_MODEL`（Ollama 云模型，默认 gpt-oss:120b-cloud），调用失败时切换到 `FALLBACK_LLM_MODEL`（本地 qwen3:4b）。备用模型调用时请求关闭思考模式；如果所用的模型版本总是开启思考、无法关闭，退回本地时一次问答仍要几分钟，这时应换用不带思考的 instruct 版本。输出中的思考段（包括只有结尾 `</think>` 的情况）会在解析前去掉。
 
 ## 6. API 设计（FastAPI）
 

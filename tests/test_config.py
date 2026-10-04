@@ -12,7 +12,7 @@ def test_defaults_match_env_example(monkeypatch):
         monkeypatch.delenv(name, raising=False)
     settings = Settings(_env_file=None)
     assert settings.ollama_base_url == "http://localhost:11434"
-    assert settings.llm_model == "deepseek-v4-flash:cloud"
+    assert settings.llm_model == "gpt-oss:120b-cloud"
     assert settings.fallback_llm_model == "qwen3:4b"
     assert settings.embed_model == "qwen3-embedding:0.6b"
     assert settings.sparse_model == "Qdrant/bm25"

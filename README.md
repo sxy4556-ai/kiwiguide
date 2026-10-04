@@ -19,7 +19,7 @@
 - 朴素 RAG 与 Agent 的对比评测
 
 ## 技术栈
-Python 3.12 · uv · FastAPI · LangGraph · Ollama（deepseek-v4-flash:cloud、qwen3-embedding）· Qdrant · fastembed · pytest · GitHub Actions
+Python 3.12 · uv · FastAPI · LangGraph · Ollama（gpt-oss:120b-cloud、qwen3-embedding）· Qdrant · fastembed · pytest · GitHub Actions
 
 ## 免责声明
 本项目提供的信息仅供参考，不构成法律、移民或税务建议。具体情况请以政府官网的最新信息为准，或咨询以下机构：

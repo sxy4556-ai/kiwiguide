@@ -35,8 +35,8 @@ Search = Callable[[str, int, str | None], list[SearchResult]]
 
 _THINK_RE = re.compile(r"<think>.*?</think>", re.S)
 _JSON_RE = re.compile(r"\{.*\}", re.S)
-# 匹配 [1]、[1,3]、[1、3] 等引用写法
-_CITE_RE = re.compile(r"\[(\d+(?:\s*[,，、]\s*\d+)*)\]")
+# 匹配 [1]、[1,3]、[1、3] 等引用写法；部分模型（如 gpt-oss）习惯用全角的【1】或［1］
+_CITE_RE = re.compile(r"[\[【［](\d+(?:\s*[,，、]\s*\d+)*)[\]】］]")
 
 
 class RewriteOutput(BaseModel):
@@ -65,8 +65,15 @@ class GradeOutput(BaseModel):
 
 
 def strip_think(text: str) -> str:
-    """去掉推理模型输出的 <think>…</think> 段。"""
-    return _THINK_RE.sub("", text).strip()
+    """去掉推理模型输出的思考段。
+
+    除了成对的 <think>…</think>，还要处理只有结尾标签的情况：总是开启思考的模型版本
+    把开头标签放在提示模板里，输出中只剩 </think>，这时取最后一个 </think> 之后的内容。
+    """
+    text = _THINK_RE.sub("", text)
+    if "</think>" in text:
+        text = text.rsplit("</think>", 1)[1]
+    return text.strip()
 
 
 def parse_json[T: BaseModel](text: str, schema: type[T]) -> T:

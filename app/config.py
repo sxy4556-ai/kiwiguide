@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
     ollama_base_url: str = "http://localhost:11434"
-    llm_model: str = "deepseek-v4-flash:cloud"
+    llm_model: str = "gpt-oss:120b-cloud"
     fallback_llm_model: str = "qwen3:4b"
     embed_model: str = "qwen3-embedding:0.6b"
     sparse_model: str = "Qdrant/bm25"

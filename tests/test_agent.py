@@ -14,6 +14,7 @@ from app.agent.nodes import (
     RewriteOutput,
     parse_json,
     renumber_citations,
+    strip_think,
 )
 from app.ingest.chunk import Chunk
 from app.rag.naive import DISCLAIMER
@@ -70,6 +71,23 @@ def test_out_of_range_citation_removed():
     body, citations = renumber_citations("结论 [5]，另一结论 [1, 2]。", [BOND, RENT])
     assert body == "结论 ，另一结论 [1][2]。"
     assert [c.url for c in citations] == [BOND.parent.url, RENT.parent.url]
+
+
+def test_fullwidth_citation_brackets_renumbered():
+    """全角的【n】也必须识别：gpt-oss 习惯这样写，识别不了时来源列表会退化成全部资料，
+    正文编号也对不上来源。识别后统一改写成 [n]。"""
+    body, citations = renumber_citations("押金最多四周租金【2】，另见［1］。", [BOND, RENT])
+    assert body == "押金最多四周租金[1]，另见[2]。"
+    assert [c.url for c in citations] == [RENT.parent.url, BOND.parent.url]
+
+
+def test_strip_think_handles_lone_closing_tag():
+    """只有结尾 </think> 时也要去掉前面的思考过程：否则推理草稿会原样展示给用户，
+    改写和评估节点的 JSON 也会解析失败。"""
+    reply = "先分析资料……\n</think>\n\n押金最多四周租金 [1]。"
+    assert strip_think(reply) == "押金最多四周租金 [1]。"
+    assert strip_think("<think>草稿</think>结论") == "结论"
+    assert strip_think("没有思考段的回答") == "没有思考段的回答"
 
 
 def test_insufficient_results_trigger_rewrite_with_reason():
