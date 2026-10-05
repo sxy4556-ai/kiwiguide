@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KiwiGuide 新西兰留学生生活助手</title>
+<style>
+  :root {
+    --bg: #f5f7f6; --panel: #ffffff; --text: #1f2a26; --muted: #5f6f68;
+    --accent: #1f7a4d; --accent-soft: #e3f2ea; --border: #d9e2dd;
+    --warn-bg: #fff6e0; --warn-border: #e8c46a; --user: #1f7a4d; --user-text: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141a17; --panel: #1d2521; --text: #e3ebe7; --muted: #9aaba3;
+      --accent: #4cc38a; --accent-soft: #233a2e; --border: #2f3b35;
+      --warn-bg: #3a3220; --warn-border: #8a6d2a; --user: #2b8a5c; --user-text: #ffffff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 15px/1.65 -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  .app { max-width: 860px; margin: 0 auto; padding: 0 16px; min-height: 100vh;
+         display: flex; flex-direction: column; }
+  header { padding: 18px 0 10px; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  header h1 { margin: 0; font-size: 22px; }
+  header .sub { color: var(--muted); font-size: 14px; flex: 1; }
+  .new-chat { border: 1px solid var(--border); background: var(--panel); color: var(--text);
+              border-radius: 8px; padding: 4px 12px; cursor: pointer; font-size: 13px; }
+  .disclaimer { background: var(--warn-bg); border: 1px solid var(--warn-border);
+                border-radius: 8px; padding: 8px 12px; font-size: 13px; }
+  .topics { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+  .topics button { border: 1px solid var(--border); background: var(--panel); color: var(--text);
+                   border-radius: 999px; padding: 6px 14px; cursor: pointer; font-size: 14px; }
+  .topics button:hover { border-color: var(--accent); color: var(--accent); }
+  #messages { flex: 1; display: flex; flex-direction: column; gap: 14px; padding: 8px 0 16px; }
+  .msg { max-width: 92%; padding: 10px 14px; border-radius: 12px; overflow-wrap: anywhere; }
+  .msg.user { align-self: flex-end; background: var(--user); color: var(--user-text);
+              white-space: pre-wrap; }
+  .msg.bot { align-self: flex-start; background: var(--panel); border: 1px solid var(--border); }
+  .msg.error { border-color: #d66; color: #c33; }
+  .progress { color: var(--muted); font-size: 13px; }
+  .progress::before { content: "⏳ "; }
+  .answer p { margin: 0 0 8px; }
+  .answer p:last-child { margin-bottom: 0; }
+  .answer .cite { color: var(--accent); font-size: 12px; vertical-align: super;
+                  text-decoration: none; margin: 0 1px; }
+  .answer .note { color: var(--muted); font-size: 13px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+           gap: 8px; margin-top: 10px; }
+  .card { border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px;
+          background: var(--accent-soft); font-size: 13px; }
+  .card a { color: var(--accent); font-weight: 600; text-decoration: none; }
+  .card a:hover { text-decoration: underline; }
+  .card .meta { color: var(--muted); font-size: 12px; margin-top: 2px; overflow-wrap: anywhere; }
+  .clarify { border: 1px dashed var(--accent); }
+  .clarify .label { font-size: 12px; color: var(--accent); font-weight: 600; }
+  .clarify form { display: flex; gap: 6px; margin-top: 8px; }
+  .clarify input { flex: 1; min-width: 0; }
+  form.ask { position: sticky; bottom: 0; background: var(--bg); padding: 10px 0 16px;
+             display: flex; gap: 8px; }
+  input[type=text], textarea {
+    border: 1px solid var(--border); border-radius: 10px; padding: 9px 12px; font: inherit;
+    background: var(--panel); color: var(--text);
+  }
+  textarea { flex: 1; resize: none; height: 46px; }
+  button.primary { border: 0; background: var(--accent); color: #fff; border-radius: 10px;
+                   padding: 0 18px; font: inherit; cursor: pointer; }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>🥝 KiwiGuide</h1>
+    <span class="sub">新西兰留学生生活助手 · 租房、打工、签证、税务，回答附官方出处</span>
+    <button class="new-chat" id="new-chat" type="button">新对话</button>
+  </header>
+  <div class="disclaimer" role="note">
+    免责声明：本助手只根据新西兰政府官网的公开信息作答，内容仅供参考，不构成法律、移民或税务建议。
+    个人情况请咨询对应政府机构、社区法律中心（Community Law）或持牌移民顾问，并以官网最新信息为准。
+  </div>
+  <div class="topics" id="topics">
+    <button type="button" data-q="房东最多可以收多少押金（bond）？退租时押金怎么退？">🏠 租房</button>
+    <button type="button" data-q="新西兰现在的最低工资是多少？兼职也有带薪年假吗？">💼 打工</button>
+    <button type="button" data-q="学生签证在学期中每周最多可以打多少小时工？">🛂 签证</button>
+    <button type="button" data-q="留学生怎么申请 IRD 号码？兼职收入用什么税码？">🧾 税务</button>
+  </div>
+  <div id="messages" aria-live="polite"></div>
+  <form class="ask" id="ask-form">
+    <textarea id="question" placeholder="输入你的问题，例如：涨租要提前多久通知？（Enter 发送，Shift+Enter 换行）"
+              maxlength="2000" required></textarea>
+    <button class="primary" id="send" type="submit">发送</button>
+  </form>
+</div>
+<script>
+const messages = document.getElementById("messages");
+const form = document.getElementById("ask-form");
+const input = document.getElementById("question");
+const sendBtn = document.getElementById("send");
+let threadId = null;
+let busy = false;
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;",
+                                     '"': "&quot;", "'": "&#39;"}[c]));
+}
+
+function scrollDown() { window.scrollTo(0, document.body.scrollHeight); }
+
+function addMessage(cls, html) {
+  const div = document.createElement("div");
+  div.className = "msg " + cls;
+  div.innerHTML = html;
+  messages.appendChild(div);
+  scrollDown();
+  return div;
+}
+
+function setBusy(value) {
+  busy = value;
+  sendBtn.disabled = value;
+  document.querySelectorAll(".clarify button").forEach(b => { b.disabled = value; });
+}
+
+// 出处已经用卡片展示，去掉回答正文末尾的"参考来源"文字列表
+function stripSources(text) {
+  return text.replace(/\n*参考来源：\n(?:\[\d+\][^\n]*(?:\n|$))+/, "\n\n").trim();
+}
+
+function renderAnswer(text, hasCitations) {
+  const body = hasCitations ? stripSources(text) : text;
+  return body.split(/\n{2,}/).map(block => {
+    let html = escapeHtml(block)
+      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+      .replace(/\[(\d+)\]/g, '<a class="cite" href="#" data-n="$1">[$1]</a>')
+      .replace(/\n/g, "<br>");
+    const isNote = /^(以上内容仅供参考|转介说明：)/.test(block);
+    return `<p${isNote ? ' class="note"' : ""}>${html}</p>`;
+  }).join("");
+}
+
+// 同一页面的多个段落合并成一张卡片，编号写在一起
+function renderCards(citations) {
+  if (!citations.length) return "";
+  const byUrl = new Map();
+  for (const c of citations) {
+    if (!byUrl.has(c.url)) byUrl.set(c.url, {...c, indices: []});
+    byUrl.get(c.url).indices.push(c.index);
+  }
+  const cards = [...byUrl.values()].map(c => `
+    <div class="card" data-indices="${c.indices.join(",")}">
+      <div>${c.indices.map(i => `[${i}]`).join("")}
+        <a href="${escapeHtml(c.url)}" target="_blank" rel="noopener">${escapeHtml(c.title)}</a></div>
+      <div class="meta">${escapeHtml(new URL(c.url).hostname)} · 抓取于 ${escapeHtml(c.retrieved_at)}</div>
+    </div>`).join("");
+  return `<div class="cards">${cards}</div>`;
+}
+
+function showAnswer(div, answer, citations) {
+  div.innerHTML = `<div class="answer">${renderAnswer(answer, citations.length > 0)}</div>`
+    + renderCards(citations);
+  div.querySelectorAll(".cite").forEach(a => a.addEventListener("click", e => {
+    e.preventDefault();
+    const card = [...div.querySelectorAll(".card")]
+      .find(c => c.dataset.indices.split(",").includes(a.dataset.n));
+    if (card) card.querySelector("a").focus();
+  }));
+  scrollDown();
+}
+
+function showClarification(div, question) {
+  div.classList.add("clarify");
+  div.innerHTML = `<div class="label">需要补充信息</div><div>${escapeHtml(question)}</div>
+    <form><input type="text" maxlength="2000" placeholder="在这里回答，例如：学生签证，学期中" required>
+    <button class="primary" type="submit">回答</button></form>`;
+  const f = div.querySelector("form");
+  const box = f.querySelector("input");
+  box.focus();
+  f.addEventListener("submit", e => {
+    e.preventDefault();
+    const reply = box.value.trim();
+    if (!reply || busy) return;
+    f.remove();
+    resumeChat(reply);
+  });
+  scrollDown();
+}
+
+async function errorDetail(resp) {
+  try { return (await resp.json()).detail || `请求失败（${resp.status}）`; }
+  catch { return `请求失败（${resp.status}）`; }
+}
+
+// fetch 读取 SSE：EventSource 只支持 GET，而提问接口是 POST
+async function streamChat(question) {
+  addMessage("user", escapeHtml(question));
+  const div = addMessage("bot", '<div class="progress">正在连接…</div>');
+  setBusy(true);
+  let text = "";
+  let answer = null;
+  try {
+    const resp = await fetch("/chat/stream", {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({question, thread_id: threadId}),
+    });
+    if (!resp.ok) throw new Error(await errorDetail(resp));
+    const reader = resp.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    for (;;) {
+      const {value, done} = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, {stream: true}).replace(/\r\n/g, "\n");
+      let sep;
+      while ((sep = buffer.indexOf("\n\n")) >= 0) {
+        const raw = buffer.slice(0, sep);
+        buffer = buffer.slice(sep + 2);
+        let event = "message", data = "";
+        for (const line of raw.split("\n")) {
+          if (line.startsWith("event:")) event = line.slice(6).trim();
+          else if (line.startsWith("data:")) data += line.slice(5).trimStart();
+        }
+        if (!data) continue;
+        const payload = JSON.parse(data);
+        if (event === "start") threadId = payload.thread_id;
+        else if (event === "progress" && !text) {
+          div.innerHTML = `<div class="progress">${escapeHtml(payload.label)}…</div>`;
+        } else if (event === "token") {
+          text += payload.text;
+          div.innerHTML = `<div class="answer">${renderAnswer(text, false)}</div>`;
+          scrollDown();
+        } else if (event === "answer") {
+          answer = payload.answer;
+          showAnswer(div, answer, []);
+        } else if (event === "citations") {
+          showAnswer(div, answer || text, payload.citations);
+        } else if (event === "clarification") {
+          showClarification(div, payload.clarification_question);
+        } else if (event === "error") {
+          throw new Error(payload.detail);
+        }
+      }
+    }
+  } catch (err) {
+    div.classList.add("error");
+    div.textContent = err.message || "网络错误，请稍后再试";
+  } finally {
+    setBusy(false);
+  }
+}
+
+async function resumeChat(reply) {
+  addMessage("user", escapeHtml(reply));
+  const div = addMessage("bot", '<div class="progress">正在根据补充信息检索并生成回答…</div>');
+  setBusy(true);
+  try {
+    const resp = await fetch(`/chat/${encodeURIComponent(threadId)}/resume`, {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({answer: reply}),
+    });
+    if (!resp.ok) throw new Error(await errorDetail(resp));
+    const data = await resp.json();
+    if (data.status === "needs_clarification") showClarification(div, data.clarification_question);
+    else showAnswer(div, data.answer, data.citations);
+  } catch (err) {
+    div.classList.add("error");
+    div.textContent = err.message || "网络错误，请稍后再试";
+  } finally {
+    setBusy(false);
+  }
+}
+
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  const q = input.value.trim();
+  if (!q || busy) return;
+  input.value = "";
+  streamChat(q);
+});
+input.addEventListener("keydown", e => {
+  if (e.key === "Enter" && !e.shiftKey && !e.isComposing) {
+    e.preventDefault();
+    form.requestSubmit();
+  }
+});
+document.getElementById("topics").addEventListener("click", e => {
+  const btn = e.target.closest("button[data-q]");
+  if (btn && !busy) streamChat(btn.dataset.q);
+});
+document.getElementById("new-chat").addEventListener("click", () => {
+  if (busy) return;
+  threadId = null;
+  messages.innerHTML = "";
+  input.focus();
+});
+</script>
+</body>
+</html>
