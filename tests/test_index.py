@@ -93,3 +93,17 @@ def test_load_processed_reads_saved_documents(tmp_path):
     doc = make_doc("https://www.tenancy.govt.nz/bond", f"# Bond\n{BODY}")
     save_document(doc, tmp_path)
     assert load_processed(tmp_path) == [doc]
+
+
+def test_list_documents_reflects_index(stores):
+    """/sources 依据 list_documents 告诉用户索引里有哪些页面；被删除的页面不能再列出，
+    否则用户会以为助手还在参考已经下线的官方页面。"""
+    bond = make_doc("https://x.govt.nz/bond", f"# Bond\n{BODY}")
+    wage = make_doc("https://x.govt.nz/wage", f"# Wage\n{BODY}", topic="employment")
+    run([bond, wage], stores)
+    run([wage], stores)
+    _, parent_store = stores
+    assert parent_store.list_documents() == [{
+        "topic": "employment", "title": "wage", "url": "https://x.govt.nz/wage",
+        "retrieved_at": "2026-10-02T03:00:00+00:00",
+    }]
