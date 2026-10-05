@@ -264,7 +264,8 @@ def test_sub_questions_capped_at_three():
 def test_off_topic_question_declined():
     """与新西兰留学生活无关的问题要礼貌拒答，且不检索、不再调用模型：
     资料库里没有依据，硬答只会给出没有出处的内容。"""
-    llm = FakeChatModel([rewrite_reply("python sort list", topic=None, scope="off_topic")])
+    # 越界时模型通常不给子问题；空列表必须能解析，否则会降级成检索并硬答
+    llm = FakeChatModel([json.dumps({"sub_questions": [], "scope": "off_topic"})])
     searcher = FakeSearcher(default=[BOND])
     state = ask(build_graph(llm, searcher), "帮我写一个 Python 排序函数", "t1")
 

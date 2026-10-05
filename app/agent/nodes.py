@@ -12,7 +12,7 @@ from typing import Literal, TypedDict
 
 from langchain_core.messages import AIMessage, HumanMessage, RemoveMessage, SystemMessage
 from langgraph.types import Command, Overwrite, Send, interrupt
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 from app.agent.prompts import (
     GENERATE_PROMPT,
@@ -66,7 +66,7 @@ class SubQuestionOutput(BaseModel):
 
 
 class RewriteOutput(BaseModel):
-    sub_questions: list[SubQuestionOutput] = Field(min_length=1)
+    sub_questions: list[SubQuestionOutput] = []
     scope: Literal["in_scope", "off_topic"] = "in_scope"
     needs_referral: bool = False
     clarification: str | None = None
@@ -74,10 +74,14 @@ class RewriteOutput(BaseModel):
     @field_validator("sub_questions")
     @classmethod
     def _limit_sub_questions(cls, v: list[SubQuestionOutput]) -> list[SubQuestionOutput]:
-        v = [s for s in v if s.query.strip()][:MAX_SUB_QUESTIONS]
-        if not v:
+        return [s for s in v if s.query.strip()][:MAX_SUB_QUESTIONS]
+
+    @model_validator(mode="after")
+    def _require_sub_questions(self):
+        # 越界问题不检索，模型常给出空的子问题列表；范围内的问题至少要有一个子问题
+        if self.scope == "in_scope" and not self.sub_questions:
             raise ValueError("sub_questions 不能为空")
-        return v
+        return self
 
     @field_validator("clarification", mode="before")
     @classmethod
