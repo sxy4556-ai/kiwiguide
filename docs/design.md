@@ -54,20 +54,25 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    S[summarize 对话摘要] --> R[rewrite 改写为英文检索词 + 主题判断]
-    R --> C{clarify 信息是否充足}
-    C -- 不足 --> I[interrupt 反问用户] --> R
-    C -- 越界或个案建议 --> G
-    C -- 充足 --> D[decompose 拆分子问题]
-    D -->|Send 并行| RT[retrieve 混合检索]
-    RT --> GR{grade 相关性评分}
+    S[summarize 对话摘要] --> R[rewrite 拆分子问题 + 英文检索词 + 范围/转介/反问判断]
+    R --> C{clarify 决定去向}
+    C -- 缺少关键信息 --> I[interrupt 反问用户] --> R
+    C -- 越界 --> G
+    C -->|每个子问题一个 Send，并行| RT[retrieve 混合检索]
+    RT --> M[merge 交替合并、去重]
+    M --> GR{grade 相关性评分}
     GR -- 不足且重试次数小于 2 --> R
-    GR -- 足够 --> G[generate 生成中文回答]
+    GR -- 足够 --> G[generate 生成中文回答 / 拒答 / 附转介]
 ```
+
+- **一次调用完成判断**：拆分子问题、范围、是否个案、是否反问都由 rewrite 的同一次模型调用输出，clarify 只按结果路由，不再调用模型，每轮少一次模型调用。
+- **反问**：只针对会让答案完全不同的关键信息（签证类型与学期/假期；正式租客、合租还是寄宿）。每轮最多反问一次，重试时不反问。
+- **子问题**：最多 3 个，各自带主题过滤（复合问题可能跨主题），用 `Send` 并行检索，按子问题序号交替合并。
+- **拒答与转介**：越界问题不检索、不调用模型，固定文字拒答；个案问题在回答后按主题附上对应机构的转介说明。两者都由代码附加，不依赖模型。
 
 - **显式图**：流程由图控制，不依赖模型原生的工具调用，更换模型时更稳定。
 - **结构化输出**：各节点要求模型输出 JSON，用 pydantic 校验；失败时重试一次，再失败就降级。
-- **状态**：messages、summary、question、search_queries、topic、sub_questions、retrieved、grade、retries、answer、citations、clarification_question。
+- **状态**：messages、summary、question、sub_questions（每个含 question、query、topic）、search_queries、scope、needs_referral、clarification_question、clarified、sub_results、retrieved、grade、retries、answer、citations。
 - **回答格式**：
   - 中文作答；官方术语首次出现时附英文原名
   - 用 [1][2] 编号引用，并附出处列表（标题、链接、抓取日期）
