@@ -1,13 +1,15 @@
 """Agent 测试：假模型按顺序给出各节点的输出，假检索器返回编排好的结果，不访问网络。
 
 一轮问答中模型的调用顺序是：rewrite → grade →（重试时再 rewrite → grade）→ generate。
+反问时在 rewrite 之后暂停，恢复后再调用一次 rewrite；越界问题只调用 rewrite。
 """
 
 import json
 
 from langchain_core.messages import AIMessage, HumanMessage
+from langgraph.checkpoint.memory import InMemorySaver
 
-from app.agent.graph import ask, build_graph, open_checkpointer
+from app.agent.graph import ask, build_graph, open_checkpointer, pending_clarification, resume
 from app.agent.nodes import (
     MAX_RETRIES,
     AgentNodes,
@@ -16,6 +18,7 @@ from app.agent.nodes import (
     renumber_citations,
     strip_think,
 )
+from app.agent.prompts import GENERATE_REFERRAL_NOTE, OFF_TOPIC_ANSWER
 from app.ingest.chunk import Chunk
 from app.rag.naive import DISCLAIMER
 from app.retrieval.search import SearchResult
@@ -33,8 +36,10 @@ RENT = _result(2, "https://www.tenancy.govt.nz/rent", "Increasing rent")
 NOTICE = _result(3, "https://www.tenancy.govt.nz/notice", "Giving notice")
 
 
-def rewrite_reply(*queries: str, topic: str | None = "tenancy") -> str:
-    return json.dumps({"queries": list(queries), "topic": topic})
+def rewrite_reply(*queries: str, topic: str | None = "tenancy", **extra) -> str:
+    """每条检索词作为一个子问题；extra 可以带 scope、needs_referral、clarification。"""
+    subs = [{"question": q, "query": q, "topic": topic} for q in queries]
+    return json.dumps({"sub_questions": subs, **extra}, ensure_ascii=False)
 
 
 def grade_reply(sufficient: bool, reason: str = "") -> str:
@@ -150,15 +155,17 @@ def test_invalid_json_retried_once_then_degrades():
 
 def test_parse_json_tolerates_fences_and_think():
     """推理模型会输出 <think> 段，常见模型会用 ```json 包裹：这些都应该能解析，减少无谓的降级。"""
-    text = '<think>想一想 {"x": 1}</think>\n```json\n{"queries": ["bond"], "topic": "TAX"}\n```'
+    text = ('<think>想一想 {"x": 1}</think>\n```json\n'
+            '{"sub_questions": [{"query": "bond", "topic": "TAX"}]}\n```')
     out = parse_json(text, RewriteOutput)
-    assert out.queries == ["bond"]
-    assert out.topic == "tax"
+    assert out.sub_questions[0].query == "bond"
+    assert out.sub_questions[0].topic == "tax"
 
 
 def test_unknown_topic_disables_filter():
     """主题不在四个之内时不能拿去过滤：用不存在的主题过滤会把所有结果都滤掉。"""
-    assert RewriteOutput(queries=["a"], topic="housing").topic is None
+    out = RewriteOutput(sub_questions=[{"query": "a", "topic": "housing"}])
+    assert out.sub_questions[0].topic is None
 
 
 def test_multi_turn_context_survives_restart(tmp_path):
@@ -189,6 +196,109 @@ def test_multi_turn_context_survives_restart(tmp_path):
     other = ask(build_graph(llm3, searcher, saver), "押金多少？", "student-2")
     saver.conn.close()
     assert len(other["messages"]) == 2
+
+
+def test_clarification_pauses_then_resumes():
+    """缺少签证类型时必须先反问：不同签证的打工规定完全不同，猜一个作答可能让用户违反签证条件。
+
+    反问时图要暂停、不检索；用户回答后从断点继续，补充信息要进入改写。
+    每轮最多反问一次：模型再次要求反问时也要直接作答，避免用户被反复追问。
+    """
+    llm = FakeChatModel([
+        rewrite_reply("work hours", topic="visa",
+                      clarification="你持有哪种签证？现在是学期中还是假期？"),
+        rewrite_reply("student visa work hours during term", topic="visa",
+                      clarification="你在哪所学校？"),
+        grade_reply(True),
+        "学期中每周最多打工 25 小时 [1]。",
+    ])
+    searcher = FakeSearcher(default=[BOND])
+    graph = build_graph(llm, searcher, InMemorySaver())
+
+    paused = ask(graph, "我每周可以打工多少小时？", "t1")
+    assert pending_clarification(paused) == "你持有哪种签证？现在是学期中还是假期？"
+    assert searcher.calls == []
+    assert len(llm.calls) == 1
+
+    state = resume(graph, "学生签证，学期中", "t1")
+    assert pending_clarification(state) is None
+    assert "补充信息：学生签证，学期中" in llm.calls[1][1].content
+    assert state["answer"].startswith("学期中每周最多打工 25 小时 [1]。")
+    assert searcher.calls == [("student visa work hours during term", 6, "visa")]
+    # 反问和回答都记入对话，后续追问能看到
+    assert [m.type for m in state["messages"]] == ["human", "ai", "human", "ai"]
+
+
+def test_compound_question_retrieves_each_sub_question():
+    """复合问题的每个子问题都要单独检索、各用自己的主题过滤：
+    签证和税务的资料在不同主题下，共用一个主题过滤会把另一半答案的依据滤掉。"""
+    llm = FakeChatModel([
+        json.dumps({"sub_questions": [
+            {"question": "学生签证能打工多少小时", "query": "student visa work hours",
+             "topic": "visa"},
+            {"question": "打工收入怎么交税", "query": "tax code secondary job",
+             "topic": "tax"},
+        ]}, ensure_ascii=False),
+        grade_reply(True),
+        "每周 25 小时 [1]，按税码扣税 [2]。",
+    ])
+    searcher = FakeSearcher({"student visa work hours": [BOND], "tax code secondary job": [RENT]})
+    state = ask(build_graph(llm, searcher), "留学生能打多少小时工？工资要交税吗？", "t1")
+
+    assert sorted(searcher.calls) == [
+        ("student visa work hours", 6, "visa"), ("tax code secondary job", 6, "tax"),
+    ]
+    # 合并顺序按子问题序号，与并行任务完成的先后无关
+    assert [d["url"] for d in state["retrieved"]] == [BOND.parent.url, RENT.parent.url]
+    generate_prompt = llm.calls[-1][1].content
+    assert "1. 学生签证能打工多少小时" in generate_prompt
+    assert "2. 打工收入怎么交税" in generate_prompt
+
+
+def test_sub_questions_capped_at_three():
+    """子问题最多 3 个：每个子问题都要检索，拆得过多会拖慢回答，也会挤占每个子问题的上下文。"""
+    out = RewriteOutput(sub_questions=[{"query": f"q{i}"} for i in range(5)])
+    assert [s.query for s in out.sub_questions] == ["q0", "q1", "q2"]
+
+
+def test_off_topic_question_declined():
+    """与新西兰留学生活无关的问题要礼貌拒答，且不检索、不再调用模型：
+    资料库里没有依据，硬答只会给出没有出处的内容。"""
+    llm = FakeChatModel([rewrite_reply("python sort list", topic=None, scope="off_topic")])
+    searcher = FakeSearcher(default=[BOND])
+    state = ask(build_graph(llm, searcher), "帮我写一个 Python 排序函数", "t1")
+
+    assert state["answer"] == OFF_TOPIC_ANSWER
+    assert "超出了我的服务范围" in state["answer"]
+    assert state["citations"] == []
+    assert searcher.calls == []
+    assert len(llm.calls) == 1
+
+
+def test_immigration_case_includes_referral():
+    """移民个案问题只给官方一般性信息，并转介持牌移民顾问：
+    新西兰提供移民建议需要执业许可，不能让用户把回答当成个案判断。"""
+    llm = FakeChatModel([
+        rewrite_reply("student visa declined appeal", topic="visa", needs_referral=True),
+        grade_reply(True),
+        "签证被拒后可以申请复议 [1]。",
+    ])
+    graph = build_graph(llm, FakeSearcher(default=[BOND]))
+    state = ask(graph, "我的签证被拒了，我该怎么申诉？", "t1")
+
+    answer = state["answer"]
+    assert "转介说明" in answer
+    assert "持牌移民顾问" in answer and "Immigration New Zealand" in answer
+    assert answer.index("转介说明") < answer.index(DISCLAIMER)
+    # 生成时也提醒模型只讲一般性规定
+    assert GENERATE_REFERRAL_NOTE in llm.calls[-1][1].content
+
+
+def test_general_question_has_no_referral():
+    """一般性问题不附转介说明：每条回答都附会稀释提示的作用，用户需要时反而注意不到。"""
+    llm = FakeChatModel([rewrite_reply("bond"), grade_reply(True), "押金最多四周租金 [1]。"])
+    state = ask(build_graph(llm, FakeSearcher(default=[BOND])), "押金最多多少？", "t1")
+    assert "转介说明" not in state["answer"]
 
 
 def _history(rounds: int) -> list:
