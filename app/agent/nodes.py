@@ -1,23 +1,35 @@
-"""图中的各个节点：summarize → rewrite → retrieve → grade →（不足时回到 rewrite）→ generate。"""
+"""图中的各个节点。
+
+summarize → rewrite → clarify →（需要反问时暂停，回答后回到 rewrite；越界时直接到 generate）
+→ 每个子问题并行 retrieve → merge → grade →（不足时回到 rewrite）→ generate。
+"""
 
 import logging
 import re
 from collections.abc import Callable
 from dataclasses import asdict
+from typing import Literal, TypedDict
 
 from langchain_core.messages import AIMessage, HumanMessage, RemoveMessage, SystemMessage
-from pydantic import BaseModel, Field, field_validator
+from langgraph.types import Command, Overwrite, Send, interrupt
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 from app.agent.prompts import (
     GENERATE_PROMPT,
+    GENERATE_REFERRAL_NOTE,
+    GENERATE_SUB_QUESTIONS_NOTE,
     GRADE_PROMPT,
     JSON_RETRY_PROMPT,
+    OFF_TOPIC_ANSWER,
+    REFERRAL_CONTACTS,
+    REFERRAL_FALLBACK,
+    REFERRAL_TEMPLATE,
     REWRITE_PROMPT,
     REWRITE_RETRY_NOTE,
     SUMMARIZE_PROMPT,
     TOPICS,
 )
-from app.agent.state import AgentState
+from app.agent.state import AgentState, SubQuestion
 from app.ingest.chunk import Chunk
 from app.rag.naive import DISCLAIMER, NO_RESULT_ANSWER, Citation, format_context, format_sources
 from app.retrieval.search import SearchResult
@@ -30,6 +42,7 @@ KEEP_MESSAGES = 5  # 压缩后保留的最近消息：两轮问答加当前问�
 HISTORY_MESSAGES = 4  # 改写和生成时附带的最近消息条数
 HISTORY_CHARS = 600  # 每条历史消息截取的长度，避免旧回答占满上下文
 DEFAULT_TOP_K = 6
+MAX_SUB_QUESTIONS = 3  # 复合问题最多拆成几个子问题
 
 Search = Callable[[str, int, str | None], list[SearchResult]]
 
@@ -39,17 +52,10 @@ _JSON_RE = re.compile(r"\{.*\}", re.S)
 _CITE_RE = re.compile(r"[\[【［](\d+(?:\s*[,，、]\s*\d+)*)[\]】］]")
 
 
-class RewriteOutput(BaseModel):
-    queries: list[str] = Field(min_length=1)
+class SubQuestionOutput(BaseModel):
+    question: str = ""
+    query: str = Field(min_length=1)
     topic: str | None = None
-
-    @field_validator("queries")
-    @classmethod
-    def _clean_queries(cls, v: list[str]) -> list[str]:
-        v = [q.strip() for q in v if q.strip()][:3]
-        if not v:
-            raise ValueError("queries 不能为空")
-        return v
 
     @field_validator("topic", mode="before")
     @classmethod
@@ -57,6 +63,38 @@ class RewriteOutput(BaseModel):
         # 模型给出的主题不在四个之内时不过滤，避免用错误主题把正确页面滤掉
         v = str(v).strip().lower() if v is not None else None
         return v if v in TOPICS else None
+
+
+class RewriteOutput(BaseModel):
+    sub_questions: list[SubQuestionOutput] = []
+    scope: Literal["in_scope", "off_topic"] = "in_scope"
+    needs_referral: bool = False
+    clarification: str | None = None
+
+    @field_validator("sub_questions")
+    @classmethod
+    def _limit_sub_questions(cls, v: list[SubQuestionOutput]) -> list[SubQuestionOutput]:
+        return [s for s in v if s.query.strip()][:MAX_SUB_QUESTIONS]
+
+    @model_validator(mode="after")
+    def _require_sub_questions(self):
+        # 越界问题不检索，模型常给出空的子问题列表；范围内的问题至少要有一个子问题
+        if self.scope == "in_scope" and not self.sub_questions:
+            raise ValueError("sub_questions 不能为空")
+        return self
+
+    @field_validator("clarification", mode="before")
+    @classmethod
+    def _empty_to_none(cls, v):
+        return v.strip() or None if isinstance(v, str) else v
+
+
+class RetrieveTask(TypedDict):
+    """Send 发给 retrieve 的单个子问题。"""
+
+    index: int
+    query: str
+    topic: str | None
 
 
 class GradeOutput(BaseModel):
@@ -147,6 +185,16 @@ def format_history(state: AgentState) -> str:
     return "\n".join(parts)
 
 
+def referral_note(state: AgentState) -> str:
+    """按子问题涉及的主题列出对应机构；同一机构只列一次，主题都未知时用通用说明。"""
+    contacts = []
+    for s in state.get("sub_questions", []):
+        contact = REFERRAL_CONTACTS.get(s["topic"] or "")
+        if contact and contact not in contacts:
+            contacts.append(contact)
+    return REFERRAL_TEMPLATE.format(contacts="；或".join(contacts) or REFERRAL_FALLBACK)
+
+
 class AgentNodes:
     def __init__(self, llm, search: Search, top_k: int = DEFAULT_TOP_K):
         self.llm = llm
@@ -191,21 +239,63 @@ class AgentNodes:
             RewriteOutput,
         )
         if out is None:
-            # 降级：原问题直接检索，不按主题过滤，相当于朴素 RAG
-            return {"search_queries": [question], "topic": None}
-        return {"search_queries": out.queries, "topic": out.topic}
+            # 降级：原问题直接检索，不按主题过滤，相当于朴素 RAG；不反问、不拒答
+            fallback = SubQuestionOutput(question=question, query=question)
+            out = RewriteOutput(sub_questions=[fallback])
+        subs = [SubQuestion(question=s.question or question, query=s.query.strip(), topic=s.topic)
+                for s in out.sub_questions]
+        return {
+            "sub_questions": subs,
+            "search_queries": [s["query"] for s in subs],
+            "scope": out.scope,
+            "needs_referral": out.needs_referral,
+            "clarification_question": out.clarification,
+            "sub_results": Overwrite([]),  # 重试时清掉上一次的检索结果
+        }
 
-    def retrieve(self, state: AgentState) -> dict:
-        """每条检索词分别检索，按名次交替合并、按父块去重，最多保留 top_k 个。"""
-        rankings = [self.search(q, self.top_k, state.get("topic")) for q in state["search_queries"]]
-        merged: list[SearchResult] = []
+    def clarify(self, state: AgentState) -> Command[Literal["rewrite", "retrieve", "generate"]]:
+        """决定下一步：反问、拒答，或把每个子问题并行发给 retrieve。
+
+        反问和拒答只在第一次改写后考虑：重试时问题已经确认在范围内，不应再打断用户。
+        每轮最多反问一次，避免模型反复追问。
+        """
+        first_pass = state.get("retries", 0) == 0
+        question = state.get("clarification_question")
+        if first_pass and question and not state.get("clarified"):
+            # 暂停整张图，把反问交给调用方；恢复时 interrupt() 返回用户的回答，本节点从头重跑
+            reply = str(interrupt(question)).strip()
+            return Command(goto="rewrite", update={
+                "question": f"{state['question']}\n补充信息：{reply}",
+                "clarified": True,
+                "messages": [AIMessage(question), HumanMessage(reply)],
+            })
+        if first_pass and state.get("scope") == "off_topic":
+            return Command(goto="generate")
+        return Command(goto=[
+            Send("retrieve", RetrieveTask(index=i, query=s["query"], topic=s["topic"]))
+            for i, s in enumerate(state["sub_questions"])
+        ])
+
+    def retrieve(self, task: RetrieveTask) -> dict:
+        """检索一个子问题；多个子问题由 Send 并行执行，各自往 sub_results 追加一项。"""
+        results = self.search(task["query"], self.top_k, task["topic"])
+        return {"sub_results": [{"index": task["index"],
+                                 "results": [result_to_dict(r) for r in results]}]}
+
+    def merge(self, state: AgentState) -> dict:
+        """各子问题的结果按名次交替合并、按父块去重，最多保留 top_k 个。
+
+        交替合并保证每个子问题都至少有一个父块进入上下文，这正是拆分的目的。
+        """
+        rankings = [s["results"] for s in sorted(state["sub_results"], key=lambda s: s["index"])]
+        merged: list[dict] = []
         seen: set[str] = set()
         for rank in range(max((len(r) for r in rankings), default=0)):
             for ranking in rankings:
-                if rank < len(ranking) and ranking[rank].parent.id not in seen:
-                    seen.add(ranking[rank].parent.id)
+                if rank < len(ranking) and ranking[rank]["id"] not in seen:
+                    seen.add(ranking[rank]["id"])
                     merged.append(ranking[rank])
-        return {"retrieved": [result_to_dict(r) for r in merged[: self.top_k]]}
+        return {"retrieved": merged[: self.top_k]}
 
     def grade(self, state: AgentState) -> dict:
         results = [dict_to_result(d) for d in state["retrieved"]]
@@ -231,10 +321,15 @@ class AgentNodes:
         }
 
     def generate(self, state: AgentState) -> dict:
+        if state.get("scope") == "off_topic" and not state.get("retrieved"):
+            # 越界问题不检索也不调用模型，固定文字拒答
+            return {"answer": OFF_TOPIC_ANSWER, "citations": [],
+                    "messages": [AIMessage(OFF_TOPIC_ANSWER)]}
         results = [dict_to_result(d) for d in state["retrieved"]]
+        referral = referral_note(state) if state.get("needs_referral") else ""
         if not results:
             # 没有资料时不调用模型，避免模型凭记忆编造
-            answer = f"{NO_RESULT_ANSWER}\n\n{DISCLAIMER}"
+            answer = "\n\n".join(p for p in (NO_RESULT_ANSWER, referral, DISCLAIMER) if p)
             return {"answer": answer, "citations": [], "messages": [AIMessage(answer)]}
         parts = []
         history = format_history(state)
@@ -245,13 +340,21 @@ class AgentNodes:
         if grade and not grade["sufficient"]:
             parts.append(f"（注意：资料可能不足以完整回答，原因：{grade['reason']}。"
                          "资料没有覆盖的部分请明确说明。）")
+        subs = state.get("sub_questions", [])
+        if len(subs) > 1:
+            items = "\n".join(f"{i}. {s['question']}" for i, s in enumerate(subs, 1))
+            parts.append(GENERATE_SUB_QUESTIONS_NOTE.format(items=items))
+        if referral:
+            parts.append(GENERATE_REFERRAL_NOTE)
         parts.append(f"问题：{state['question']}")
         reply = strip_think(
             self.llm.invoke([SystemMessage(GENERATE_PROMPT), HumanMessage("\n\n".join(parts))])
             .content
         )
         body, citations = renumber_citations(reply, results)
-        answer = f"{body}\n\n{format_sources(citations)}\n\n{DISCLAIMER}"
+        answer = "\n\n".join(
+            p for p in (body, format_sources(citations), referral, DISCLAIMER) if p
+        )
         return {
             "answer": answer,
             "citations": [asdict(c) for c in citations],
