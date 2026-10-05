@@ -11,8 +11,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app.config import get_settings  # noqa: E402
-from app.ingest.clean import build_document, save_document  # noqa: E402
 from app.ingest.fetch import Fetcher  # noqa: E402
+from app.ingest.refresh import fetch_sources  # noqa: E402
 from app.ingest.sources import load_sources  # noqa: E402
 from app.logging_config import setup_logging  # noqa: E402
 
@@ -28,39 +28,21 @@ def main() -> int:
 
     sources = load_sources(args.sources)
     fetcher = Fetcher()
-    ok, skipped, failed = 0, [], []
     try:
-        for i, src in enumerate(sources, 1):
-            url = src["url"]
-            result = fetcher.fetch(url)
-            if result.skipped:
-                skipped.append((url, result.error))
-                print(f"[{i}/{len(sources)}] 跳过 {url}：{result.error}")
-                continue
-            if not result.ok:
-                failed.append((url, result.error))
-                print(f"[{i}/{len(sources)}] 失败 {url}：{result.error}")
-                continue
-            doc = build_document(url, src["topic"], result.html, title=src.get("title"))
-            if not doc["markdown"]:
-                failed.append((url, "未提取到正文"))
-                print(f"[{i}/{len(sources)}] 失败 {url}：未提取到正文")
-                continue
-            path = save_document(doc, settings.data_dir)
-            ok += 1
-            print(f"[{i}/{len(sources)}] 成功 {url} -> {path}（{len(doc['markdown'])} 字符）")
+        summary = fetch_sources(sources, fetcher, settings.data_dir, on_progress=print)
     finally:
         fetcher.close()
 
-    total = len(sources)
-    print(f"\n共 {total} 个来源：成功 {ok}，失败 {len(failed)}，跳过 {len(skipped)}")
+    total = summary.total
+    print(f"\n共 {total} 个来源：成功 {summary.ok}，失败 {len(summary.failed)}，"
+          f"跳过 {len(summary.skipped)}")
     if total:
-        print(f"成功率：{ok / total:.1%}")
-    for url, reason in failed:
+        print(f"成功率：{summary.ok / total:.1%}")
+    for url, reason in summary.failed:
         print(f"  失败：{url}（{reason}）")
-    for url, reason in skipped:
+    for url, reason in summary.skipped:
         print(f"  跳过：{url}（{reason}）")
-    return 0 if not failed else 1
+    return 0 if not summary.failed else 1
 
 
 if __name__ == "__main__":
