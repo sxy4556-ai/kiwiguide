@@ -81,8 +81,10 @@ REFERRAL_CONTACTS = {
 }
 REFERRAL_FALLBACK = "对应的政府机构或社区法律中心（Community Law）"
 
-REFERRAL_TEMPLATE = """转介说明：以上只是官方公布的一般性信息，
-不构成针对你个人情况的法律或移民建议。你的问题涉及个案判断，建议联系{contacts}。"""
+REFERRAL_TEMPLATE = (
+    "转介说明：以上只是官方公布的一般性信息，不构成针对你个人情况的法律或移民建议。"
+    "你的问题涉及个案判断，建议联系{contacts}。"
+)
 
 JSON_RETRY_PROMPT = """你上一次的输出无法解析：{error}
 请严格按要求的格式重新输出，只输出 JSON。"""
