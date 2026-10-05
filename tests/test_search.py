@@ -1,5 +1,7 @@
 """混合检索测试：RRF 融合、父块去重、主题过滤；使用假向量模型和内存 Qdrant。"""
 
+from concurrent.futures import ThreadPoolExecutor
+
 import pytest
 from qdrant_client import QdrantClient
 
@@ -75,3 +77,13 @@ def test_topic_filter_restricts_results(searcher):
 def test_top_k_limits_result_count(searcher):
     """top_k 决定放进提示词的父块数量，必须严格遵守，否则上下文长度失控。"""
     assert len(searcher.search("bond", top_k=1)) == 1
+
+
+def test_search_from_worker_threads(searcher):
+    """Agent 用 Send 并行检索子问题，检索会在其他线程里执行：
+    存储是在主线程打开的，跨线程调用不能报错，结果也要和单线程一致。"""
+    queries = ["landlord bond money", "tax code main job", "adult minimum wage"]
+    expected = [[r.parent.id for r in searcher.search(q)] for q in queries]
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        got = list(pool.map(lambda q: [r.parent.id for r in searcher.search(q)], queries * 3))
+    assert got == expected * 3

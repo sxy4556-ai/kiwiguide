@@ -1,5 +1,6 @@
 """混合检索：dense 和 sparse 各取候选子块，用 RRF 融合，按父块去重后回取父块作为上下文。"""
 
+import threading
 from dataclasses import dataclass
 
 from app.ingest.chunk import Chunk
@@ -56,17 +57,22 @@ class HybridSearcher:
         self.dense = dense
         self.sparse = sparse
         self.prefetch_limit = prefetch_limit
+        # Qdrant 本地模式和 SQLite 连接都不保证线程安全，并行检索时串行访问；
+        # 耗时的向量化（调用 Ollama）在锁外进行，仍然可以并行
+        self._storage_lock = threading.Lock()
 
     def search(self, query: str, top_k: int = 6, topic: str | None = None) -> list[SearchResult]:
-        """返回最多 top_k 个互不相同的父块，按融合分数降序。"""
-        dense_hits = self.vector_store.search(
-            self.dense.embed_query(query), DENSE, self.prefetch_limit, topic
-        )
-        sparse_hits = self.vector_store.search(
-            self.sparse.embed_query(query), SPARSE, self.prefetch_limit, topic
-        )
+        """返回最多 top_k 个互不相同的父块，按融合分数降序。可以在多个线程中同时调用。"""
+        dense_vec = self.dense.embed_query(query)
+        sparse_vec = self.sparse.embed_query(query)
+        with self._storage_lock:
+            dense_hits = self.vector_store.search(dense_vec, DENSE, self.prefetch_limit, topic)
+            sparse_hits = self.vector_store.search(sparse_vec, SPARSE, self.prefetch_limit, topic)
         parent_of = {h["id"]: h["parent_id"] for h in dense_hits + sparse_hits}
         fused = rrf_fuse([[h["id"] for h in dense_hits], [h["id"] for h in sparse_hits]])
         ranked = dedupe_parents(fused, parent_of)[:top_k]
-        parents = {p.id: p for p in self.parent_store.get_parents([pid for pid, _ in ranked])}
+        with self._storage_lock:
+            parents = {
+                p.id: p for p in self.parent_store.get_parents([pid for pid, _ in ranked])
+            }
         return [SearchResult(parents[pid], score) for pid, score in ranked if pid in parents]

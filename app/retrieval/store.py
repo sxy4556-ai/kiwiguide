@@ -112,7 +112,8 @@ class ParentStore:
     def __init__(self, path: Path | str):
         if str(path) != ":memory:":
             Path(path).parent.mkdir(parents=True, exist_ok=True)
-        self.conn = sqlite3.connect(str(path))
+        # 并行检索会在其他线程里回取父块；并发访问由 HybridSearcher 的锁串行化
+        self.conn = sqlite3.connect(str(path), check_same_thread=False)
         self.conn.executescript(
             """
             CREATE TABLE IF NOT EXISTS parents (
