@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     embed_model: str = "qwen3-embedding:0.6b"
     sparse_model: str = "Qdrant/bm25"
     data_dir: Path = Path("data")
+    sources_file: Path = Path("sources.yaml")
     log_level: str = "INFO"
 
 

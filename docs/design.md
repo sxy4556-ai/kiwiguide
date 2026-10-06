@@ -89,8 +89,15 @@ flowchart TD
 | `POST /chat/{thread_id}/resume` | 回答反问，从断点继续 |
 | `POST /chat/stream` | SSE 流式输出：节点进度事件、回答文本、引用列表 |
 | `GET /sources` | 已索引的来源列表 |
-| `POST /ingest/refresh` | 在后台重新抓取并增量更新索引 |
+| `POST /ingest/refresh` | 在后台重新抓取并增量更新索引（202；已有任务在运行时 409） |
+| `GET /ingest/refresh` | 查看更新任务的状态和结果摘要 |
 | `GET /` | 中文网页界面 |
+
+- **分层**：`app/api/routes.py` 只做参数校验和线程池调度；`app/api/service.py` 的 ChatService 包装 Agent 的提问、恢复和流式输出，以及来源列表和后台任务。测试时用假模型组装同一个 ChatService。
+- **延迟创建**：问答服务在第一次调用问答接口时才创建（需要 Ollama 探测向量维度），Ollama 不可用时问答接口返回 503，`/health` 和首页照常可用。
+- **流式事件**：start（thread_id）→ progress（节点进度）→ token（generate 的原始输出）→ answer（整理编号、附来源和免责声明后的完整回答）→ citations → done；需要反问时以 clarification 代替 answer 和 citations，出错时发送 error。token 只用于边生成边显示，前端收到 answer 后整体替换。
+- **索引更新与检索互斥**：Qdrant 本地库只允许一个进程打开，服务运行时由 `/ingest/refresh` 在同一进程内更新索引；写索引期间持有检索锁，抓取阶段不持锁，问答不受影响。
+- **错误格式**：所有错误都返回 `{"detail": 中文说明}`，包括参数校验（422）、状态冲突（409）、服务不可用（503）和未处理异常（500）。
 
 ## 7. 配置
 统一由 `app/config.py`（pydantic-settings）读取 `.env`，各字段见 `.env.example`。项目不需要任何 API 密钥。

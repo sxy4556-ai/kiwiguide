@@ -154,6 +154,13 @@ class ParentStore:
     def document_hashes(self) -> dict[str, str]:
         return dict(self.conn.execute("SELECT url, content_hash FROM documents"))
 
+    def list_documents(self) -> list[dict]:
+        """已索引页面的 topic、title、url、retrieved_at，按主题和标题排序。"""
+        rows = self.conn.execute(
+            "SELECT topic, title, url, retrieved_at FROM documents ORDER BY topic, title, url"
+        )
+        return [dict(zip(("topic", "title", "url", "retrieved_at"), r, strict=True)) for r in rows]
+
     def get_parents(self, ids: list[str]) -> list[Chunk]:
         """按传入顺序返回父块，找不到的 id 跳过。"""
         if not ids:
