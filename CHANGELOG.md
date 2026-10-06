@@ -2,6 +2,14 @@
 
 ## 未发布
 
+### Day 5（2026-10-06）
+- 新增接口：`POST /chat`、`POST /chat/{thread_id}/resume`、`POST /chat/stream`（SSE）、`GET /sources`、`POST /ingest/refresh` 和 `GET /ingest/refresh`
+- 统一中文错误响应（422、409、503、500）和请求耗时日志；问答服务在首次调用时创建，Ollama 不可用时返回 503，不影响 `/health`
+- 新增中文网页界面（`/`）：主题快捷问题、节点进度和流式回答、反问回答框、按页面合并的出处卡片、顶部免责声明
+- 抓取流程提取为 `app/ingest/refresh.py`，命令行脚本和后台更新共用；新增配置项 `SOURCES_FILE`
+- 新增依赖 `sse-starlette`
+- 测试增至 89 个
+
 ### Day 4（2026-10-05）
 - Agent 新增反问：缺少签证类型、学期/假期或居住方式等关键信息时暂停并反问，回答后从断点继续；每轮最多反问一次
 - 复合问题拆成最多 3 个子问题，各自按主题过滤，用 `Send` 并行检索后按序合并
