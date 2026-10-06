@@ -1,7 +1,9 @@
 """问答、来源和索引更新接口。"""
 
 import json
+import logging
 import threading
+import time
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Path, Request, status
@@ -18,6 +20,7 @@ from app.api.schemas import (
 )
 from app.api.service import ChatService, ServiceError
 
+logger = logging.getLogger(__name__)
 router = APIRouter()
 _build_lock = threading.Lock()
 
@@ -63,9 +66,12 @@ async def chat_stream(body: ChatRequest, service: Service) -> EventSourceRespons
     出错时发送 error。"""
 
     async def events():
+        # 请求日志在响应头发出时就记录了，流式回答的总耗时在这里单独记录
+        start = time.perf_counter()
         async for name, data in iterate_in_threadpool(service.stream(body.question,
                                                                      body.thread_id)):
             yield {"event": name, "data": json.dumps(data, ensure_ascii=False)}
+        logger.info("流式回答结束（%.0f 毫秒）", (time.perf_counter() - start) * 1000)
 
     return EventSourceResponse(events())
 
