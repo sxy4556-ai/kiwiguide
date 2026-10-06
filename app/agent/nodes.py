@@ -48,8 +48,9 @@ Search = Callable[[str, int, str | None], list[SearchResult]]
 
 _THINK_RE = re.compile(r"<think>.*?</think>", re.S)
 _JSON_RE = re.compile(r"\{.*\}", re.S)
-# 匹配 [1]、[1,3]、[1、3] 等引用写法；部分模型（如 gpt-oss）习惯用全角的【1】或［1］
-_CITE_RE = re.compile(r"[\[【［](\d+(?:\s*[,，、]\s*\d+)*)[\]】］]")
+# 匹配 [1]、[1,3]、[1、3] 等引用写法；部分模型（如 gpt-oss）习惯用全角的【1】或［1］，
+# 有时还会写成【[1]】，外层的【】一并匹配，替换后不留多余括号
+_CITE_RE = re.compile(r"【?[\[【［](\d+(?:\s*[,，、]\s*\d+)*)[\]】］]】?")
 
 
 class SubQuestionOutput(BaseModel):

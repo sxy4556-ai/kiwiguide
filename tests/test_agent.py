@@ -86,6 +86,12 @@ def test_fullwidth_citation_brackets_renumbered():
     assert [c.url for c in citations] == [RENT.parent.url, BOND.parent.url]
 
 
+def test_nested_fullwidth_citation_collapsed():
+    """评测中 gpt-oss 写出过【[1]】：只替换里层时界面会显示成【[1]】，外层括号也要去掉。"""
+    body, _ = renumber_citations("每周最多 25 小时【[2]】。", [BOND, RENT])
+    assert body == "每周最多 25 小时[1]。"
+
+
 def test_strip_think_handles_lone_closing_tag():
     """只有结尾 </think> 时也要去掉前面的思考过程：否则推理草稿会原样展示给用户，
     改写和评估节点的 JSON 也会解析失败。"""
