@@ -10,6 +10,7 @@
 #   question   问题
 #   gold_urls  应当命中的官方页面（命中其中任意一个即算命中）
 #   key_points 答案要点
+#   clarify_reply  （可选）Agent 反问时评测脚本代为回答的内容
 
 questions:
   # ---------- 租房 ----------
@@ -98,6 +99,7 @@ questions:
     topic: tenancy
     type: underspecified
     question: 我的押金能退回来吗？
+    clarify_reply: 我是正式租客，交的是普通押金，租约已经结束，没有欠租。
     gold_urls:
       - https://www.tenancy.govt.nz/rent-bond-and-bills/bond/refunding-a-bond/
       - https://www.tenancy.govt.nz/rent-bond-and-bills/bond/
@@ -273,6 +275,7 @@ questions:
     topic: visa
     type: underspecified
     question: How many hours am I allowed to work?
+    clarify_reply: I'm on a student visa and it's during the semester.
     gold_urls:
       - https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/
     key_points:

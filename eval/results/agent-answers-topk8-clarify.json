@@ -1,0 +1,1010 @@
+{
+  "mode": "agent",
+  "retrieval_only": false,
+  "run_at": "2026-10-07T00:00:07+00:00",
+  "settings": {
+    "embed_model": "qwen3-embedding:0.6b",
+    "sparse_model": "Qdrant/bm25",
+    "top_k": 8,
+    "llm_model": "gpt-oss:120b-cloud"
+  },
+  "summary": {
+    "n": 30,
+    "hit@1": 0.8,
+    "hit@3": 1.0,
+    "hit@5": 1.0,
+    "mrr": 0.9,
+    "faithfulness": 4.767,
+    "faithfulness_n": 30,
+    "correctness": 4.133,
+    "correctness_n": 30,
+    "clarified": 5,
+    "avg_seconds": 19.6
+  },
+  "by_lang": {
+    "zh": {
+      "n": 20,
+      "hit@1": 0.8,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "mrr": 0.9,
+      "faithfulness": 4.8,
+      "faithfulness_n": 20,
+      "correctness": 4.25,
+      "correctness_n": 20,
+      "clarified": 3,
+      "avg_seconds": 19.4
+    },
+    "en": {
+      "n": 10,
+      "hit@1": 0.8,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "mrr": 0.9,
+      "faithfulness": 4.7,
+      "faithfulness_n": 10,
+      "correctness": 3.9,
+      "correctness_n": 10,
+      "clarified": 2,
+      "avg_seconds": 20.0
+    }
+  },
+  "by_type": {
+    "simple": {
+      "n": 25,
+      "hit@1": 0.8,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "mrr": 0.9,
+      "faithfulness": 4.76,
+      "faithfulness_n": 25,
+      "correctness": 4.2,
+      "correctness_n": 25,
+      "clarified": 2,
+      "avg_seconds": 18.4
+    },
+    "compound": {
+      "n": 3,
+      "hit@1": 0.6666666666666666,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "mrr": 0.8333333333333334,
+      "faithfulness": 4.667,
+      "faithfulness_n": 3,
+      "correctness": 3.667,
+      "correctness_n": 3,
+      "clarified": 2,
+      "avg_seconds": 28.3
+    },
+    "underspecified": {
+      "n": 2,
+      "hit@1": 1.0,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "mrr": 1.0,
+      "faithfulness": 5,
+      "faithfulness_n": 2,
+      "correctness": 4,
+      "correctness_n": 2,
+      "clarified": 1,
+      "avg_seconds": 21.1
+    }
+  },
+  "questions": [
+    {
+      "id": "t01",
+      "lang": "zh",
+      "topic": "tenancy",
+      "type": "simple",
+      "question": "房东最多可以收多少押金？押金要交给谁保管？",
+      "gold_urls": [
+        "https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/"
+      ],
+      "retrieved_urls": [
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/types-of-tenancies/periodic-or-fixed-term-tenancy/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/letting-fees-and-key-money/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/refunding-a-bond/"
+      ],
+      "rr": 1.0,
+      "answer": "1. 房东可以收取的押金最高为**相当于4周租金**的金额，且需向租客提供收据，并在23个工作日内以电子方式交存[1]。  \n\n2. 押金必须由房东**交给租赁服务部门（Tenancy Services）**保管，租赁服务部门在租期内持有该押金[2][3]。\n\n参考来源：\n[1] Information for new tenants - https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/（抓取于 2026-10-02）\n[2] Bonds - https://www.tenancy.govt.nz/rent-bond-and-bills/bond/（抓取于 2026-10-02）\n[3] Bonds - https://www.tenancy.govt.nz/rent-bond-and-bills/bond/（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 2,
+      "faithfulness": 5,
+      "faithfulness_reason": "回答的两条陈述均可在资料中找到对应依据，分别对应押金上限为4周租金并需在23工作日内电子交存，以及押金须由房东交给Tenancy Services保管的规定。",
+      "correctness": 5,
+      "correctness_reason": "完整覆盖了押金最高为4周租金、需提供收据以及在23个工作日内交存至 Tenancy Services 的要点，没有错误",
+      "seconds": 14.7
+    },
+    {
+      "id": "t02",
+      "lang": "zh",
+      "topic": "tenancy",
+      "type": "simple",
+      "question": "房东涨房租需要提前多久通知？多久可以涨一次？",
+      "gold_urls": [
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/"
+      ],
+      "retrieved_urls": [
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/"
+      ],
+      "rr": 1.0,
+      "answer": "房东要涨房租，必须提前 **至少 60 天**（boarding house 即 寄宿屋的房东则需提前 28 天）以书面形式通知租客，通知中要写明新租金金额和生效日期[1]。  \n\n租金只能在 **每 12 个月** 进行一次调整。也就是说，租金的下一次涨幅只能在：\n\n* 租约开始后满 12 个月后，或  \n* 上一次租金涨幅生效后满 12 个月后  \n\n才可以实施[2]。  \n\n因此，房东至少要提前 60 天（寄宿屋 28 天）发出书面通知，并且每 12 个月只能涨一次租金。   [1][2]\n\n参考来源：\n[1] Rent increases and reductions - https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/（抓取于 2026-10-02）\n[2] Rent increases and reductions - https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 5,
+      "faithfulness_reason": "回答的所有事实性陈述（提前60天/28天书面通知、每12个月才能再次涨租）均可在资料中找到对应依据，未出现无依据或矛盾内容",
+      "correctness": 5,
+      "correctness_reason": "完整覆盖了提前60天（寄宿屋28天）书面通知以及每12个月才能再次涨租的要点，表述准确无误",
+      "seconds": 13.4
+    },
+    {
+      "id": "t03",
+      "lang": "zh",
+      "topic": "tenancy",
+      "type": "simple",
+      "question": "房东要来检查房子，需要提前多久通知我？可以多频繁？",
+      "gold_urls": [
+        "https://www.tenancy.govt.nz/maintenance-and-inspections/inspections/"
+      ],
+      "retrieved_urls": [
+        "https://www.tenancy.govt.nz/maintenance-and-inspections/inspections/",
+        "https://www.tenancy.govt.nz/maintenance-and-inspections/inspections/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/types-of-tenancies/periodic-or-fixed-term-tenancy/",
+        "https://www.tenancy.govt.nz/maintenance-and-inspections/inspections/",
+        "https://www.tenancy.govt.nz/ending-a-tenancy/giving-notice-to-end-tenancy/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/boarding-houses/",
+        "https://www.tenancy.govt.nz/ending-a-tenancy/ending-a-fixed-term-early/"
+      ],
+      "rr": 1.0,
+      "answer": "房东在进行房屋检查（inspection）时，必须提前 **至少 48 小时** 向租客发出通知（如果是寄宿屋（boarding house），则需提前 **24 小时**）[1]。通知的提前时间不能超过 **14 天**[1]。\n\n检查的频率最高只能是 **每 4 周一次**（即一个月一次）[1]。如果房东需要再次检查（例如确认已完成的维修），同样需要遵守上述的提前通知要求[2]。\n\n参考来源：\n[1] Inspections - https://www.tenancy.govt.nz/maintenance-and-inspections/inspections/（抓取于 2026-10-02）\n[2] Inspections - https://www.tenancy.govt.nz/maintenance-and-inspections/inspections/（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": "请问您是正式租客、合租房客还是寄宿者？",
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 5,
+      "faithfulness_reason": "所有关于提前通知时间、最长提前天数和检查频率的陈述均可在资料中找到对应依据，且关于再次检查的通知要求也在资料中有说明",
+      "correctness": 5,
+      "correctness_reason": "完整覆盖所有要点，提前通知时间和频率均正确，无错误",
+      "seconds": 25.1
+    },
+    {
+      "id": "t04",
+      "lang": "zh",
+      "topic": "tenancy",
+      "type": "simple",
+      "question": "合租时，租客（tenant）和室友（flatmate）在法律上有什么区别？",
+      "gold_urls": [
+        "https://www.tenancy.govt.nz/starting-a-tenancy/flatting/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/"
+      ],
+      "retrieved_urls": [
+        "https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/flatting/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/flatting/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/flatting/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/flatting/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/"
+      ],
+      "rr": 1.0,
+      "answer": "在合租（flatting）中，**租客（tenant）**和**室友（flatmate）**在法律上的定位完全不同：\n\n1. **签约主体不同**  \n   - 租客是与房东签订**租赁协议（tenancy agreement）**的人，受《住宅租赁法 1986》（Residential Tenancies Act 1986）约束。  \n   - 室友是没有在租赁协议上签名的人，只是与租客共享房屋。[[1][2][3][4]]\n\n2. **法律保护范围**  \n   - 租客受《住宅租赁法》保护，拥有租客权利（如租金、维修、被驱逐的程序）并承担相应义务。[[5]]  \n   - 室友不受该法保护，他们的权利仅取决于与租客之间的私人约定。[[3][4][6]]\n\n3. **对房东的责任**  \n   - 租客对房东负全部租金和房屋状态的法律责任，若有多人共同签约，所有租客对全部租金和损害承担连带责任。[[5]]  \n   - 室友不对房东负责，只需向租客支付自己分担的租金份额。[[3]]\n\n4. **纠纷处理渠道**  \n   - 租客与房东之间的争议只能提交**租赁仲裁庭（Tenancy Tribunal）**处理。[[5]]  \n   - 租客与室友或室友之间的争议则只能向**争议仲裁庭（Disputes Tribunal）**求助，租赁仲裁庭不受理此类案件。[[7]]\n\n5. **其他注意事项**  \n   - 因不受《住宅租赁法》约束，室友的居住安排不受法定房屋规则约束，建议双方以书面形式记录分摊租金等约定。[[3]]\n\n综上，租客在法律上是正式的租赁关系主体，受《住宅租赁法》全面保护并承担全部责任；而室友则属于非受法保护的合租伙伴，仅对租客负有私人约定的义务。\n\n参考来源：\n[1] Information for new tenants - https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/（抓取于 2026-10-02）\n[2] Flatting - https://www.tenancy.govt.nz/starting-a-tenancy/flatting/（抓取于 2026-10-02）\n[3] Flatting - https://www.tenancy.govt.nz/starting-a-tenancy/flatting/（抓取于 2026-10-02）\n[4] Who tenancy law does not protect - https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/（抓取于 2026-10-02）\n[5] Flatting - https://www.tenancy.govt.nz/starting-a-tenancy/flatting/（抓取于 2026-10-02）\n[6] Who tenancy law does not protect - https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/（抓取于 2026-10-02）\n[7] Flatting - https://www.tenancy.govt.nz/starting-a-tenancy/flatting/（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 5,
+      "faithfulness_reason": "所有陈述均可在提供的资料中找到对应依据，没有无依据的内容",
+      "correctness": 5,
+      "correctness_reason": "回答完整覆盖了租客签约受《住宅租赁法》保护并对全部租金和损坏承担连带责任，以及室友不在租约上不受该法保护、权利取决于与租客约定的要点，没有错误",
+      "seconds": 16.7
+    },
+    {
+      "id": "t05",
+      "lang": "en",
+      "topic": "tenancy",
+      "type": "simple",
+      "question": "Can a landlord or letting agent charge me a letting fee or key money?",
+      "gold_urls": [
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/letting-fees-and-key-money/"
+      ],
+      "retrieved_urls": [
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/letting-fees-and-key-money/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/letting-fees-and-key-money/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/letting-fees-and-key-money/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/letting-fees-and-key-money/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/charging-rent/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/charging-rent/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/charging-rent/"
+      ],
+      "rr": 1.0,
+      "answer": "不可以。根据《住宅租赁法》（Residential Tenancies Act），房东或其代理人**不能向租客收取租赁费用（letting fees）**，即使是续约或延长租期也不例外[1][2]。  \n\n同样，**不能向租客收取钥匙费（key money）**，除非是“选项费（option fee）”。选项费是租客为保留房源而支付的费用，最高只能是一周租金；如果租客最终决定租住，房东必须退还该费用或抵作租金[3]。  \n\n因此，除上述选项费的特殊情况外，房东和中介均不得向你收取租赁费用或钥匙费。\n\n参考来源：\n[1] Letting fees and key money - https://www.tenancy.govt.nz/rent-bond-and-bills/letting-fees-and-key-money/（抓取于 2026-10-02）\n[2] Letting fees and key money - https://www.tenancy.govt.nz/rent-bond-and-bills/letting-fees-and-key-money/（抓取于 2026-10-02）\n[3] Letting fees and key money - https://www.tenancy.govt.nz/rent-bond-and-bills/letting-fees-and-key-money/（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 5,
+      "faithfulness_reason": "所有关于不能收取letting fees和key money以及option fee的金额和退款规定的陈述均可在资料中找到对应依据，没有无依据或矛盾的内容",
+      "correctness": 4,
+      "correctness_reason": "回答覆盖了不能收取租赁费和钥匙费的要点，并说明即使续约也不可，但未提及租赁费自2018年12月12日起被禁止的具体日期",
+      "seconds": 14.6
+    },
+    {
+      "id": "t06",
+      "lang": "zh",
+      "topic": "tenancy",
+      "type": "simple",
+      "question": "住学校的学生宿舍，受《住宅租赁法》保护吗？",
+      "gold_urls": [
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/"
+      ],
+      "retrieved_urls": [
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/flatting/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/"
+      ],
+      "rr": 1.0,
+      "answer": "住在学校提供的学生宿舍（如宿舍楼或学生旅舍）一般**不受《住宅租赁法》（Residential Tenancies Act 1986）保护**，因为这类住宿属于《住宅租赁法》明确排除的范围之一[1][2]。  \n\n不过，资料中提到“例外适用——见《法案》第5B节”，说明在某些特定情况下（例如学校自行选择让住宿受《住宅租赁法》约束），学生宿舍可能会被纳入该法的保护范围。若想确认具体是否适用，需要查看该宿舍的合同或向学校住宿管理部门询问是否已“contract into”《住宅租赁法》。  \n\n**结论**：大多数学校学生宿舍不受《住宅租赁法》保护，只有在符合第5B节例外规定并经双方同意的情况下才可能受到该法的约束[1][2]。\n\n参考来源：\n[1] Who tenancy law does not protect - https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/（抓取于 2026-10-02）\n[2] Who tenancy law does not protect - https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 4,
+      "faithfulness_reason": "回答的大部分陈述都有资料依据，但提到需查看合同或询问是否已“contract into”《住宅租赁法》并未在提供的资料中直接出现，属于无依据的细节。",
+      "correctness": 3,
+      "correctness_reason": "回答覆盖了学生宿舍一般不受《住宅租赁法》保护并提及第5B节例外，但未提及宿舍提供方必须制定并告知住宿规则这一要点",
+      "seconds": 15.1
+    },
+    {
+      "id": "t07",
+      "lang": "en",
+      "topic": "tenancy",
+      "type": "simple",
+      "question": "What is the difference between a periodic tenancy and a fixed-term tenancy?",
+      "gold_urls": [
+        "https://www.tenancy.govt.nz/starting-a-tenancy/types-of-tenancies/periodic-or-fixed-term-tenancy/"
+      ],
+      "retrieved_urls": [
+        "https://www.tenancy.govt.nz/starting-a-tenancy/types-of-tenancies/periodic-or-fixed-term-tenancy/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/types-of-tenancies/periodic-or-fixed-term-tenancy/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/types-of-tenancies/periodic-or-fixed-term-tenancy/",
+        "https://www.tenancy.govt.nz/ending-a-tenancy/giving-notice-to-end-tenancy/",
+        "https://www.tenancy.govt.nz/ending-a-tenancy/ending-a-fixed-term-early/",
+        "https://www.tenancy.govt.nz/ending-a-tenancy/ending-a-fixed-term-early/",
+        "https://www.tenancy.govt.nz/ending-a-tenancy/ending-a-fixed-term-early/",
+        "https://www.tenancy.govt.nz/ending-a-tenancy/ending-a-fixed-term-early/"
+      ],
+      "rr": 1.0,
+      "answer": "**周期租约（periodic tenancy）**  \n- 租约在租约协议中约定即可成立，但没有固定的结束日期。只要租客或房东以正确的书面通知结束租约，租约即终止[1]。  \n- 当固定期限租约到期且双方均未在规定的“有效期”（90 天前至 21 天前）内发出不续租的书面通知时，固定期限租约会自动转为周期租约[2]。\n\n**固定期限租约（fixed‑term tenancy）**  \n- 租约期限必须明确写在租约协议上，且期限超过 90 天（如 1 年），没有最长限制[2]。  \n- 只能在房东和租客双方同意的情况下提前结束；否则只能等到约定的到期日结束[3][4]。  \n- 若在到期前的“有效期”（90 天前至 21 天前）内任一方书面通知不续租，租约在到期时不转为周期租约，而是直接结束[2]。  \n- 期限为 90 天或以下的**短期固定期限租约（short fixed‑term tenancy）**在到期时不会自动转为周期租约，租约结束时不需要书面通知，租客必须在约定到期日搬走[5]。\n\n**主要区别**  \n1. **是否有固定结束日期**：固定期限租约有明确的结束日期，周期租约没有。  \n2. **结束方式**：固定期限租约只能在到期时结束，或在双方同意下提前结束；周期租约可以通过任意一方的书面通知随时结束。  \n3. **到期后状态**：固定期限租约到期后若未发出不续租通知，会自动转为周期租约；短期固定期限租约则直接结束，不转为周期租约。  \n\n以上信息均来源于官方资料。\n\n参考来源：\n[1] Periodic or fixed-term tenancy - https://www.tenancy.govt.nz/starting-a-tenancy/types-of-tenancies/periodic-or-fixed-term-tenancy/（抓取于 2026-10-02）\n[2] Periodic or fixed-term tenancy - https://www.tenancy.govt.nz/starting-a-tenancy/types-of-tenancies/periodic-or-fixed-term-tenancy/（抓取于 2026-10-02）\n[3] Giving notice to end a tenancy - https://www.tenancy.govt.nz/ending-a-tenancy/giving-notice-to-end-tenancy/（抓取于 2026-10-02）\n[4] Ending a fixed-term tenancy early - https://www.tenancy.govt.nz/ending-a-tenancy/ending-a-fixed-term-early/（抓取于 2026-10-02）\n[5] Periodic or fixed-term tenancy - https://www.tenancy.govt.nz/starting-a-tenancy/types-of-tenancies/periodic-or-fixed-term-tenancy/（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 5,
+      "faithfulness_reason": "回答中的每一条事实性陈述都可以在提供的官方资料中找到对应依据，未出现无依据或矛盾的内容",
+      "correctness": 5,
+      "correctness_reason": "回答完整覆盖了所有要点，表述虽有细节扩展但结论一致，没有错误",
+      "seconds": 16.4
+    },
+    {
+      "id": "t08",
+      "lang": "zh",
+      "topic": "tenancy",
+      "type": "underspecified",
+      "question": "我的押金能退回来吗？",
+      "gold_urls": [
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/refunding-a-bond/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/"
+      ],
+      "retrieved_urls": [
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/refunding-a-bond/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/refunding-a-bond/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/bond/",
+        "https://www.tenancy.govt.nz/rent-bond-and-bills/rent/increasing-rent/",
+        "https://www.tenancy.govt.nz/starting-a-tenancy/new-to-tenancy/information-for-new-tenants/"
+      ],
+      "rr": 1.0,
+      "answer": "您的押金（bond）能否退回，取决于您交的是哪种押金以及在租约结束时是否还有未付费用或宠物损害。\n\n1. **普通押金（general bond）**  \n   - 普通押金通常在租约结束时、且租客没有欠租金、费用或其他应付金额时全额退还。  \n   - 退还时，房东需要通过 **Bond Hub** 或其使用的物业管理软件提交押金退还请求。 [1][2][3]\n\n2. **宠物押金（pet bond）**  \n   - 宠物押金用于覆盖超出正常磨损的宠物损害。  \n   - 如果在租约结束或租客停止养宠物时没有出现此类损害，租客也应获得押金退还。 [1][2][4]\n\n3. **如果您的租约不受《住宅租赁法》（Residential Tenancies Act）保护**  \n   - 某些租赁安排（如紧急或过渡性住房、车库、车位、棚屋等）不需要将押金登记在 Tenancy Services。  \n   - 在这种情况下，押金的退还不受上述退款流程约束，可能需要自行与房东协商或依据其他约定退回。 [5]\n\n**综上**，只要您的租约属于受《住宅租赁法》保护的普通住宅租赁，并且在租约结束时没有未付费用（普通押金）或宠物相关损害（宠物押金），您的押金应当可以全额退回，房东会通过 Bond Hub 进行退款申请。若您的租约属于法案例外情形，则需另行处理。\n\n参考来源：\n[1] Refunding a bond - https://www.tenancy.govt.nz/rent-bond-and-bills/bond/refunding-a-bond/（抓取于 2026-10-02）\n[2] Refunding a bond - https://www.tenancy.govt.nz/rent-bond-and-bills/bond/refunding-a-bond/（抓取于 2026-10-02）\n[3] Bonds - https://www.tenancy.govt.nz/rent-bond-and-bills/bond/（抓取于 2026-10-02）\n[4] Bonds - https://www.tenancy.govt.nz/rent-bond-and-bills/bond/（抓取于 2026-10-02）\n[5] Who tenancy law does not protect - https://www.tenancy.govt.nz/starting-a-tenancy/who-is-protected/who-tenancy-law-does-not-protect/（抓取于 2026-10-02）\n\n转介说明：以上只是官方公布的一般性信息，不构成针对你个人情况的法律或移民建议。你的问题涉及个案判断，建议联系租房服务处（Tenancy Services）或社区法律中心（Community Law）。\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 5,
+      "faithfulness_reason": "所有陈述均可在提供的资料中找到对应依据，未出现无依据或矛盾的内容",
+      "correctness": 5,
+      "correctness_reason": "完整覆盖了需先了解押金类型和租约是否结束的要点，并正确说明租约结束且无欠款时普通押金可退回",
+      "seconds": 19.8
+    },
+    {
+      "id": "e01",
+      "lang": "zh",
+      "topic": "employment",
+      "type": "simple",
+      "question": "新西兰现在的成人最低工资是每小时多少？",
+      "gold_urls": [
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/minimum-wage/minimum-wage-rates-and-types"
+      ],
+      "retrieved_urls": [
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/minimum-wage/minimum-wage-rates-and-types",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/payslips",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/minimum-wage/minimum-wage-rates-and-types",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/minimum-wage/minimum-wage-rates-and-types",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/minimum-wage/minimum-wage-rates-and-types",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/annual-holiday-pay",
+        "https://www.employment.govt.nz/starting-employment/rights-and-responsibilities/employee-rights-and-responsibilities",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/annual-holiday-pay"
+      ],
+      "rr": 1.0,
+      "answer": "新西兰的成人最低工资（adult minimum wage）目前是每小时 **23.95 新西兰元**[1]\n\n参考来源：\n[1] Minimum wage rates and types - https://www.employment.govt.nz/pay-and-hours/pay-and-wages/minimum-wage/minimum-wage-rates-and-types（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 5,
+      "faithfulness_reason": "回答的唯一事实性陈述“成人最低工资每小时23.95新西兰元”在资料[1]的表格中有明确对应，全部有依据",
+      "correctness": 3,
+      "correctness_reason": "回答给出了成人最低工资 23.95 新西兰元，但未提及起步最低工资和培训最低工资，未覆盖全部要点",
+      "seconds": 17.3
+    },
+    {
+      "id": "e02",
+      "lang": "zh",
+      "topic": "employment",
+      "type": "simple",
+      "question": "做满一年后有多少带薪年假？",
+      "gold_urls": [
+        "https://www.employment.govt.nz/leave-and-holidays/annual-holidays/taking-annual-holidays",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/annual-holiday-pay"
+      ],
+      "retrieved_urls": [
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/final-pay",
+        "https://www.employment.govt.nz/leave-and-holidays/annual-holidays/taking-annual-holidays",
+        "https://www.employment.govt.nz/leave-and-holidays/annual-holidays/taking-annual-holidays",
+        "https://www.employment.govt.nz/leave-and-holidays/annual-holidays/taking-annual-holidays",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/pay-as-you-go-annual-holiday-payments",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/annual-holiday-pay",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/annual-holiday-pay",
+        "https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment"
+      ],
+      "rr": 0.5,
+      "answer": "在新西兰，员工在连续工作满 12 个月后，最低可享有 **4 周的带薪年假（annual leave）**。具体的年假天数也可能在雇佣协议中约定更高的额度，但法律规定的最低标准就是 4 周[1][2]。\n\n参考来源：\n[1] Taking annual holidays - https://www.employment.govt.nz/leave-and-holidays/annual-holidays/taking-annual-holidays（抓取于 2026-10-02）\n[2] Casual employment - https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 5,
+      "faithfulness_reason": "所有陈述均可在资料中找到依据，尤其是4周最低带薪年假以及雇佣协议可约定更高额度",
+      "correctness": 3,
+      "correctness_reason": "回答覆盖了连续工作满12个月后至少4周年假的要点，但未提及可约定以至少8%收入代替休假的选项，遗漏了第二个要点",
+      "seconds": 17.4
+    },
+    {
+      "id": "e03",
+      "lang": "zh",
+      "topic": "employment",
+      "type": "simple",
+      "question": "公共假日上班，雇主应该怎么补偿？",
+      "gold_urls": [
+        "https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-rights-for-employees"
+      ],
+      "retrieved_urls": [
+        "https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-rights-for-employees",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/annual-holiday-pay",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/annual-holiday-pay",
+        "https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-rights-for-employees",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/annual-holiday-pay",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/pay-as-you-go-annual-holiday-payments",
+        "https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-rights-for-employees",
+        "https://www.employment.govt.nz/leave-and-holidays/annual-holidays/taking-annual-holidays"
+      ],
+      "rr": 1.0,
+      "answer": "在新西兰，雇主只有在以下两种情况下才可以要求员工在公共假日上班：\n\n1. 该公共假日正好落在员工本来就会工作的日子；  \n2. 员工的雇佣协议（employment agreement）明确规定员工必须在公共假日工作。  \n\n如果公共假日并不在员工已约定的正常工作时间内，雇主必须通过**可用性条款（availability clause）**来合法安排员工在该假日待命或工作，并且必须满足以下两点要求：\n\n- **有正当理由**：雇主必须基于合理的依据，说明为何在雇佣协议中加入该条款以及为何需要员工在公共假日可用。  \n- **提供合理补偿**：雇主必须向员工支付合理的补偿，以换取员工在公共假日的可用性或实际工作。  \n\n因此，公共假日上班时，雇主的补偿义务是**给予合理的补偿**，具体金额并未在官方资料中详细规定，只要求符合“合理补偿”的原则。  \n\n**参考**：  \n- 公共假日上班的条件与补偿要求（When you must work）[1]  \n- 可用性条款的必要性与雇主义务[1]\n\n参考来源：\n[1] Public holidays rights for employees - https://www.employment.govt.nz/leave-and-holidays/public-holidays/public-holidays-rights-for-employees（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 5,
+      "faithfulness_reason": "所有关于公共假日上班条件和补偿要求的陈述均可在资料[1]中找到对应依据，没有无依据的内容",
+      "correctness": 1,
+      "correctness_reason": "回答未提及至少1.5倍工资，也未说明若是假日本来是工作日可获带薪调休，两个要点均未覆盖",
+      "seconds": 19.8
+    },
+    {
+      "id": "e04",
+      "lang": "zh",
+      "topic": "employment",
+      "type": "simple",
+      "question": "每年有几天带薪病假？没用完的可以留到明年吗？",
+      "gold_urls": [
+        "https://www.employment.govt.nz/leave-and-holidays/sick-leave/taking-sick-leave"
+      ],
+      "retrieved_urls": [
+        "https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment",
+        "https://www.employment.govt.nz/leave-and-holidays/sick-leave/taking-sick-leave",
+        "https://www.employment.govt.nz/leave-and-holidays/annual-holidays/taking-annual-holidays",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/final-pay",
+        "https://www.employment.govt.nz/leave-and-holidays/sick-leave/taking-sick-leave",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/annual-holiday-pay",
+        "https://www.employment.govt.nz/starting-employment/rights-and-responsibilities/employee-rights-and-responsibilities",
+        "https://www.employment.govt.nz/leave-and-holidays/sick-leave/taking-sick-leave"
+      ],
+      "rr": 0.5,
+      "answer": "- **每年可享受的带薪病假天数**：符合条件的员工每年有 **10 天带薪病假（paid sick leave）** 的法定额度[1]。  \n\n- **未用完的带薪病假是否可以留到下一年**：未使用的病假可以结转至下一年度，累计上限为 **20 天**（即最多可以保留 20 天的未用病假）[2]。若雇主与员工在书面雇佣协议中另有约定，累计天数可以超过 20 天[2]。  \n\n因此，法定情况下每年 10 天带薪病假，未用完的可以结转，但总额不能超过 20 天（除非双方在合同中另有约定）。\n\n参考来源：\n[1] Taking sick leave - https://www.employment.govt.nz/leave-and-holidays/sick-leave/taking-sick-leave（抓取于 2026-10-02）\n[2] Taking sick leave - https://www.employment.govt.nz/leave-and-holidays/sick-leave/taking-sick-leave（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 2,
+      "faithfulness": 5,
+      "faithfulness_reason": "所有陈述都有资料依据：10 天年带薪病假在资料[5]中明确，未用完可结转至下一年且上限20天在资料[2]中说明，且可通过书面协议超过20天也在同一资料中提及。",
+      "correctness": 5,
+      "correctness_reason": "完整覆盖了10天年假和可结转至最多20天的要点，无误",
+      "seconds": 18.1
+    },
+    {
+      "id": "e05",
+      "lang": "en",
+      "topic": "employment",
+      "type": "simple",
+      "question": "Can my employer take money out of my wages without asking me?",
+      "gold_urls": [
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/deductions"
+      ],
+      "retrieved_urls": [
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/minimum-wage/minimum-wage-rates-and-types",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/deductions",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/deductions",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/annual-holiday-pay",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/pay-as-you-go-annual-holiday-payments",
+        "https://www.employment.govt.nz/starting-employment/rights-and-responsibilities/employee-rights-and-responsibilities",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/deductions",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/annual-holiday-pay"
+      ],
+      "rr": 0.5,
+      "answer": "不可以。根据新西兰《雇佣关系法》（Employment Relations Act）和《最低工资法》（Minimum Wage Act）规定，雇主只能在以下三种情况下从工资中扣除金额：\n\n1. **法律要求**的扣除（例如税款、学生贷款等）[1]；  \n2. **您书面同意**的扣除，且该扣除必须是合法且合理的[1]；  \n3. **特定情形下的书面授权**，例如您明确授权雇主从工资中扣除您自行提供的商品或服务的费用（如木柴、住宿费用等），这类扣除必须事先记录在工资记录之外，并且只能在您同意的情况下计入最低工资计算[2]。\n\n此外，若出现一次性多付工资的情况，雇主**必须先取得您的书面同意**才能从工资中扣回多付的金额；如果无法取得同意或您已离职，雇主只能通过调解等方式追回[3]。\n\n任何要求您支付“费用”“保费”（premium）以获得或保留工作岗位的做法，都是**非法**的，雇主不得向您收取此类费用，也不得从工资中扣除[4]。\n\n因此，除非符合上述合法、合理且经您书面同意的情形，雇主不能在未征得您同意的情况下直接扣除您的工资。\n\n参考来源：\n[1] Employee rights and responsibilities - https://www.employment.govt.nz/starting-employment/rights-and-responsibilities/employee-rights-and-responsibilities（抓取于 2026-10-02）\n[2] Minimum wage rates and types - https://www.employment.govt.nz/pay-and-hours/pay-and-wages/minimum-wage/minimum-wage-rates-and-types（抓取于 2026-10-02）\n[3] Deductions and premiums - https://www.employment.govt.nz/pay-and-hours/pay-and-wages/deductions（抓取于 2026-10-02）\n[4] Deductions and premiums - https://www.employment.govt.nz/pay-and-hours/pay-and-wages/deductions（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 4,
+      "faithfulness_reason": "答案的大部分陈述都有资料依据，但提及《雇佣关系法》没有在提供的资料中出现，属于无依据的细节，未影响整体结论",
+      "correctness": 5,
+      "correctness_reason": "回答完整覆盖了标准要点，说明了合法扣除的条件和禁止收取保费的规定，没有错误",
+      "seconds": 14.3
+    },
+    {
+      "id": "e06",
+      "lang": "en",
+      "topic": "employment",
+      "type": "simple",
+      "question": "How long can a trial period be, and what rights do I lose during it?",
+      "gold_urls": [
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods"
+      ],
+      "retrieved_urls": [
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods",
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods",
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods",
+        "https://www.employment.govt.nz/starting-employment/rights-and-responsibilities/employee-rights-and-responsibilities",
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/annual-holiday-pay",
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods",
+        "https://www.employment.govt.nz/starting-employment/rights-and-responsibilities/employee-rights-and-responsibilities"
+      ],
+      "rr": 1.0,
+      "answer": "**试用期（probation period）最长可以多久？**  \n根据官方资料，试用期的最长时长为 **90 个日历天**，且只能在雇员首次受雇时使用，且雇员之前未为该雇主工作过[1]。\n\n**在试用期间会失去哪些雇员权利？**  \n在试用期间，雇员**不会失去任何权利**。雇员在试用期内必须得到工资，且享有与非试用期雇员完全相同的权利和待遇[2]。唯一的例外是，雇主在试用期内解雇雇员时 **不必遵循全部的解雇程序**（即可以不完全适用一般的解雇规则）[2]。因此，除了解雇程序的灵活性外，雇员的其他权利（如工资、休息、假期、灵活工作安排等）均保持不变。\n\n参考来源：\n[1] Trial periods - https://www.employment.govt.nz/starting-employment/hiring/trial-periods（抓取于 2026-10-02）\n[2] Trial periods - https://www.employment.govt.nz/starting-employment/hiring/trial-periods（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 2,
+      "faithfulness": 5,
+      "faithfulness_reason": "All factual statements (90‑day maximum, conditions for use, and that employees retain all rights except the employer’s reduced dismissal obligations) are directly supported by the cited sources.",
+      "correctness": 1,
+      "correctness_reason": "只提到90天但未说明必须写入雇佣协议并在工作前签署；错误地说试用期不失去任何权利，未提及不能提出不公解雇的个人申诉",
+      "seconds": 15.0
+    },
+    {
+      "id": "e07",
+      "lang": "zh",
+      "topic": "employment",
+      "type": "simple",
+      "question": "临时工（casual）有带薪年假吗？",
+      "gold_urls": [
+        "https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/pay-as-you-go-annual-holiday-payments"
+      ],
+      "retrieved_urls": [
+        "https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment",
+        "https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment",
+        "https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/annual-holiday-pay",
+        "https://www.employment.govt.nz/leave-and-holidays/annual-holidays/taking-annual-holidays",
+        "https://www.employment.govt.nz/leave-and-holidays/annual-holidays/taking-annual-holidays",
+        "https://www.employment.govt.nz/pay-and-hours/pay-and-wages/leave-and-holiday-pay/annual-holiday-pay",
+        "https://www.employment.govt.nz/leave-and-holidays/annual-holidays/taking-annual-holidays"
+      ],
+      "rr": 1.0,
+      "answer": "是的，临时工（casual）也享有带薪年假（paid annual holidays）。  \n\n1. **基本权利**：所有雇员在连续工作满 12 个月后，都有权获得每年 4 周的带薪年假。临时工同样适用这一规定[1]。  \n\n2. **支付方式**：由于临时工的工作时间往往不规律或间歇性，雇主可以选择不提供实际的 4 周假期，而是以“年度假期付款（Payment for annual holidays）”的形式一次性在工资中发放，比例不得低于雇员毛收入的 8%。这种“即付即得（pay‑as‑you‑go）”方式只有在雇主实际提供 4 周假期不切实际时才可使用[1]。  \n\n3. **注意事项**：并非所有临时工自动适用即付即得，只有在雇主证明提供假期不可行时才可采用；否则仍应按常规方式享受 4 周的带薪年假[1]。  \n\n因此，临时工在满足连续工作 12 个月的前提下，依法享有带薪年假，只是实现方式可能是实际休假或通过工资中计入的假期付款。\n\n参考来源：\n[1] Casual employment - https://www.employment.govt.nz/starting-employment/types-of-worker/casual-employment（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 5,
+      "faithfulness_reason": "所有陈述均可在资料[1]中找到对应依据，没有无依据的内容",
+      "correctness": 5,
+      "correctness_reason": "回答完整覆盖了‘pay-as-you-go’方式以及不少于8%的支付比例，两点均准确无误",
+      "seconds": 15.9
+    },
+    {
+      "id": "e08",
+      "lang": "en",
+      "topic": "employment",
+      "type": "compound",
+      "question": "I'm a migrant worker and I think my employer is exploiting me. What counts as exploitation and what visa options do I have?",
+      "gold_urls": [
+        "https://www.employment.govt.nz/resolving-problems/migrant-exploitation",
+        "https://www.immigration.govt.nz/work/worker-rights/your-rights-as-a-worker-from-overseas/"
+      ],
+      "retrieved_urls": [
+        "https://www.employment.govt.nz/resolving-problems/migrant-exploitation",
+        "https://www.immigration.govt.nz/work/worker-rights/your-rights-as-a-worker-from-overseas/",
+        "https://www.employment.govt.nz/resolving-problems/migrant-exploitation",
+        "https://www.immigration.govt.nz/work/worker-rights/your-rights-as-a-worker-from-overseas/",
+        "https://www.employment.govt.nz/resolving-problems/migrant-exploitation",
+        "https://www.immigration.govt.nz/work/worker-rights/your-rights-as-a-worker-from-overseas/",
+        "https://www.employment.govt.nz/resolving-problems/migrant-exploitation",
+        "https://www.immigration.govt.nz/work/worker-rights/your-rights-as-a-worker-from-overseas/"
+      ],
+      "rr": 1.0,
+      "answer": "**1. 在新西兰，雇主对外来务工者的剥削行为包括哪些？**  \n\n- **行为导致或增加对您经济、社会、身体或情绪福祉的实质性伤害**（exploitation）[1]。  \n- **违反最低就业标准**，包括《雇佣关系法 2000》（Employment Relations Act 2000）和《工作场所健康与安全法 2015》（Health and Safety at Work Act 2015）等立法的要求[1]。  \n- **不符合《移民法 2009》（Immigration Act 2009）的规定**，如雇主未遵守签证条件[1]。  \n- **上述行为由您签证所绑定的雇主（或其代表）实施**，且**行为正在发生或最近发生**，并且**您与该雇主的工作是真实的、雇佣关系合法**[1]。  \n- **具体的剥削形式**（依据《什么是外来务工者剥削？》）包括：  \n  - 经济方面：未全额支付工资、不给予应有的加班费等；  \n  - 社会方面：将您与其他人隔离、限制社交活动；  \n  - 身体方面：强迫长时间工作且不提供休息或餐饮时间；  \n  - 情绪方面：恐吓、威胁或让您感到害怕[2]。  \n\n> **不属于剥削的情形**（但仍可提供帮助）  \n> - 仅一次性的小违规，如假期工资未付、计薪错误、未及时调涨最低工资、从最终工资中扣除合理费用、因公司破产或合法裁员导致的欠薪、合法终止雇佣等[3]。\n\n---\n\n**2. 在新西兰，外来务工者在现有签证下若遭受剥削，有哪些签证选项可以考虑？**  \n\n- **迁徙剥削保护工作签证（Migrant Exploitation Protection Work Visa，MEPV）** 是专为遭受剥削的临时务工者设立的签证。它的主要特点：  \n  - **免费**，且无需提供体检、警察记录或支付费用[4]。  \n  - **签证期限最长可达 6 个月**（视您现有签证剩余时间而定）[4]。  \n  - **高优先级处理**，允许您在调查期间**快速离开当前雇主**，并可在新西兰**为任何雇主工作**[4]。  \n  - **申请条件**：必须持有**雇主名称写在签证上的当前工作签证**；不适用于不绑定雇主的签证（如打工度假签证、毕业后工作签证）[4]。  \n  - **申请时限**：必须在收到**剥削评估报告信（Report of Exploitation Assessment Letter，RoEAL）**后 **1 个月内** 向移民新西兰（Immigration New Zealand）提交申请[1][4]。  \n\n- **获取 RoEAL 的步骤**：先向 **Employment New Zealand**（就业新西兰）报告剥削，若报告被认定为可信，机构会发出 RoEAL，随后您即可申请 MEPV[5]。  \n\n> 资料中未提及其他专门针对剥削的签证选项。若不符合上述条件，仍可通过常规的工作签证或其他移民途径自行评估，但这超出当前官方资料的范围。\n\n参考来源：\n[1] Migrant exploitation - https://www.employment.govt.nz/resolving-problems/migrant-exploitation（抓取于 2026-10-02）\n[2] Migrant exploitation - https://www.employment.govt.nz/resolving-problems/migrant-exploitation（抓取于 2026-10-02）\n[3] Migrant exploitation - https://www.employment.govt.nz/resolving-problems/migrant-exploitation（抓取于 2026-10-02）\n[4] Your rights as a worker from overseas - https://www.immigration.govt.nz/work/worker-rights/your-rights-as-a-worker-from-overseas/（抓取于 2026-10-02）\n[5] Your rights as a worker from overseas - https://www.immigration.govt.nz/work/worker-rights/your-rights-as-a-worker-from-overseas/（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": "请问您目前持有什么类型的签证？",
+      "retries": 0,
+      "sub_questions": 2,
+      "faithfulness": 4,
+      "faithfulness_reason": "大部分陈述都有资料依据，但提到‘不给予应有的加班费’等细节在资料中未明确出现，属于无依据的细节，整体结论仍然成立",
+      "correctness": 3,
+      "correctness_reason": "回答完整描述了MEPV签证并说明可离开雇主，但未提及支付费用获取工作或返还工资的具体剥削形式，也未明确说明即使担心签证也不必害怕向Employment New Zealand报告",
+      "seconds": 27.9
+    },
+    {
+      "id": "v01",
+      "lang": "zh",
+      "topic": "visa",
+      "type": "simple",
+      "question": "学生签证在学期中每周最多可以打工多少小时？",
+      "gold_urls": [
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/"
+      ],
+      "retrieved_urls": [
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/"
+      ],
+      "rr": 1.0,
+      "answer": "学生签证在学期（即上课期间）通常只能进行**兼职工作，最高每周 25 小时**。这是一项标准的工作时限，只有在签证条件明确允许的情况下才可适用；如果签证仍然只允许每周 20 小时，则需要通过变更签证条件的方式提升至 25 小时[1][2][3]。如果签证已经在 2025 年 11 月 3 日之后批准，默认的工作时限即为每周 25 小时；若在此日期之前批准且仅获准 20 小时，则可申请变更以提升至 25 小时[1]。\n\n参考来源：\n[1] Check or change your student visa conditions - https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/（抓取于 2026-10-02）\n[2] Working on a student visa - https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/（抓取于 2026-10-02）\n[3] Working on a student visa - https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 5,
+      "faithfulness_reason": "All factual statements in the answer are supported by the provided sources",
+      "correctness": 5,
+      "correctness_reason": "完整覆盖了每周25小时的上限及2025年11月3日的政策变更，并说明需以签证具体条件为准，可申请变更",
+      "seconds": 21.8
+    },
+    {
+      "id": "v02",
+      "lang": "zh",
+      "topic": "visa",
+      "type": "simple",
+      "question": "毕业后工作签证（Post-Study Work Visa）最长可以待多久？",
+      "gold_urls": [
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/study/after-you-finish-your-study/staying-to-work-after-finishing-your-study/"
+      ],
+      "retrieved_urls": [
+        "https://www.immigration.govt.nz/study/after-you-finish-your-study/staying-to-work-after-finishing-your-study/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/study/after-you-finish-your-study/staying-to-work-after-finishing-your-study/"
+      ],
+      "rr": 1.0,
+      "answer": "毕业后工作签证（Post‑Study Work Visa）最长可以在新西兰停留 **3 年**。这适用于完成硕士或博士层次（level 7 以上）且在新西兰全日制学习至少 30 周的资格；其他符合条件的资格则按实际学习时长授予签证，但最高仍不超过 3 年[1][2].\n\n参考来源：\n[1] Staying to work after finishing your study - https://www.immigration.govt.nz/study/after-you-finish-your-study/staying-to-work-after-finishing-your-study/（抓取于 2026-10-02）\n[2] Post-Study Work Visa - https://www.immigration.govt.nz/visas/post-study-work-visa/（抓取于 2026-10-06）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 5,
+      "faithfulness_reason": "所有陈述都有资料依据，最长3年、硕士/博士需30周全日制学习、其他资格按学习时长授予且不超3年均可在提供的文档中找到对应信息",
+      "correctness": 4,
+      "correctness_reason": "基本覆盖了最长3年及学历条件，但把硕士/博士的资格层级写成了7级以上，略有错误",
+      "seconds": 22.2
+    },
+    {
+      "id": "v03",
+      "lang": "en",
+      "topic": "visa",
+      "type": "simple",
+      "question": "Which qualifications make me eligible for a Post-Study Work Visa?",
+      "gold_urls": [
+        "https://www.immigration.govt.nz/study/after-you-finish-your-study/qualifications-needed-for-a-post-study-work-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/"
+      ],
+      "retrieved_urls": [
+        "https://www.immigration.govt.nz/study/after-you-finish-your-study/qualifications-needed-for-a-post-study-work-visa/",
+        "https://www.immigration.govt.nz/study/after-you-finish-your-study/staying-to-work-after-finishing-your-study/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/"
+      ],
+      "rr": 1.0,
+      "answer": "符合新西兰**毕业后工作签证（Post‑Study Work Visa，PSWV）**资格的学习成果主要有两大类：\n\n1. **学位类（degree）资格**  \n   - **第7级或以上的学位**，包括：  \n     - 第8级的**研究生文凭（Postgraduate Diploma）**、  \n     - 第9级的**硕士学位（Master’s degree）**、  \n     - 第10级的**博士学位（Doctoral degree）**。  \n   - 这些学位必须在新西兰**全日制学习至少30周**后完成。  \n   - 获得此类资格后，可在新西兰从事**任何合法工作**（不受专业限制），只要满足健康、品格等其他签证要求。  \n   - 参考来源：[1]、[2]、[3]。\n\n2. **非学位类（non‑degree）资格**  \n   - **第7级或以下的非学位资格**，但必须**在新西兰全日制学习并完成全部学习时长**，且**该资格必须在“符合毕业后工作签证资格的资格清单（list of qualifications eligible for a Post‑Study Work Visa）”中**。  \n   - 持有此类资格的申请人只能从事**与所学专业相关的工作**，具体要求会写在签证条件里。  \n   - 参考来源：[4]、[5]、[2]、[3]。\n\n> **补充说明（2026 年后）**  \n> 从2026年晚些时候起，**拥有NZQCF第7级的研究生文凭（Graduate Diploma）**（在新西兰全日制学习）**以及****在新西兰或海外取得的**学士学位（bachelor’s degree）**的申请人，也将被纳入PSWV的资格范围。  \n> 参考来源：[5]、[6]。\n\n**总结**：要符合PSWV资格，你需要：\n\n- **学位类**：第7级或以上的学位（研究生文凭、硕士或博士），且在新西兰全日制学习≥30周；或  \n- **非学位类**：第7级或以下、且在官方“符合资格清单”上的非学位资格，完成全日制学习并满足时长要求；或（2026年后）NZQCF第7级研究生文凭 + 学士学位。  \n\n以上信息均来源于官方移民局提供的资料。\n\n参考来源：\n[1] Post-Study Work Visa - https://www.immigration.govt.nz/visas/post-study-work-visa/（抓取于 2026-10-06）\n[2] Post-Study Work Visa - https://www.immigration.govt.nz/visas/post-study-work-visa/（抓取于 2026-10-06）\n[3] Post-Study Work Visa - https://www.immigration.govt.nz/visas/post-study-work-visa/（抓取于 2026-10-06）\n[4] Qualifications needed for a Post-Study Work Visa - https://www.immigration.govt.nz/study/after-you-finish-your-study/qualifications-needed-for-a-post-study-work-visa/（抓取于 2026-10-02）\n[5] Staying to work after finishing your study - https://www.immigration.govt.nz/study/after-you-finish-your-study/staying-to-work-after-finishing-your-study/（抓取于 2026-10-02）\n[6] Post-Study Work Visa - https://www.immigration.govt.nz/visas/post-study-work-visa/（抓取于 2026-10-06）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 5,
+      "faithfulness_reason": "所有关于资格等级、学习时长、工作限制以及2026年后扩展的陈述均可在提供的官方资料中找到对应依据，没有无依据或矛盾的内容",
+      "correctness": 5,
+      "correctness_reason": "回答完整覆盖了标准要点，说明只有在新西兰完成且在资格清单上的学历符合，且区分了7级以上学位和非学位的不同工作条件，没有错误",
+      "seconds": 24.1
+    },
+    {
+      "id": "v04",
+      "lang": "zh",
+      "topic": "visa",
+      "type": "simple",
+      "question": "拿学生签证做无偿的志愿者工作，算不算打工？",
+      "gold_urls": [
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/unpaid-work-while-studying/"
+      ],
+      "retrieved_urls": [
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/unpaid-work-while-studying/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/unpaid-work-while-studying/"
+      ],
+      "rr": 1.0,
+      "answer": "在新西兰持学生签证时，**可以做志愿者工作，只要不收取任何报酬或实物回报**，这类活动不被视为“打工”。  \n- 官方说明：“你可以在持学生签证期间做志愿者工作，只要你没有得到任何收益或奖励。”[1]  \n- “收益或奖励”指任何可以用金钱衡量的付款或福利，如住宿、食物、交通、工资或津贴等。如果志愿工作中没有这些收益，就不算是受雇工作[2]。  \n\n因此，只要确保志愿工作完全无偿，就不算作需要工作许可的打工。\n\n参考来源：\n[1] Unpaid work while studying - https://www.immigration.govt.nz/study/once-you-have-a-student-visa/unpaid-work-while-studying/（抓取于 2026-10-02）\n[2] Unpaid work while studying - https://www.immigration.govt.nz/study/once-you-have-a-student-visa/unpaid-work-while-studying/（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 5,
+      "faithfulness_reason": "回答的每条事实性陈述都能在资料中找到对应依据，志愿者工作在学生签证下只要无报酬即可，不算打工，且‘收益或奖励’的定义也在资料中有说明。",
+      "correctness": 5,
+      "correctness_reason": "回答完整覆盖了标准要点，正确说明有报酬即算工作，并列举了报酬种类",
+      "seconds": 21.9
+    },
+    {
+      "id": "v05",
+      "lang": "zh",
+      "topic": "visa",
+      "type": "simple",
+      "question": "签证快到期了，新签证申请还没批下来，我还能合法留在新西兰吗？",
+      "gold_urls": [
+        "https://www.immigration.govt.nz/visas/interim-visa/"
+      ],
+      "retrieved_urls": [
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/",
+        "https://www.immigration.govt.nz/visas/interim-visa/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/"
+      ],
+      "rr": 0.5,
+      "answer": "是的，只要您在当前临时签证（temporary visa）到期前已经递交了新的签证申请，移民局通常会自动为您发放**临时签证（Interim Visa）**，让您在新签证审理期间合法留在新西兰。该临时签证的生效日为您原签证到期的次日，且在此期间您可以继续学习和工作（视具体情况而定）[1][2]。\n\n需要满足的基本条件包括：\n\n- 您在新西兰境内并持有当前的临时签证；\n- 已经为另一种临时签证递交了申请；\n- 符合该临时签证的其他要求[2]。\n\n如果您未在原签证到期前递交新申请，则会失去合法居留资格，可能面临被驱逐的风险[1]。因此，请确保在签证到期前至少提前一个月提交新签证申请，以触发临时签证的自动发放[1][3]。\n\n参考来源：\n[1] Check or change your student visa conditions - https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/（抓取于 2026-10-02）\n[2] Interim Visa - https://www.immigration.govt.nz/visas/interim-visa/（抓取于 2026-10-02）\n[3] Check or change your student visa conditions - https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/（抓取于 2026-10-02）\n\n转介说明：以上只是官方公布的一般性信息，不构成针对你个人情况的法律或移民建议。你的问题涉及个案判断，建议联系移民局（Immigration New Zealand）、持牌移民顾问（licensed immigration adviser，可在移民顾问管理局 Immigration Advisers Authority 官网查询）或律师。\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": "请问您目前持有什么类型的签证？",
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 5,
+      "faithfulness_reason": "所有陈述均可在提供的资料中找到对应依据，没有无依据的内容",
+      "correctness": 3,
+      "correctness_reason": "回答覆盖了自动获得过渡签证的要点，但未提及过渡签证免费、最长6个月以及被拒后21天到期等关键细节",
+      "seconds": 23.5
+    },
+    {
+      "id": "v06",
+      "lang": "zh",
+      "topic": "visa",
+      "type": "simple",
+      "question": "申请付费学生签证，自费的话需要证明多少生活费？",
+      "gold_urls": [
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/"
+      ],
+      "retrieved_urls": [
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/visas/post-study-work-visa/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/"
+      ],
+      "rr": 1.0,
+      "answer": "自费申请付费学生签证时，必须提供能够证明你在新西兰的生活费用足够的材料。具体金额如下：\n\n- **高等教育（tertiary level）**  \n  - 学习时间 **1 年或以上**：需要证明拥有 **NZD $20,000** 的生活费（每年）[1]。  \n  - 学习时间 **不足 1 年**：需要证明拥有 **NZD $1,667** 的生活费（每月）[1]。\n\n- **义务教育（compulsory education，指 1‑13 年级的学校）**  \n  - 学习时间 **1 年或以上**：需要证明拥有 **NZD $17,000** 的生活费（每年）[1]。  \n  - 学习时间 **不足 1 年**：需要证明拥有 **NZD $1,417** 的生活费（每月）[1]。\n\n以上金额仅为最低要求，实际所需费用会因居住地点、住宿、交通和饮食等因素而有所不同。提交的证据可以包括银行对账单、定期存款证明、奖学金或教育贷款文件等[1]。\n\n参考来源：\n[1] Fee Paying Student Visa - https://www.immigration.govt.nz/visas/fee-paying-student-visa/（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 1,
+      "sub_questions": 1,
+      "faithfulness": 5,
+      "faithfulness_reason": "All factual statements about the required living funds for self‑funded fee‑paying student visas and the types of evidence needed are supported by the provided sources.",
+      "correctness": 5,
+      "correctness_reason": "完整覆盖了所有要点，金额和条件均与标准答案一致，无错误",
+      "seconds": 27.8
+    },
+    {
+      "id": "v07",
+      "lang": "en",
+      "topic": "visa",
+      "type": "underspecified",
+      "question": "How many hours am I allowed to work?",
+      "gold_urls": [
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/"
+      ],
+      "retrieved_urls": [
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/"
+      ],
+      "rr": 1.0,
+      "answer": "在持学生签证期间，学期（即上课期间）您只能做**兼职工作**，每周最多**25 小时**[1]。  \n\n- 2025 年 11 月 3 日之后，新西兰把学生签证的工作时限从 20 小时/周提升至 25 小时/周[2]。  \n- 如果您的签证最初只允许 20 小时/周，您可以依据[2]的说明申请“工作时数变更”(variation of conditions) 将时数提升至 25 小时/周。  \n\n因此，当前您在学期内的工作上限为 **每周 25 小时**（如签证已更新为该时数；若仍是 20 小时，则需申请变更）。\n\n参考来源：\n[1] Working on a student visa - https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/（抓取于 2026-10-02）\n[2] Check or change your student visa conditions - https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": "请问您持有什么类型的签证？是学生签证还是其他签证？",
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 5,
+      "faithfulness_reason": "所有陈述都有资料依据，虽引用编号不完全对应，但内容均可在提供的资料中找到支持",
+      "correctness": 3,
+      "correctness_reason": "只覆盖了学生签证可工作25小时的要点，未提及需先了解签证类型及其条件",
+      "seconds": 22.3
+    },
+    {
+      "id": "x01",
+      "lang": "zh",
+      "topic": "tax",
+      "type": "simple",
+      "question": "刚到新西兰，怎么申请 IRD 号码？",
+      "gold_urls": [
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one"
+      ],
+      "retrieved_urls": [
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application"
+      ],
+      "rr": 1.0,
+      "answer": "刚到新西兰时，申请个人税号（IRD 号码）的步骤如下：\n\n1. **使用“新抵达者”专用渠道**  \n   进入 IRD 官方网站的 “New arrival to New Zealand – IRD number application” 页面，选择针对刚抵达新西兰的申请流程。该流程会利用你在移民局（Immigration New Zealand）获得的签证信息直接核实身份，省去重复提交身份证明文件的步骤[1]。\n\n2. **登录 myIR**  \n   在页面上点击 “Log in to myIR”，使用你的 myIR 账户（或先注册）登录后填写申请表格。提交后，IRD 会在 2 天内通过短信或电子邮件把你的 IRD 号码发送给你[2]。\n\n3. **注意申请时限**  \n   - 若你持有澳大利亚护照且没有新西兰签证，通常在抵达后有 **4–6 周** 的时间可以完成此流程[3]。  \n   - 若你持有新西兰移民局签发的签证，则必须在签证上标明的 **最迟抵达日期** 前完成申请；逾期后需改为 “living in New Zealand” 的常规申请流程[3]。\n\n4. **费用**  \n   申请 IRD 号码本身是 **免费** 的[4]。\n\n5. **后续责任**  \n   获得号码后，请妥善保管，日后所有与税务相关的事务（如工作收入、开银行账户、加入 KiwiSaver 等）都需要使用该号码[5]。\n\n**简要流程**：  \n- 访问 IRD “New arrival” 页面 →  \n- 登录 myIR →  \n- 填写并提交申请（在签证或 4‑6 周内） →  \n- 2 天内收到 IRD 号码 →  \n- 安全保存号码以备后用。  \n\n如在申请过程中需要补充材料，IRD 会主动联系你[2]。祝顺利完成申请！\n\n参考来源：\n[1] New arrival to New Zealand – IRD number application - https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application（抓取于 2026-10-02）\n[2] New arrival to New Zealand – IRD number application - https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application（抓取于 2026-10-02）\n[3] New arrival to New Zealand – IRD number application - https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application（抓取于 2026-10-02）\n[4] When you need an IRD number - https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one（抓取于 2026-10-02）\n[5] When you need an IRD number - https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 5,
+      "faithfulness_reason": "回答中的每一条事实性陈述（使用新抵达渠道、登录myIR、2天内收到号码、4‑6周时限、签证到达日期限制、免费、保管号码及其用途、需要补充材料时会联系）均可在提供的资料中找到对应依据",
+      "correctness": 5,
+      "correctness_reason": "完整覆盖了标准要点：说明可通过“新到达者”线上流程申请，IRD 通过移民局核实身份无需重复提交证件；指出持签证者须在签证上最晚入境日期前申请；并说明申请免费",
+      "seconds": 16.7
+    },
+    {
+      "id": "x02",
+      "lang": "zh",
+      "topic": "tax",
+      "type": "simple",
+      "question": "我有两份兼职，第二份工作应该用什么税码？",
+      "gold_urls": [
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/secondary-tax-codes",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/what-tax-code-should-i-use"
+      ],
+      "retrieved_urls": [
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/what-tax-code-should-i-use",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/secondary-tax-codes",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/secondary-tax-codes",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/secondary-tax-codes",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals"
+      ],
+      "rr": 1.0,
+      "answer": "如果你已经有一份兼职（使用了主税码），而现在又有第二份兼职收入，通常需要为这份额外的收入使用**次要税码（secondary tax code）**，这样雇主才能按照你全年总收入的正确税率来扣税，避免年终出现补税或退税的情况[1][2]。\n\n**如何确定具体的次要税码：**  \n1. 参考 **IR330 税码声明表（tax code declaration form）**，按照表格第 2‑3 页的流程图逐步判断适用的次要税码[3]。  \n2. 完成后将填写好的 IR330 表格交给第二份工作的雇主，让他们在发薪时使用该次要税码[3]。  \n3. 如果你有学生贷款，需要选择能够扣除贷款还款的税码；如果你领取了收入测算福利（如 MSD 的福利），则该福利的收入部分必须使用 **M** 税码，其他收入则使用次要税码[4]。\n\n**简要步骤**  \n- 访问 IR330 表格（可在 IRD 网站下载）。  \n- 按照表格中的问题判断你是否属于以下情形：有学生贷款、领取收入测算福利、仅做季节性工作等。  \n- 根据判断结果得到相应的次要税码（如 **M**, **S**, **W**, **X** 等），并在表格上填写。  \n- 将表格交给第二份工作的雇主。\n\n> **结论**：第二份兼职应使用次要税码，并通过填写 IR330 表格来确定具体的代码[1][3][2]。如果资料中没有列出你具体的个人情况，系统无法直接给出确切的税码，需要你自行完成 IR330 流程或咨询税务专业人士。\n\n参考来源：\n[1] Secondary tax codes - https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/secondary-tax-codes（抓取于 2026-10-02）\n[2] Secondary tax codes - https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/secondary-tax-codes（抓取于 2026-10-02）\n[3] Secondary tax codes - https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/secondary-tax-codes（抓取于 2026-10-02）\n[4] What tax code should I use? - https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/what-tax-code-should-i-use（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 2,
+      "faithfulness_reason": "回答中多处陈述缺乏资料依据或引用错误，例如把 IR330 流程图的来源标注为[3]（实际在[5]或[1]），学生贷款和 MSD 福利使用 M 税码的说明引用了[4]（与税务居住状态有关），并且列出的次要税码如 S、W、X 在提供的资料中并未出现",
+      "correctness": 5,
+      "correctness_reason": "回答提到主要收入使用主税码，第二份收入使用次要税码，并说明次要税码通过全年收入估算并使用 IR330 表格告知雇主，完整覆盖要点且无错误",
+      "seconds": 16.4
+    },
+    {
+      "id": "x03",
+      "lang": "en",
+      "topic": "tax",
+      "type": "simple",
+      "question": "What are the New Zealand income tax rates from 1 April 2025?",
+      "gold_urls": [
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals"
+      ],
+      "retrieved_urls": [
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals",
+        "https://www.ird.govt.nz/roles/non-residents/experts-and-students-visiting-from-overseas",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals",
+        "https://www.ird.govt.nz/roles/non-residents/experts-and-students-visiting-from-overseas",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/what-tax-code-should-i-use",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application"
+      ],
+      "rr": 1.0,
+      "answer": "新西兰自 2025年4月1日 起的个人所得税率如下（来源 [1]）：\n\n| 收入区间（每美元） | 税率 |\n|---|---|\n| 0 – $15,600 | 10.5% |\n| $15,601 – $53,500 | 17.5% |\n| $53,501 – $78,100 | 30% |\n| $78,101 – $180,000 | 33% |\n| $180,001 及以上 | 39% |\n\n这些税率采用累进制（progressive tax rates），收入越高适用的税率越高。\n\n参考来源：\n[1] Tax rates for individuals - https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 5,
+      "faithfulness_reason": "所有列出的税率和累进制说明均可在资料[1]中找到对应依据",
+      "correctness": 5,
+      "correctness_reason": "完整覆盖了标准答案的所有要点，并提供了额外的高收入税率，未出现错误",
+      "seconds": 16.6
+    },
+    {
+      "id": "x04",
+      "lang": "zh",
+      "topic": "tax",
+      "type": "simple",
+      "question": "留学生在新西兰待多久会成为税务居民？",
+      "gold_urls": [
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals"
+      ],
+      "retrieved_urls": [
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals"
+      ],
+      "rr": 1.0,
+      "answer": "留学生只要在新西兰累计居住 **超过 183 天（在任意 12 个月内）**，就会被视为新西兰税务居民，前提是他不符合“非居民访客”（non‑resident visitor）的条件 [1]。  \n此外，即使未满 183 天，只要在新西兰拥有“永久居所”（permanent place of abode），即通常居住的房屋或可以称为“家”的地方，也会被认定为税务居民 [2]。  \n\n因此，留学生通常在累计居住 **超过 183 天** 后成为税务居民，除非他符合非居民访客的例外规定，或已经拥有永久居所。 [1][2]\n\n参考来源：\n[1] Tax residency status for individuals - https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals（抓取于 2026-10-02）\n[2] Tax residency status for individuals - https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 5,
+      "faithfulness_reason": "所有关于183天规则、非居民访客例外以及永久居所导致税务居民身份的陈述均可在资料中找到对应依据，未出现无依据或矛盾内容",
+      "correctness": 3,
+      "correctness_reason": "回答覆盖了183天和永久住所两条标准要点，但未提及税务居民身份与移民身份不同以及183天不必连续、部分天数按整天计算的细节",
+      "seconds": 17.6
+    },
+    {
+      "id": "x05",
+      "lang": "en",
+      "topic": "tax",
+      "type": "simple",
+      "question": "How do I know if I paid too much tax at the end of the tax year?",
+      "gold_urls": [
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/what-happens-at-the-end-of-the-tax-year/income-tax-assessments"
+      ],
+      "retrieved_urls": [
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/secondary-tax-codes",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/what-happens-at-the-end-of-the-tax-year/income-tax-assessments",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/secondary-tax-codes",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/what-happens-at-the-end-of-the-tax-year/income-tax-assessments",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals",
+        "https://www.ird.govt.nz/roles/non-residents/experts-and-students-visiting-from-overseas"
+      ],
+      "rr": 0.5,
+      "answer": "要判断在一个税务年度（4 月 1 日至3 月 31 日）是否多缴了税款，关键是查看**收入税评估（income tax assessment）**的结果。  \n\n1. **收到评估信**  \n   - 税务局在税年结束后会把评估信寄给你，信中会列明你全年已缴的税额与应缴税额的比较。  \n   - 如果已缴税额大于应缴税额，评估信会显示你**应退税（refund）**；如果已缴税额不足，则会显示**税单（tax bill）**；若两者相等，则说明已缴税额恰好[1][2]。  \n\n2. **检查评估信中的退款或欠税信息**  \n   - 评估信上会明确标注“退款”或“需缴税款”，这直接告诉你是否多缴了税[1][2]。  \n\n3. **确保全年使用了正确的税码**  \n   - 如果在一年中有多个收入来源（工资、福利、学生津贴等），应使用**次级税码（secondary tax code）**，让雇主或付款人按正确的税率预扣税款，避免因预扣过高而在年终出现大额退款[3][4]。  \n   - 你可以通过填写IR330税码声明表或使用税率计算器来确认使用的税码是否合适[5]。  \n\n4. **如评估信有误**  \n   - 若评估信中的信息不正确，需要及时告知税务局更正[2]。  \n\n**简而言之**：在税年结束后，查看税务局寄来的收入税评估信，若显示“退款”，说明你多缴了税；若显示“税单”，则说明少缴；若显示“已缴足额”，则说明没有多缴[1][2]。同时，使用正确的税码（尤其是次级税码）可以在全年就避免多缴税款[3][4]。\n\n参考来源：\n[1] Income tax assessments - https://www.ird.govt.nz/income-tax/income-tax-for-individuals/what-happens-at-the-end-of-the-tax-year/income-tax-assessments（抓取于 2026-10-02）\n[2] Income tax assessments - https://www.ird.govt.nz/income-tax/income-tax-for-individuals/what-happens-at-the-end-of-the-tax-year/income-tax-assessments（抓取于 2026-10-02）\n[3] Secondary tax codes - https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/secondary-tax-codes（抓取于 2026-10-02）\n[4] Tax rates for individuals - https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals（抓取于 2026-10-02）\n[5] Secondary tax codes - https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/secondary-tax-codes（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 0,
+      "sub_questions": 1,
+      "faithfulness": 4,
+      "faithfulness_reason": "大部分陈述都有资料依据，唯一缺乏直接依据的是‘税务局在税年结束后会把评估信寄给你’，资料未提及寄送方式，但不影响整体结论",
+      "correctness": 5,
+      "correctness_reason": "完整覆盖了税年范围、IRD评估发送条件以及评估显示退款、税单或已足额，并提醒如信息错误需告知IRD，未出现错误",
+      "seconds": 18.7
+    },
+    {
+      "id": "c01",
+      "lang": "zh",
+      "topic": "visa",
+      "type": "compound",
+      "question": "我拿学生签证在餐厅兼职，老板让我每周干 30 小时，还说 90 天试用期内可以随时辞退我，这些合法吗？",
+      "gold_urls": [
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods"
+      ],
+      "retrieved_urls": [
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/",
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods",
+        "https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/",
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods",
+        "https://www.immigration.govt.nz/visas/fee-paying-student-visa/",
+        "https://www.employment.govt.nz/starting-employment/hiring/trial-periods"
+      ],
+      "rr": 0.5,
+      "answer": "**1. 学生签证持有人在学期期间每周工作时数上限**  \n- 根据新西兰移民局的规定，学生签证在学期期间只能进行**兼职工作（part‑time work）**，每周最高**25 小时**（自 2025 年 11 月 3 日起从原来的 20 小时提升至 25 小时）[1]。  \n- 该上限同样适用于中学学生以及英语语言课程的学生，均为**每周不超过 25 小时**[2][3]。  \n> 因此，您被要求每周工作 30 小时已经超出签证允许的工作时数，属于违反签证条件的行为。\n\n**2. 雇主在 90 天试用期内随时解雇员工是否合法**  \n- 新西兰《雇佣法》规定，**试用期（trial period）**的员工享有与正式员工相同的权利，唯一例外是雇主在试用期内解雇时**不必遵循全部的解雇程序**[4]。  \n- 试用期必须写入**雇佣协议（employment agreement）**，并明确：  \n  1. 从雇佣开始即为试用期；  \n  2. 试用期最长**90 天**；  \n  3. 雇主可以在试用期内解雇员工；  \n  4. 员工在此期间通常不能提出个人申诉（除特定情形外）[5]。  \n> 只要雇主在雇佣协议中合法约定了试用期，并遵守上述要求，**在试用期内随时解雇员工是合法的**。但如果没有书面协议或约定不符合规定，则该试用期无效，雇主仍需遵守正常的解雇程序[5]。\n\n**综合判断**  \n- 您每周被要求工作 30 小时**不符合学生签证的工作时数上限**，需要向雇主说明并确保工作时间不超过 25 小时，否则可能影响签证状态。  \n- 雇主在合法设定的 90 天试用期内**可以随时解雇**您，但必须在雇佣协议中明确约定该试用期的条款。  \n\n如需进一步确认个人签证条件或雇佣协议的具体细节，建议咨询移民局或就业关系部门。\n\n参考来源：\n[1] Check or change your student visa conditions - https://www.immigration.govt.nz/study/once-you-have-a-student-visa/check-or-change-your-student-visa-conditions/（抓取于 2026-10-02）\n[2] Working on a student visa - https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/（抓取于 2026-10-02）\n[3] Working on a student visa - https://www.immigration.govt.nz/study/once-you-have-a-student-visa/working-on-a-student-visa/（抓取于 2026-10-02）\n[4] Trial periods - https://www.employment.govt.nz/starting-employment/hiring/trial-periods（抓取于 2026-10-02）\n[5] Trial periods - https://www.employment.govt.nz/starting-employment/hiring/trial-periods（抓取于 2026-10-02）\n\n转介说明：以上只是官方公布的一般性信息，不构成针对你个人情况的法律或移民建议。你的问题涉及个案判断，建议联系移民局（Immigration New Zealand）、持牌移民顾问（licensed immigration adviser，可在移民顾问管理局 Immigration Advisers Authority 官网查询）或律师；或就业服务（Employment New Zealand）或社区法律中心（Community Law）。\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": "您目前是在学期中还是假期？",
+      "retries": 1,
+      "sub_questions": 2,
+      "faithfulness": 5,
+      "faithfulness_reason": "所有事实性陈述均可在提供的资料中找到依据，没有出现无依据或矛盾的内容",
+      "correctness": 5,
+      "correctness_reason": "完整覆盖了两条要点，正确说明每周25小时上限及30小时违规，并指出试用期最长90天需书面约定且仍受解雇规则约束",
+      "seconds": 27.0
+    },
+    {
+      "id": "c02",
+      "lang": "en",
+      "topic": "tax",
+      "type": "compound",
+      "question": "I just started my first part-time job in New Zealand. Do I need an IRD number, and what tax code should I give my employer?",
+      "gold_urls": [
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/what-tax-code-should-i-use",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application"
+      ],
+      "retrieved_urls": [
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/what-tax-code-should-i-use",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/new-arrival-to-new-zealand---ird-number-application",
+        "https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/secondary-tax-codes",
+        "https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one",
+        "https://www.ird.govt.nz/international-tax/individuals/tax-residency-status-for-individuals"
+      ],
+      "rr": 1.0,
+      "answer": "1. **是否需要 IRD 号码**  \n   根据新西兰税务局的说明，凡是有收入的情况（包括兼职工作）都需要 IRD 号码，用于税务相关的义务和权益，例如领取工资、缴税等[1]。\n\n2. **应提供的税码**  \n   资料中只列举了几种特殊情形下的税码（如 CAE、NSW、EDW、M 等），并未说明普通兼职员工应使用的默认税码是什么。因此，关于首次兼职工作应向雇主提供的具体税码（例如常见的 M 税码），资料没有提供相关信息【资料未覆盖】。\n\n参考来源：\n[1] When you need an IRD number - https://www.ird.govt.nz/managing-my-tax/ird-numbers/ird-numbers-for-individuals/when-you-need-one（抓取于 2026-10-02）\n\n以上内容仅供参考，不构成法律、移民或税务建议，请以官方网站的最新信息为准。",
+      "clarification": null,
+      "retries": 2,
+      "sub_questions": 2,
+      "faithfulness": 5,
+      "faithfulness_reason": "回答的两条陈述均可在资料中找到支持或正确指出资料未覆盖，未出现无依据或矛盾的内容",
+      "correctness": 3,
+      "correctness_reason": "回答给出了需要 IRD 号码的结论，但未说明应使用的 M 税码，未覆盖第二个要点",
+      "seconds": 29.9
+    }
+  ]
+}

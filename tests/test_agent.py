@@ -11,6 +11,7 @@ from langgraph.checkpoint.memory import InMemorySaver
 
 from app.agent.graph import ask, build_graph, open_checkpointer, pending_clarification, resume
 from app.agent.nodes import (
+    DEFAULT_TOP_K,
     MAX_RETRIES,
     AgentNodes,
     RewriteOutput,
@@ -68,7 +69,7 @@ def test_citations_renumbered_to_match_sources():
     assert "[2] Bond - https://www.tenancy.govt.nz/bond（抓取于 2026-10-02）" in state["answer"]
     assert state["answer"].endswith(DISCLAIMER)
     # 英文检索词和主题过滤确实传给了检索器
-    assert searcher.calls[0] == ("bond amount", 6, "tenancy")
+    assert searcher.calls[0] == ("bond amount", DEFAULT_TOP_K, "tenancy")
 
 
 def test_out_of_range_citation_removed():
@@ -84,6 +85,12 @@ def test_fullwidth_citation_brackets_renumbered():
     body, citations = renumber_citations("押金最多四周租金【2】，另见［1］。", [BOND, RENT])
     assert body == "押金最多四周租金[1]，另见[2]。"
     assert [c.url for c in citations] == [RENT.parent.url, BOND.parent.url]
+
+
+def test_nested_fullwidth_citation_collapsed():
+    """评测中 gpt-oss 写出过【[1]】：只替换里层时界面会显示成【[1]】，外层括号也要去掉。"""
+    body, _ = renumber_citations("每周最多 25 小时【[2]】。", [BOND, RENT])
+    assert body == "每周最多 25 小时[1]。"
 
 
 def test_strip_think_handles_lone_closing_tag():
@@ -149,7 +156,7 @@ def test_invalid_json_retried_once_then_degrades():
     state = ask(build_graph(llm, searcher), "押金多少？", "t1")
 
     assert "无法解析" in llm.calls[1][-1].content  # 重试时把错误告诉了模型
-    assert searcher.calls == [("押金多少？", 6, None)]  # 降级：原问题、不过滤主题
+    assert searcher.calls == [("押金多少？", DEFAULT_TOP_K, None)]  # 降级：原问题、不过滤主题
     assert state["citations"][0]["url"] == BOND.parent.url
 
 
@@ -224,7 +231,7 @@ def test_clarification_pauses_then_resumes():
     assert pending_clarification(state) is None
     assert "补充信息：学生签证，学期中" in llm.calls[1][1].content
     assert state["answer"].startswith("学期中每周最多打工 25 小时 [1]。")
-    assert searcher.calls == [("student visa work hours during term", 6, "visa")]
+    assert searcher.calls == [("student visa work hours during term", DEFAULT_TOP_K, "visa")]
     # 反问和回答都记入对话，后续追问能看到
     assert [m.type for m in state["messages"]] == ["human", "ai", "human", "ai"]
 
@@ -246,7 +253,8 @@ def test_compound_question_retrieves_each_sub_question():
     state = ask(build_graph(llm, searcher), "留学生能打多少小时工？工资要交税吗？", "t1")
 
     assert sorted(searcher.calls) == [
-        ("student visa work hours", 6, "visa"), ("tax code secondary job", 6, "tax"),
+        ("student visa work hours", DEFAULT_TOP_K, "visa"),
+        ("tax code secondary job", DEFAULT_TOP_K, "tax"),
     ]
     # 合并顺序按子问题序号，与并行任务完成的先后无关
     assert [d["url"] for d in state["retrieved"]] == [BOND.parent.url, RENT.parent.url]
