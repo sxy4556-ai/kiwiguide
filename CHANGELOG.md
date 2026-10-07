@@ -2,6 +2,14 @@
 
 ## 未发布
 
+### Day 6（2026-10-07）
+- `scripts/run_eval.py` 支持评测回答（`--mode naive|agent`），LLM 评判忠实度和正确率（1–5 分），支持并行和结果文件后缀
+- 新增评测报告 `docs/eval.md`：Agent 的 hit@5 1.000（基线 0.967）、MRR 0.900（基线 0.894）、忠实度 4.77（基线 4.73），正确率 4.13 低于基线 4.53，报告中分析了原因
+- Agent 每次放进上下文的父块数由 6 调为 8
+- 收紧反问条件，30 题中的反问次数由 8 次降到 5 次
+- 修复引用编号【[n]】显示为多余括号的问题
+- 测试增至 95 个
+
 ### Day 5（2026-10-06）
 - 新增接口：`POST /chat`、`POST /chat/{thread_id}/resume`、`POST /chat/stream`（SSE）、`GET /sources`、`POST /ingest/refresh` 和 `GET /ingest/refresh`
 - 统一中文错误响应（422、409、503、500）和请求耗时日志；问答服务在首次调用时创建，Ollama 不可用时返回 503，不影响 `/health`
