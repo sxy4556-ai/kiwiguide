@@ -41,7 +41,7 @@ SUMMARY_AFTER_ROUNDS = 6  # 已完成的问答超过这个轮数就压缩历史
 KEEP_MESSAGES = 5  # 压缩后保留的最近消息：两轮问答加当前问题
 HISTORY_MESSAGES = 4  # 改写和生成时附带的最近消息条数
 HISTORY_CHARS = 600  # 每条历史消息截取的长度，避免旧回答占满上下文
-DEFAULT_TOP_K = 6
+DEFAULT_TOP_K = 8  # 评测中 6 → 8 后正确率和 MRR 提高，复合问题受益最多，见 docs/eval.md
 MAX_SUB_QUESTIONS = 3  # 复合问题最多拆成几个子问题
 
 Search = Callable[[str, int, str | None], list[SearchResult]]

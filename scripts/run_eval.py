@@ -2,7 +2,7 @@
 
 用法：
     只评测检索：uv run python scripts/run_eval.py --mode naive --retrieval-only [--top-k 10]
-    评测回答：  uv run python scripts/run_eval.py --mode agent [--top-k 6] [--workers 4] [--tag xxx]
+    评测回答：  uv run python scripts/run_eval.py --mode agent [--top-k 8] [--workers 4] [--tag xxx]
 评测回答时检索指标按放进提示词的父块计算，忠实度和正确率由 LLM 评判（1–5 分）。
 """
 
@@ -22,6 +22,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from langgraph.checkpoint.memory import InMemorySaver  # noqa: E402
 
 from app.agent.graph import build_graph  # noqa: E402
+from app.agent.nodes import DEFAULT_TOP_K  # noqa: E402
 from app.config import get_settings  # noqa: E402
 from app.eval.metrics import reciprocal_rank, summarize  # noqa: E402
 from app.eval.runner import evaluate, run_agent, run_naive, summarize_answers  # noqa: E402
@@ -92,7 +93,7 @@ def main() -> int:
     parser.add_argument("--mode", choices=["naive", "agent"], default="naive", help="评测对象")
     parser.add_argument("--retrieval-only", action="store_true", help="只评测检索，不生成回答")
     parser.add_argument("--top-k", type=int, default=None,
-                        help="每题取回的父块数；只评测检索时默认 10，评测回答时默认 6")
+                        help="每题取回的父块数；只评测检索时默认 10，评测回答时与 Agent 默认值相同")
     parser.add_argument("--workers", type=int, default=4, help="评测回答时并行的题数")
     parser.add_argument("--tag", default="", help="结果文件名后缀，用于区分调参前后")
     parser.add_argument("--questions", default=str(ROOT / "eval" / "questions.yaml"))
@@ -101,7 +102,7 @@ def main() -> int:
         print("--retrieval-only 只支持 naive：Agent 的检索依赖模型改写，请直接评测回答")
         return 2
     if args.top_k is None:
-        args.top_k = 10 if args.retrieval_only else 6
+        args.top_k = 10 if args.retrieval_only else DEFAULT_TOP_K
 
     settings = get_settings()
     setup_logging(settings.log_level)
