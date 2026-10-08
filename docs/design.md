@@ -119,3 +119,10 @@ flowchart TD
 - 抓取前检查各站点的 robots.txt 和版权说明，结论记录在 `docs/data-sources.md`。
 - 回答中引用原始链接；原始数据不提交、不再分发。
 - 界面和每条回答都附免责声明。
+
+## 11. MCP 服务
+- **入口**：`app/mcp_server.py` 的 `create_mcp_server(service)`，由 `scripts/mcp_server.py` 以 stdio 方式运行；使用官方 `mcp` SDK 的 `MCPServer`。
+- **工具**：`ask`、`answer_clarification`、`list_sources`，分别对应 `/chat`、`/chat/{thread_id}/resume`、`/sources`。不提供更新索引的工具：更新耗时数分钟且会写索引，不适合由客户端随意触发。
+- **复用**：业务逻辑全部来自 `ChatService`，参数校验复用接口层的 `Text` 和 `ThreadId`，两个入口的行为和输入规则一致。
+- **错误**：没有反问可回答时，把 `ServiceError` 转为 `ToolError` 返回中文原因；其他异常只记服务端日志，客户端只看到笼统的出错提示。
+- **限制**：与 API 服务一样会打开 Qdrant 本地库，两者不能同时运行。

@@ -19,6 +19,7 @@
 - 父子分块，稠密向量 + BM25 混合检索，RRF 融合
 - 多轮会话记忆（按 thread_id 保存）
 - FastAPI 接口（支持 SSE 流式输出）和中文网页界面
+- MCP 服务：支持 MCP 的客户端可以直接调用问答工具
 - 朴素 RAG 与 Agent 的对比评测
 
 ## 架构
@@ -142,8 +143,30 @@ uv run python scripts/refresh_sources.py
 
 服务运行时改用接口 `POST /ingest/refresh`，效果相同。
 
+### 8. 作为 MCP 服务使用（可选）
+`scripts/mcp_server.py` 以 stdio 方式提供 MCP 服务，由 MCP 客户端启动。在客户端的 MCP 配置中加入（`--directory` 改为本项目的路径）：
+
+```json
+{
+  "mcpServers": {
+    "kiwiguide": {
+      "command": "uv",
+      "args": ["run", "--directory", "/path/to/kiwiguide", "python", "scripts/mcp_server.py"]
+    }
+  }
+}
+```
+
+提供三个工具，与 HTTP 接口一一对应：
+
+| 工具 | 对应接口 | 说明 |
+|---|---|---|
+| `ask` | `POST /chat` | 提问，参数 `question` 和可选的 `thread_id`，返回结构与 `/chat` 相同 |
+| `answer_clarification` | `POST /chat/{thread_id}/resume` | 回答反问，参数 `thread_id` 和 `answer` |
+| `list_sources` | `GET /sources` | 已索引的来源列表 |
+
 ### 注意
-Qdrant 本地库同一时间只允许一个进程打开。服务运行时，不要同时运行 `build_index.py`、`refresh_sources.py`、`ask.py` 或 `run_eval.py`，否则会报存储被占用的错误；先停止服务再运行，或者用对应的接口。
+Qdrant 本地库同一时间只允许一个进程打开。服务运行时，不要同时运行 `build_index.py`、`refresh_sources.py`、`ask.py`、`run_eval.py` 或 `mcp_server.py`，否则会报存储被占用的错误；先停止服务再运行，或者用对应的接口。
 
 ## 接口说明
 
