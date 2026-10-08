@@ -1,5 +1,14 @@
 # 更新记录
 
+## 未发布
+
+### Day 8（2026-10-09）
+- 新增 MCP 服务（`app/mcp_server.py`、`scripts/mcp_server.py`，stdio 方式）：工具 `ask`、`answer_clarification`、`list_sources`，分别对应 `/chat`、`/chat/{thread_id}/resume`、`/sources`，参数校验与接口一致
+- 新增依赖 `mcp`
+- README 新增 MCP 客户端配置方法；设计文档新增 MCP 服务一节
+- 新增项目总结日志 `docs/devlog/summary.md`
+- 测试增至 102 个
+
 ## v1.0.0（2026-10-08）
 
 首个正式版本。汇总：
