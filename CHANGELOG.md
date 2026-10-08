@@ -1,6 +1,21 @@
 # 更新记录
 
-## 未发布
+## v1.0.0（2026-10-08）
+
+首个正式版本。汇总：
+- **数据**：4 个主题（租房、打工与劳动权益、学生签证、税务）共 50 个政府官网页面；遵守 robots.txt 和抓取间隔，trafilatura 清洗为 Markdown；各站点许可见 `docs/data-sources.md`
+- **索引与检索**：父子分块；qwen3-embedding 稠密向量 + BM25 稀疏向量的 Qdrant 本地混合索引，RRF 融合、主题过滤、父块回取；按 content_hash 增量更新
+- **Agent**（LangGraph）：对话摘要、子问题拆分与英文检索词改写、缺关键信息时反问、子问题并行检索、相关性评估与重试、带编号引用的中文回答；越界拒答、个案问题转介；SQLite 多轮会话记忆；主模型失败时切换本地备用模型
+- **接口与界面**：`/chat`、`/chat/{thread_id}/resume`、`/chat/stream`（SSE）、`/sources`、`/ingest/refresh`、`/health`；中文网页界面
+- **评测**：30 道题对比朴素 RAG 与 Agent，Agent hit@5 1.000、MRR 0.900、忠实度 4.77，正确率 4.13 低于基线 4.53（见 `docs/eval.md`）
+- **脚本**：`check_env.py`、`fetch_sources.py`、`build_index.py`、`refresh_sources.py`、`ask.py`、`run_eval.py`
+- 测试 96 个，CI 运行 ruff 和 pytest
+
+### Day 7（2026-10-08）
+- 新增 `scripts/refresh_sources.py`：重新抓取所有来源，只为内容有变化的页面重建索引，打印变化统计；与 `/ingest/refresh` 共用摘要函数 `describe_refresh`
+- README 完善为正式版：架构图、快速开始、接口说明、评测结果摘要、数据来源与许可、免责声明
+- 版本号更新为 1.0.0
+- 测试增至 96 个
 
 ### Day 6（2026-10-07）
 - `scripts/run_eval.py` 支持评测回答（`--mode naive|agent`），LLM 评判忠实度和正确率（1–5 分），支持并行和结果文件后缀

@@ -6,6 +6,7 @@ from pathlib import Path
 
 from app.ingest.clean import build_document, save_document
 from app.ingest.fetch import Fetcher
+from app.ingest.index import IndexStats
 
 
 @dataclass
@@ -46,3 +47,10 @@ def fetch_sources(
         summary.ok += 1
         report(f"{prefix} 成功 {url} -> {path}（{len(doc['markdown'])} 字符）")
     return summary
+
+
+def describe_refresh(fetched: FetchSummary, stats: IndexStats) -> str:
+    """把抓取和增量索引的结果合成一行中文摘要，更新脚本和 `/ingest/refresh` 共用。"""
+    return (f"抓取 {fetched.total} 个来源：成功 {fetched.ok}，失败 {len(fetched.failed)}，"
+            f"跳过 {len(fetched.skipped)}；索引：新增 {stats.added}，更新 {stats.updated}，"
+            f"未变化 {stats.unchanged}，删除 {stats.removed} 个页面")

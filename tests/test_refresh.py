@@ -4,7 +4,8 @@ import json
 from pathlib import Path
 
 from app.ingest.fetch import FetchResult
-from app.ingest.refresh import fetch_sources
+from app.ingest.index import IndexStats
+from app.ingest.refresh import FetchSummary, describe_refresh, fetch_sources
 
 FIXTURE = Path(__file__).parent / "fixtures" / "bond_page.html"
 
@@ -47,3 +48,13 @@ def test_fetch_sources_counts_and_saves(tmp_path):
     assert len(saved) == 1
     assert json.loads(saved[0].read_text(encoding="utf-8"))["url"] == "https://x.govt.nz/bond"
     assert len(lines) == 4 and lines[0].startswith("[1/4] 成功")
+
+
+def test_describe_refresh_reports_every_count():
+    """更新摘要必须同时给出抓取结果和索引变化的每一项数字：维护者靠它判断官网是否改版、
+    哪些页面没能更新；漏掉失败或删除的数量，会让过期内容悄悄留在索引里。"""
+    fetched = FetchSummary(total=5, ok=3, failed=[("u1", "HTTP 500")], skipped=[("u2", "robots")])
+    stats = IndexStats(added=1, updated=2, unchanged=4, removed=1)
+    text = describe_refresh(fetched, stats)
+    assert text == ("抓取 5 个来源：成功 3，失败 1，跳过 1；"
+                    "索引：新增 1，更新 2，未变化 4，删除 1 个页面")

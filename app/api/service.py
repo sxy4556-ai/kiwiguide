@@ -17,7 +17,7 @@ from app.agent.state import new_turn
 from app.config import Settings
 from app.ingest.fetch import Fetcher
 from app.ingest.index import build_index, load_processed
-from app.ingest.refresh import fetch_sources
+from app.ingest.refresh import describe_refresh, fetch_sources
 from app.ingest.sources import load_sources
 from app.llm import get_chat_model
 from app.retrieval.embeddings import make_dense_embedder, make_sparse_embedder, probe_dimension
@@ -204,9 +204,7 @@ def build_service(settings: Settings) -> ChatService:
         # 写索引期间持有检索锁：本地 Qdrant 和 SQLite 不能同时读写，检索会等更新完成
         with searcher.storage_lock:
             stats = build_index(docs, vector_store, parent_store, dense, sparse)
-        return (f"抓取 {fetched.total} 个来源：成功 {fetched.ok}，失败 {len(fetched.failed)}，"
-                f"跳过 {len(fetched.skipped)}；索引：新增 {stats.added}，更新 {stats.updated}，"
-                f"未变化 {stats.unchanged}，删除 {stats.removed} 个页面")
+        return describe_refresh(fetched, stats)
 
     def close() -> None:
         saver.conn.close()
